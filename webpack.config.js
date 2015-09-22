@@ -17,7 +17,7 @@ module.exports = {
   },
   resolve: {
     modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.cjsx', '.coffee'],
+    extensions: ['', '.js', '.jsx'],
     alias: {
       shared: path.join(__dirname, 'shared')
     }
@@ -25,10 +25,7 @@ module.exports = {
   module: {
     loaders: [
 
-      //{test: /\.cjsx$/, exclude: /node_modules/, loaders: ['react-hot', 'coffee', 'cjsx']},
-      {test: /\.coffee/, exclude: /node_modules/, loaders: ['react-hot', 'coffee']},
-      //{test: /\.(jsx|js)?$/, exclude: /node_modules/, loaders: ['react-hot', 'babel']},
-      {test: /\.js?$/, exclude: /node_modules/, loaders: ['react-hot', 'babel']},
+      {test: /\.(jsx|js)?$/, exclude: /node_modules\/(?!fl-)/, loaders: ['react-hot', 'babel']},
 
       {test: /\.css$/, loader: css_to_file
    				? 'style!css'

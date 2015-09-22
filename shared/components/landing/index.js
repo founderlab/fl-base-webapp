@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import LoginActions from '../../actions/login'
-import Login from '../login'
+import Login from 'fl-auth-client/components/login'
 
 @connect((state) => ({login: state.login}))
 export default class Landing extends React.Component {

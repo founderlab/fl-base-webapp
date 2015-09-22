@@ -1,6 +1,6 @@
 import React from 'react'
 import {Router} from 'react-router'
-import {history} from 'react-router/lib/BrowserHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {createStore, combineReducers} from 'redux'
 import {Provider} from 'react-redux'
 import {fromJS} from 'immutable'
@@ -16,6 +16,7 @@ Object.keys(initial_state).forEach(key => {initial_state[key] = fromJS(initial_s
 
 const reducer = combineReducers(reducers)
 const store = createStore(reducer, initial_state)
+const history = createBrowserHistory()
 
 React.render(
   <Provider store={store}>

@@ -1,7 +1,5 @@
 import React from 'react'
-
-import auth from '../auth'
-
+import Auth from 'fl-auth-client'
 import NavBar from './navbar'
 import LandingPage from './landing'
 
@@ -9,7 +7,7 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      logged_in: auth.loggedIn()
+      logged_in: Auth.loggedIn()
     }
   }
 
