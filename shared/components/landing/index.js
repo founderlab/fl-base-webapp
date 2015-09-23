@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux'
 
 import LoginActions from '../../actions/login'
 import Login from 'fl-auth-client/components/login'
+import Register from 'fl-auth-client/components/register'
 
 @connect((state) => ({login: state.login}))
 export default class Landing extends React.Component {
@@ -36,6 +37,10 @@ export default class Landing extends React.Component {
             </div>
           </div>
         </section>
+
+        <div>
+          <Register login={login} {...bindActionCreators(LoginActions, dispatch)} />
+        </div>
 
       </div>
     )

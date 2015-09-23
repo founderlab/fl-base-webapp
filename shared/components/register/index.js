@@ -1,16 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import Register from 'fl-auth-client/components/signup'
+import Register from 'fl-auth-client/components/register'
 
 export default class Home extends React.Component {
 
   render() {
     return (
-      <div id="signup">
-        <p>signup</p>
+      <div id="register">
+        <p>Register</p>
+        <Register />
       </div>
     )
   }
 
 }
+asdasdsd
+asdas

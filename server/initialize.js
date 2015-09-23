@@ -1,7 +1,6 @@
 import _ from 'lodash'
 
-if (!process.env.NODE_ENV)
-  process.env.NODE_ENV = 'development'
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development'
 
 if (!process.env.DATABASE_URL) {
   console.log('No process.env.DATABASE_URL present, using openshift values')

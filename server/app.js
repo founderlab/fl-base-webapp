@@ -46,4 +46,3 @@ process.on('SIGTERM', () => {
   console.log(`${config.env}-FounderLab_replaceme stopping on port ${config.port}`)
   process.exit(0)
 })
-
