@@ -5,7 +5,7 @@ export default class UsersController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
       model_type: require('../../models/user'),
-      route: '/api/users'
+      route: '/api/users',
     }, options))
   }
 }

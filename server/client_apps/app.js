@@ -1,17 +1,19 @@
 import React from 'react'
 import {RoutingContext, match} from 'react-router'
 import createLocation from 'history/lib/createLocation'
-import {createStore, combineReducers} from 'redux'
+import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 
 import reducers from '../../shared/reducers'
 import routes from '../../shared/routes'
+import promiseMiddleware from '../../shared/middleware/promise_middleware'
+
 
 export default function app(req, res) {
 
   const location = createLocation(req.url)
   const reducer = combineReducers(reducers)
-  const store = createStore(reducer)
+  const store = applyMiddleware(promiseMiddleware)(createStore)(reducer)
 
   match({routes, location}, (err, redirectLocation, renderProps) => {
     if (err) {

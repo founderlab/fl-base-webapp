@@ -1,12 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-
-import LoginActions from '../../actions/login'
 import Login from 'fl-auth-client/components/login'
+import LoginActions from '../../actions/login'
 
 @connect((state) => ({login: state.login}))
 export default class NavBar extends React.Component {
+
+  static propTypes = {
+    login: React.PropTypes.object,
+    dispatch: React.PropTypes.function,
+  }
 
   render() {
     const {login, dispatch} = this.props

@@ -1,18 +1,18 @@
+import _ from 'lodash'
 import fs from 'fs'
 import path from 'path'
-import _ from 'lodash'
 
 const EXCLUDED_FILES = ['.DS_Store']
 
 function removeDirectoryAndExtension(file, directory) {
-  let filename = file.replace(`${directory}/`, '')
+  const filename = file.replace(`${directory}/`, '')
   return filename.replace(path.extname(filename), '')
 }
 
 export default class DirectoryUtils {
 
   static files(directory) {
-    let results = []
+    const results = []
 
     function processDirectory(directory) {
       if (!fs.existsSync(directory)) return
@@ -36,7 +36,7 @@ export default class DirectoryUtils {
   }
 
   static modules(directory) {
-    let results = {}
+    const results = {}
     DirectoryUtils.files(directory).forEach(file => {
       try {
         results[removeDirectoryAndExtension(file, directory)] = require(file)
@@ -48,7 +48,7 @@ export default class DirectoryUtils {
   }
 
   static functionModules(directory) {
-    let results = DirectoryUtils.modules(directory)
+    const results = DirectoryUtils.modules(directory)
     _.keys(results).forEach(file => {
       if (!_.isFunction(results[file])) delete results[file]
     })

@@ -4,10 +4,14 @@ import NavBar from './navbar'
 import LandingPage from './landing'
 
 export default class App extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.node,
+  }
+
   constructor() {
     super()
     this.state = {
-      logged_in: Auth.loggedIn()
+      logged_in: Auth.loggedIn(),
     }
   }
 

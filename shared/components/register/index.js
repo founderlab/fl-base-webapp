@@ -1,9 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import Register from 'fl-auth-client/components/register'
 
-export default class Home extends React.Component {
+export default class RegisterPage extends React.Component {
 
   render() {
     return (
@@ -15,5 +13,3 @@ export default class Home extends React.Component {
   }
 
 }
-asdasdsd
-asdas

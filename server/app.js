@@ -1,6 +1,4 @@
 import './initialize'
-import _ from 'lodash'
-import URL from 'url'
 import express from 'express'
 import bodyParser from 'body-parser'
 import http from 'http'
@@ -12,11 +10,11 @@ import {configure as configureAuth, loggedIn} from 'fl-auth-server'
 import User from './models/user'
 import config from './config'
 
-let bind_options = {
+const bind_options = {
   origins: config.origins,
-  auth: [loggedIn]
+  auth: [loggedIn],
 }
-let app = bind_options.app = express()
+const app = bind_options.app = express()
 console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${process.env.PORT} running env: '${process.env.NODE_ENV}' **************`)
 
 //import session from './session'

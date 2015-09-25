@@ -1,13 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import Register from 'fl-auth-client/components/register'
 
 import LoginActions from '../../actions/login'
-import Login from 'fl-auth-client/components/login'
-import Register from 'fl-auth-client/components/register'
 
 @connect((state) => ({login: state.login}))
 export default class Landing extends React.Component {
+
+  static propTypes = {
+    login: React.PropTypes.object,
+    dispatch: React.PropTypes.function,
+  }
 
   render() {
     const {login, dispatch} = this.props
@@ -38,12 +42,17 @@ export default class Landing extends React.Component {
           </div>
         </section>
 
-        <div>
-          <Register login={login} {...bindActionCreators(LoginActions, dispatch)} />
-        </div>
-
+        <section id="register">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-6 col-lg-offset-3">
+                <h2 className="text-center">Register</h2>
+                <Register login={login} {...bindActionCreators(LoginActions, dispatch)} />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     )
   }
-
 }
