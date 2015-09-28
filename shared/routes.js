@@ -1,6 +1,5 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
-import Auth from 'fl-auth/client'
 import App from './components/app'
 import Landing from './components/landing'
 import Home from './components/home'
@@ -8,10 +7,11 @@ import Login from './components/login'
 import Register from './components/register'
 
 function requireAuth(nextState, replaceState) {
-  if (!Auth.loggedIn()) {
-    console.log('requireAuth fail')
-    replaceState({nextPathname: nextState.location.pathname}, '/login')
-  }
+  console.log('requireAuth', nextState)
+  // if (!Auth.loggedIn()) {
+  //   console.log('requireAuth fail')
+  //   replaceState({nextPathname: nextState.location.pathname}, '/login')
+  // }
 }
 
 export default (
@@ -20,6 +20,6 @@ export default (
     <Route component={Login} path="login" />
     <Route component={Register} path="register" />
     <Route component={Home} path="home" />
+    // <Route component={Home} path="home" onEnter={requireAuth} />
   </Route>
 )
-    // onEnter={requireAuth} />

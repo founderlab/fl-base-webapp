@@ -2,24 +2,30 @@
 import request from 'superagent'
 
 export function register(email, password) {
-  return {
-    type: 'REGISTER',
-    // promise: request.post('/register', {email, password}),
-    payload: {
-      email,
-      password,
-    },
+  return (dispatch, getState) => {
+
+    dispatch({type: 'REGISTER_START'})
+
+    request.post('/register').send({email, password}).end((err, res) => {
+      const error = err || res.body.error
+      if (error) return dispatch({res, error, type: 'REGISTER_ERROR'})
+
+      dispatch({res, type: 'REGISTER_SUCCESS'})
+    })
   }
 }
 
-export function submitLogin(email, password) {
-  return {
-    type: 'LOGIN',
-    // promise: request.post('/login', {email, password}),
-    payload: {
-      email,
-      password,
-    },
+export function login(email, password) {
+  return (dispatch, getState) => {
+
+    dispatch({type: 'LOGIN_START'})
+
+    request.post('/login').send({email, password}).end((err, res) => {
+      const error = err || res.body.error
+      if (error) return dispatch({res, error, type: 'LOGIN_ERROR'})
+
+      dispatch({res, type: 'LOGIN_SUCCESS'})
+    })
   }
 }
 
@@ -30,4 +36,4 @@ export function logout() {
   }
 }
 
-export default {register, submitLogin, logout}
+export default {register, login, logout}
