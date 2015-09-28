@@ -21,7 +21,7 @@ const history = createBrowserHistory()
 
 React.render(
   <Provider store={store}>
-    { () =>
+    {() =>
       <Router children={routes} history={history} />
     }
   </Provider>,

@@ -1,10 +1,9 @@
 import request from 'axios'
-const BACKEND_URL = '/register'
 
 export function register(email, password) {
   return {
     type: 'REGISTER',
-    promise: request.post(BACKEND_URL, {email, password}),
+    promise: request.post('/register', {email, password}),
     payload: {
       email,
       password,
@@ -15,6 +14,7 @@ export function register(email, password) {
 export function submitLogin(email, password) {
   return {
     type: 'LOGIN',
+    promise: request.post('/login', {email, password}),
     payload: {
       email,
       password,

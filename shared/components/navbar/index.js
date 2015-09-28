@@ -2,18 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import Login from 'fl-auth-client/components/login'
-import LoginActions from '../../actions/login'
+import AuthActions from '../../actions/auth'
 
-@connect((state) => ({login: state.login}))
+@connect((state) => ({auth: state.auth}))
 export default class NavBar extends React.Component {
 
   static propTypes = {
-    login: React.PropTypes.object,
+    auth: React.PropTypes.object,
     dispatch: React.PropTypes.function,
   }
 
   render() {
-    const {login, dispatch} = this.props
+    const {auth, dispatch} = this.props
 
     return (
       <nav id="mainNav" className="navbar navbar-default navbar-fixed-top affix">
@@ -26,7 +26,7 @@ export default class NavBar extends React.Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand page-scroll" href="#page-top">FounderLab_replaceme</a>
+            <a className="navbar-brand page-scroll" href="/#page-top">FounderLab_replaceme</a>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -36,7 +36,7 @@ export default class NavBar extends React.Component {
                 <a className="page-scroll" href="#about">About</a>
               </li>
               <li>
-                <Login login={login} {...bindActionCreators(LoginActions, dispatch)} />
+                <Login auth={auth} {...bindActionCreators(AuthActions, dispatch)} />
               </li>
             </ul>
           </div>

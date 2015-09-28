@@ -22,6 +22,9 @@ export default function app(req, res) {
     }
     if (!renderProps) return res.status(404).end('Not found')
 
+    console.log('Rendering, req.user:', req.user)
+    console.log('store:', store)
+
     const InitialComponent = (
       <Provider store={store}>
         {() =>
