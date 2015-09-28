@@ -2,8 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import Register from 'fl-auth/client/components/register'
-
-import AuthActions from '../actions/auth'
+import AuthActions from 'fl-auth/client/actions'
 
 @connect((state) => ({auth: state.auth}))
 export default class RegisterPage extends React.Component {
