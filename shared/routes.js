@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
-import Auth from 'fl-auth-client'
+import Auth from 'fl-auth/client'
 import App from './components/app'
 import Landing from './components/landing'
 import Home from './components/home'

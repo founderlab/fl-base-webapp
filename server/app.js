@@ -5,7 +5,7 @@ import http from 'http'
 import path from 'path'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import {configure as configureAuth, loggedIn} from 'fl-auth-server'
+import {configure as configureAuth, loggedIn} from 'fl-auth/server'
 
 import User from './models/user'
 import config from './config'

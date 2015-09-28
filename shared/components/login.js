@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import LoginForm from 'fl-auth-client/components/login/form'
+import LoginForm from 'fl-auth/client/components/login/form'
 
 import AuthActions from '../actions/auth'
 
