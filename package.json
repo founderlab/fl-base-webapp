@@ -13,6 +13,7 @@
     "start": "forever index.js"
   },
   "dependencies": {
+    "babel": "^5.8.20",
     "backbone": "^1.2.0",
     "backbone-mongo": "^0.6.10",
     "backbone-rest": "^0.7.2",
@@ -40,7 +41,6 @@
     "redux-request-middleware": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/redux-request-middleware"
   },
   "devDependencies": {
-    "babel": "^5.8.20",
     "babel-loader": "^5.3.2",
     "css-loader": "^0.16.0",
     "extract-text-webpack-plugin": "^0.8.2",
