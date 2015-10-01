@@ -10,7 +10,7 @@
     "start": "eval $(cat .env) nodemon -w server -w shared index.js",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "lint": "./node_modules/.bin/eslint server shared",
-    "openshift-start": "~/app-root/runtime/repo/node_modules/.bin/coffee server/app.coffee"
+    "openshift-start": "forever index.js"
   },
   "dependencies": {
     "backbone": "^1.2.0",
