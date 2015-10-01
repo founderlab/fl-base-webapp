@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Gwilym Humphreys (https://github.com/gwilymhumphreys)",
   "license": "",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "scripts": {
     "start-jsx": "NODE_PATH=$NODE_PATH:./shared node .",
     "nodemon-start": "eval $(cat .env) nodemon -w server -w shared index.js",
