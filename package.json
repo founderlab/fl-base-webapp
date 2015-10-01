@@ -7,10 +7,10 @@
   "license": "",
   "scripts": {
     "start-jsx": "NODE_PATH=$NODE_PATH:./shared node .",
-    "start": "eval $(cat .env) nodemon -w server -w shared index.js",
+    "nodemon-start": "eval $(cat .env) nodemon -w server -w shared index.js",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "lint": "./node_modules/.bin/eslint server shared",
-    "openshift-start": "forever index.js"
+    "start": "forever index.js"
   },
   "dependencies": {
     "backbone": "^1.2.0",
