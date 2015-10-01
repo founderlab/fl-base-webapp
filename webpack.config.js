@@ -49,6 +49,9 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      __DEBUG__: process.env.DEBUG || false // for redux-devtools
+    }),
     css_to_file ? new ExtractTextPlugin('app.css', {allChunks: true}) : ''
   ],
   devtool: 'inline-source-map',

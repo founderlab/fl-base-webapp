@@ -9,7 +9,7 @@ export default class RegisterPage extends React.Component {
 
   static propTypes = {
     auth: React.PropTypes.object,
-    dispatch: React.PropTypes.function,
+    dispatch: React.PropTypes.func,
   }
 
   render() {

@@ -4,16 +4,21 @@ import createLocation from 'history/lib/createLocation'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
+import {fromJS} from 'immutable'
+import requestMiddleware from 'redux-request-middleware'
 
 import reducers from '../../shared/reducers'
 import routes from '../../shared/routes'
-// import promiseMiddleware from '../../shared/middleware/promise_middleware'
 
 export default function app(req, res) {
 
   const location = createLocation(req.url)
   const reducer = combineReducers(reducers)
-  const store = applyMiddleware(thunk)(createStore)(reducer)
+  const server_state = {}
+  if (req.user) {
+    server_state.auth = fromJS({email: req.user.get('email')})
+  }
+  const store = applyMiddleware(thunk, requestMiddleware)(createStore)(reducer, server_state)
 
   match({routes, location}, (err, redirectLocation, renderProps) => {
     if (err) {
@@ -22,8 +27,6 @@ export default function app(req, res) {
     }
     if (!renderProps) return res.status(404).end('Not found')
 
-    console.log('Rendering, req.user:', req.user)
-    console.log('store:', store)
 
     const InitialComponent = (
       <Provider store={store}>
@@ -33,6 +36,7 @@ export default function app(req, res) {
       </Provider>
     )
     const component_html = React.renderToString(InitialComponent)
+
     const initial_state = store.getState()
 
     const HTML = `
