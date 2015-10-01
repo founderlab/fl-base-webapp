@@ -57,6 +57,6 @@ export default function app(req, res) {
       </html>
     `
 
-    res.end(HTML)
+    res.type('html').send(HTML)
   })
 }
