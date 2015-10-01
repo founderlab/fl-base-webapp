@@ -12,3 +12,4 @@ const config = {
 }
 config.url = process.env.URL || `http://${config.ip}:${config.port}`
 export default config
+console.log('config', config)
