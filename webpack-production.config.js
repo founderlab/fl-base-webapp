@@ -3,12 +3,10 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // Extract text plugin is not working for some reason
-var css_to_file = !process.env.BUILD
+var css_to_file = true
 
 module.exports = {
   entry:  [
-    'webpack-dev-server/client?http://localhost:8080/',
-    'webpack/hot/only-dev-server',
     './client/index'
   ],
   output: {
@@ -25,11 +23,11 @@ module.exports = {
   module: {
     loaders: [
 
-      {test: /\.(jsx|js)?$/, exclude: /node_modules\/(?!fl-)/, loaders: ['react-hot', 'babel']},
+      {test: /\.(jsx|js)?$/, exclude: /node_modules\/(?!fl-)/, loaders: ['babel']},
 
       {test: /\.css$/, loader: css_to_file
-   				? 'style!css'
-   				: ExtractTextPlugin.extract('css', 'css')},
+          ? 'style!css'
+          : ExtractTextPlugin.extract('css', 'css')},
       {test: /\.styl$/, loader: css_to_file
         ? 'style!css!stylus'
         : ExtractTextPlugin.extract('stylus', 'css!stylus')},
@@ -48,31 +46,11 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      __DEBUG__: process.env.DEBUG || false, // for redux-devtools
       'process.env': {
         'NODE_ENV': process.env.DEBUG ? 'development' : 'production', // This has effect on the react lib size
       },
     }),
     css_to_file ? new ExtractTextPlugin('app.css', {allChunks: true}) : ''
-  ],
-  devtool: 'inline-source-map',
-  devServer: {
-    hot: true,
-    proxy: {
-      '*': 'http://localhost:' + (process.env.PORT || 3000)
-    },
-    stats: {
-      // Config for minimal console.log mess.
-      assets: false,
-      colors: true,
-      version: false,
-      hash: false,
-      timings: false,
-      chunks: false,
-      chunkModules: false
-    }
-  }
+  ]
 }
