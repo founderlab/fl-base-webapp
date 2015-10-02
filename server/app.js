@@ -28,7 +28,13 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
 app.use(morgan('dev'))
 
-configureAuth({app})
+configureAuth({
+  app,
+  facebook: {
+    app_id: process.env.FACEBOOK_APP_ID,
+    app_secret: process.env.FACEBOOK_APP_SECRET,
+  },
+})
 
 initApi(bind_options)
 // React app last; handles all other routes
