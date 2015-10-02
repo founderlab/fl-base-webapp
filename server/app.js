@@ -17,7 +17,7 @@ const bind_options = {
   auth: [ensureLoggedIn],
 }
 const app = bind_options.app = express()
-console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${process.env.PORT} running env: '${process.env.NODE_ENV}' **************`)
+console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 
 app.set('port', config.port)
 app.use(express.static(path.join(__dirname, '../dist')))

@@ -9,7 +9,6 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "start-jsx": "NODE_PATH=$NODE_PATH:./shared node .",
     "start": "eval $(cat .env) nodemon -w server -w shared index.js",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "lint": "./node_modules/.bin/eslint server shared",
