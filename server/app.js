@@ -3,6 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import http from 'http'
 import path from 'path'
+import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
 import {configure as configureAuth, ensureLoggedIn} from 'fl-auth/server'
@@ -25,11 +26,7 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
-// app.use((req, res, next) => {
-//   console.log('session called')
-//   console.log('session:', req.session)
-//   next()
-// })
+app.use(morgan('dev'))
 
 configureAuth({app})
 
