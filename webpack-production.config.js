@@ -47,6 +47,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
     new webpack.DefinePlugin({
+      __DEBUG__: false, // for redux-devtools
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.DEBUG ? 'development' : 'production') // This has effect on the react lib size
       }
