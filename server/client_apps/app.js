@@ -39,18 +39,18 @@ export default function app(req, res) {
 
     const initial_state = store.getState()
 
+          // <link rel="stylesheet" media="all" href="/bootstrap/css/bootstrap.css">
     const HTML = `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
           <title>FounderLab_replaceme></title>
-          <link rel="stylesheet" media="all" href="/bootstrap/css/bootstrap.css">
           <script type="application/javascript">
             window.__INITIAL_STATE__ = ${JSON.stringify(initial_state)}
           </script>
         </head>
-        <body>
+        <body id="app">
           <div id="react-view">${component_html}</div>
           <script type="application/javascript" src="/bundle.js"></script>
         </body>

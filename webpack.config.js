@@ -34,15 +34,16 @@ module.exports = {
         ? 'style!css!stylus'
         : ExtractTextPlugin.extract('stylus', 'css!stylus')},
 
-      {test: /\.(png|jpg|gif|wav|mp3)$/, loader: 'file'},
+      // {test: /\.(png|jpg|gif|wav|mp3)$/, loader: 'file'},
+      {test: /\.(woff|woff2|ttf|eot|svg|png|jpg|gif|wav|mp3)$/, loader: 'file'},
 
-      // Needed for the css when [bootstrap-webpack](https://github.com/bline/bootstrap-webpack)
-      // loads bootstrap's css.
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=image/svg+xml" },
+      // // Needed for the css when [bootstrap-webpack](https://github.com/bline/bootstrap-webpack)
+      // // loads bootstrap's css.
+      // { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
+      // { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
+      // { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=application/octet-stream" },
+      // { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
+      // { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=image/svg+xml" },
 
     ]
   },
@@ -51,10 +52,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      __DEBUG__: process.env.DEBUG || false, // for redux-devtools
-      'process.env': {
-        'NODE_ENV': process.env.DEBUG ? 'development' : 'production', // This has effect on the react lib size
-      },
+      __DEBUG__: process.env.DEBUG || false                   // for redux-devtools
     }),
     css_to_file ? new ExtractTextPlugin('app.css', {allChunks: true}) : ''
   ],

@@ -10,10 +10,10 @@
   },
   "scripts": {
     "start": "eval $(cat .env) nodemon -w server -w shared index.js",
+    "start-prod": "eval $(cat .env) NODE_ENV=production nodemon -w server -w shared index.js",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "lint": "eslint server shared",
-    "build": "webpack --config webpack-production.config.js --progress --profile --colors",
-    "openshift-start": "forever index.js"
+    "build": "webpack --config webpack-production.config.js --progress --profile --colors"
   },
   "dependencies": {
     "babel": "^5.8.20",
