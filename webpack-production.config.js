@@ -48,8 +48,8 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': process.env.DEBUG ? 'development' : 'production', // This has effect on the react lib size
-      },
+        'NODE_ENV': JSON.stringify(process.env.DEBUG ? 'development' : 'production') // This has effect on the react lib size
+      }
     }),
     css_to_file ? new ExtractTextPlugin('app.css', {allChunks: true}) : ''
   ]
