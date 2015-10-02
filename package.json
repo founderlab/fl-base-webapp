@@ -10,10 +10,10 @@
   },
   "scripts": {
     "start-jsx": "NODE_PATH=$NODE_PATH:./shared node .",
-    "nodemon-start": "eval $(cat .env) nodemon -w server -w shared index.js",
+    "start": "eval $(cat .env) nodemon -w server -w shared index.js",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "lint": "./node_modules/.bin/eslint server shared",
-    "start": "forever index.js"
+    "openshift-start": "forever index.js"
   },
   "dependencies": {
     "babel": "^5.8.20",
