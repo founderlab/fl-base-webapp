@@ -33,6 +33,7 @@ configureAuth({
   facebook: {
     app_id: process.env.FACEBOOK_APP_ID,
     app_secret: process.env.FACEBOOK_APP_SECRET,
+    url: config.url,
   },
 })
 
