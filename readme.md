@@ -6,4 +6,6 @@ Uses React, Redux, BackboneORM, Bootstrap, Webpack.
 
 ###Changelog:
 
+- 0.1.0: Functioning app with auth
 - 0.0.1: Initial version, probably broken in some way
+
