@@ -1,2 +1,4 @@
 import auth from 'fl-auth/client/reducers'
-export default {auth}
+import {reducer as form} from 'redux-form'
+
+export default {auth, form}

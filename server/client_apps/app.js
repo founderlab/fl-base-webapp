@@ -1,6 +1,7 @@
 import React from 'react'
+import {renderToString} from 'react-dom/server'
 import {RoutingContext, match} from 'react-router'
-import createLocation from 'history/lib/createLocation'
+import createMemoryHistory from 'history/lib/createMemoryHistory'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
@@ -12,11 +13,12 @@ import routes from '../../shared/routes'
 
 export default function app(req, res) {
 
-  const location = createLocation(req.url)
+  const history = createMemoryHistory()
+  const location = history.createLocation(req.url)
   const reducer = combineReducers(reducers)
 
   const server_state = {
-    auth: req.user ? fromJS({email: req.user.get('email')}): {}
+    auth: fromJS(req.user ? {email: req.user.get('email')} : {})
   }
   const store = applyMiddleware(thunk, requestMiddleware)(createStore)(reducer, server_state)
 
@@ -27,7 +29,7 @@ export default function app(req, res) {
     }
     if (!render_props) return res.status(404).end('Not found')
 
-    const component_html = React.renderToString(
+    const component_html = renderToString(
       <Provider store={store}>
         <RoutingContext {...render_props} />
       </Provider>

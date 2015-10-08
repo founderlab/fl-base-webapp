@@ -1,10 +1,10 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
-import App from './components/app'
-import Landing from './components/landing'
-import Home from './components/home'
-import Login from './components/login'
-import Register from './components/register'
+import App from './routes/app'
+import Landing from './routes/landing'
+import Home from './routes/home'
+import Login from './routes/login'
+import Register from './routes/register'
 
 function requireAuth(nextState, replaceState) {
   console.log('requireAuth', nextState)

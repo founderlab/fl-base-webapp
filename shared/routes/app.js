@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from './navbar'
+import NavBar from '../components/navbar'
 
 export default class App extends React.Component {
   static propTypes = {
