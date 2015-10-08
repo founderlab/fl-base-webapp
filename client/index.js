@@ -1,5 +1,6 @@
 import React from 'react'
 import {Router} from 'react-router'
+import {render} from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {compose, createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
@@ -35,9 +36,7 @@ const store = finalCreateStore(reducer, initial_state)
 //
 let to_render = (
   <Provider store={store}>
-    {() =>
-      <Router children={routes} history={history} />
-    }
+    <Router children={routes} history={history} />
   </Provider>
 )
 if (__DEBUG__) {
@@ -52,4 +51,4 @@ if (__DEBUG__) {
   )
 }
 
-React.render(to_render, document.getElementById('react-view'))
+render(to_render, document.getElementById('react-view'))

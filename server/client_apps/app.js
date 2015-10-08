@@ -14,28 +14,24 @@ export default function app(req, res) {
 
   const location = createLocation(req.url)
   const reducer = combineReducers(reducers)
-  const server_state = {}
-  if (req.user) {
-    server_state.auth = fromJS({email: req.user.get('email')})
+
+  const server_state = {
+    auth: req.user ? fromJS({email: req.user.get('email')}): {}
   }
   const store = applyMiddleware(thunk, requestMiddleware)(createStore)(reducer, server_state)
 
-  match({routes, location}, (err, redirectLocation, renderProps) => {
+  match({routes, location}, (err, redirect_location, render_props) => {
     if (err) {
       console.error(err)
       return res.status(500).end('Internal server error')
     }
-    if (!renderProps) return res.status(404).end('Not found')
+    if (!render_props) return res.status(404).end('Not found')
 
-
-    const InitialComponent = (
+    const component_html = React.renderToString(
       <Provider store={store}>
-        {() =>
-          <RoutingContext {...renderProps} />
-        }
+        <RoutingContext {...render_props} />
       </Provider>
     )
-    const component_html = React.renderToString(InitialComponent)
 
     const initial_state = store.getState()
 
