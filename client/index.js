@@ -14,7 +14,7 @@ import routes from '../shared/routes'
 import './css/index.styl'
 
 const initial_state = window.__INITIAL_STATE__
-  const reducer = combineReducers(reducers)
+const reducer = combineReducers(reducers)
 const history = createBrowserHistory()
 
 //

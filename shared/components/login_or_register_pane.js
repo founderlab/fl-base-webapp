@@ -1,11 +1,11 @@
 import React from 'react'
-import LoginForm from 'fl-auth/client/components/login/form'
-import RegisterForm from 'fl-auth/client/components/register/form'
+import LoginForm from 'fl-auth/lib/client/components/login/form'
+import RegisterForm from 'fl-auth/lib/client/components/register/form'
 
 export default class LoginOrRegisterPane extends React.Component {
 
   static propTypes = {
-    mode: React.PropTypes.string,
+    mode: React.PropTypes.oneOf(['login','register']),
     login: React.PropTypes.func.isRequired,
     register: React.PropTypes.func.isRequired,
   }

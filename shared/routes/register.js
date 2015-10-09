@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import LoginOrRegisterPane from '../components/login_or_register_pane'
-import AuthActions from 'fl-auth/client/actions'
+import AuthActions from 'fl-auth/lib/client/actions'
 
 @connect((state) => ({auth: state.auth}))
 export default class RegisterPage extends React.Component {

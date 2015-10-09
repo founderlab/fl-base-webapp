@@ -6,7 +6,7 @@ import path from 'path'
 import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import {configure as configureAuth, ensureLoggedIn} from 'fl-auth/server'
+import {configure as configureAuth, ensureLoggedIn} from 'fl-auth'
 
 import config from './config'
 import sessionMiddleware from './session'
