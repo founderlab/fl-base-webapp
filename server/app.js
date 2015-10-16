@@ -6,7 +6,7 @@ import path from 'path'
 import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import {configure as configureAuth, ensureLoggedIn} from 'fl-auth'
+import {configure as configureAuth, ensureLoggedIn, bearer} from 'fl-auth'
 
 import config from './config'
 import sessionMiddleware from './session'
@@ -15,7 +15,8 @@ import initClientApps from './client_apps'
 
 const bind_options = {
   origins: config.origins,
-  auth: [ensureLoggedIn],
+  auth: bearer,
+  // auth: [bearer, ensureLoggedIn],
 }
 const app = bind_options.app = express()
 console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
