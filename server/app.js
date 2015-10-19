@@ -8,6 +8,7 @@ import moment from 'moment'
 import cookieParser from 'cookie-parser'
 import {configure as configureAuth, ensureLoggedIn, bearer} from 'fl-auth'
 
+import allowOrigins from './lib/allow_origins'
 import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
@@ -20,6 +21,9 @@ const bind_options = {
 }
 const app = bind_options.app = express()
 console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
+
+// Allow all for now. Remember to keep cors before auth middleware
+allowOrigins(app, '*', config.origins)
 
 app.set('port', config.port)
 app.use(express.static(path.join(__dirname, '../dist')))

@@ -8,6 +8,7 @@ import {Provider} from 'react-redux'
 import {fromJS} from 'immutable'
 import requestMiddleware from 'redux-request-middleware'
 
+import config from '../config'
 import reducers from '../../shared/reducers'
 import routes from '../../shared/routes'
 
@@ -18,7 +19,8 @@ export default function app(req, res) {
   const reducer = combineReducers(reducers)
 
   const server_state = {
-    auth: fromJS(req.user ? {email: req.user.get('email')} : {})
+    auth: fromJS(req.user ? {email: req.user.get('email')} : {}),
+    config: fromJS(config),
   }
   const store = applyMiddleware(thunk, requestMiddleware)(createStore)(reducer, server_state)
 

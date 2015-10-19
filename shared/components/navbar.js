@@ -1,13 +1,22 @@
 import React from 'react'
-import Login from 'fl-auth/lib/client/components/login'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import AuthActions from 'fl-auth/lib/client/actions'
+import Login from './auth/login'
 
+@connect((state) => ({auth: state.auth, config: state.config}))
 export default class NavBar extends React.Component {
 
   static propTypes = {
-    auth: React.PropTypes.object,
+    auth: React.PropTypes.object.isRequired,
+    config: React.PropTypes.object.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
   }
 
   render() {
+    const {dispatch} = this.props
+    const email = this.props.auth.get('email')
+
     return (
       <nav id="mainNav" className="navbar navbar-default navbar-fixed-top affix">
         <div className="container-fluid">
@@ -29,7 +38,14 @@ export default class NavBar extends React.Component {
                 <a className="page-scroll" href="#about">About</a>
               </li>
               <li>
-                <Login {...this.props} />
+                {email ? (
+                  <span>
+                    {email}
+                    <a href="/logout" className="btn btn-small">logout</a>
+                  </span>
+                ) : (
+                  <Login mode="horizontal" {...bindActionCreators(AuthActions, dispatch)} {...this.props} />
+                )}
               </li>
             </ul>
           </div>
