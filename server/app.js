@@ -6,9 +6,9 @@ import path from 'path'
 import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import {configure as configureAuth, ensureLoggedIn, bearer} from 'fl-auth'
+import {configure as configureAuth, sessionOrToken} from 'fl-auth'
 
-import allowOrigins from './lib/allow_origins'
+import allow from './lib/cors'
 import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
@@ -16,14 +16,13 @@ import initClientApps from './client_apps'
 
 const bind_options = {
   origins: config.origins,
-  auth: bearer,
-  // auth: [bearer, ensureLoggedIn],
+  auth: [sessionOrToken],
 }
+console.log('sessionOrToken', sessionOrToken)
 const app = bind_options.app = express()
 console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 
-// Allow all for now. Remember to keep cors before auth middleware
-allowOrigins(app, '*', config.origins)
+app.use(morgan('dev'))
 
 app.set('port', config.port)
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -31,8 +30,11 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
-app.use(morgan('dev'))
 
+// Allow all for now. Remember to keep cors before auth middleware
+app.use(allow(config.origins))
+
+// Auth after other middleware and before api/client
 configureAuth({
   app,
   facebook: {

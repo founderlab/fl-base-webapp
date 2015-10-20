@@ -21,7 +21,6 @@ if (config.redis_sessions) {
   session_middleware = session({saveUninitialized: true, resave: true, secret: 'AD83NPD0', cookie: {maxAge: config.session_age}, store: session_store})
 
 } else {
-
   // Skip, no redis on openshift yet
   console.log(`Using memory sessions`)
 
