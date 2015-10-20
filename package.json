@@ -41,6 +41,7 @@
     "redux": "^3.0.0",
     "redux-form": "^2.1.0",
     "fl-auth": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth",
+    "fl-auth-react": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-react",
     "redux-request-middleware": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/redux-request-middleware",
     "redux-thunk": "^1.0.0",
     "sessionstore": "^1.2.5",

@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import AuthActions from 'fl-auth/lib/client/actions'
+import {actions as auth_actions} from 'fl-auth-react'
 import Login from './auth/login'
 
 @connect((state) => ({auth: state.auth, config: state.config}))
@@ -44,7 +44,7 @@ export default class NavBar extends React.Component {
                     <a href="/logout" className="btn btn-small">logout</a>
                   </span>
                 ) : (
-                  <Login mode="horizontal" {...bindActionCreators(AuthActions, dispatch)} {...this.props} />
+                  <Login mode="horizontal" {...bindActionCreators(auth_actions, dispatch)} {...this.props} />
                 )}
               </li>
             </ul>

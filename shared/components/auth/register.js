@@ -1,5 +1,5 @@
 import React from 'react'
-import RegisterForm from 'fl-auth/lib/client/components/register_form'
+import RegisterForm from 'fl-auth-react'
 
 export default class Register extends React.Component {
 

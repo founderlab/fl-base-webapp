@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from 'fl-auth/lib/client/components/login_form'
+import LoginForm from 'fl-auth-react'
 
 export default class Login extends React.Component {
 

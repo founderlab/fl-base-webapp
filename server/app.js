@@ -18,13 +18,12 @@ const bind_options = {
   origins: config.origins,
   auth: [sessionOrToken],
 }
-console.log('sessionOrToken', sessionOrToken)
+
 const app = bind_options.app = express()
 console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 
-app.use(morgan('dev'))
-
 app.set('port', config.port)
+app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, '../dist')))
 app.use(cookieParser())
 app.use(bodyParser.json())
