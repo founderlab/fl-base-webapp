@@ -10,7 +10,6 @@ export default class LoginOrRegisterPane extends React.Component {
 
   render() {
     return (
-
       <section id={this.props.mode}>
         <div className="container">
           <div className="row">
@@ -27,8 +26,6 @@ export default class LoginOrRegisterPane extends React.Component {
           </div>
         </div>
       </section>
-
     )
   }
-
 }

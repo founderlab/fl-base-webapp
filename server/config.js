@@ -9,7 +9,6 @@ const config = {
 
   origins: process.env.ORIGINS || '*',
   session_age: 365 * 24 * 60 * 60 * 1000,
-  redis_sessions: false,
 
   email: {
     host: process.env.EMAIL_HOST,

@@ -18,6 +18,9 @@ export function configure(config=default_config) {
   transport = nodemailer.createTransport(smtpTransport(transport_options))
 }
 
+
+// usage:
+// sendMail({to: 'a@b.com', subject: 'testsubject', text: 'testemailtext'}, err => { ... } )
 export default function sendMail(options, callback) {
   if (!transport) configure()
   if (!options.to) return callback(new Error('sendMail: missing options.to'))
