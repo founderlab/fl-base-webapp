@@ -13,7 +13,6 @@ import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
 import initClientApps from './client_apps'
-import sendMail from './lib/email'
 
 const bind_options = {
   origins: config.origins,
@@ -21,7 +20,7 @@ const bind_options = {
 }
 
 const app = bind_options.app = express()
-console.info(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
+console.log(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 
 app.set('port', config.port)
 app.use(morgan('dev'))
