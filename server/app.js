@@ -13,6 +13,7 @@ import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
 import initClientApps from './client_apps'
+import sendMail from './lib/email'
 
 const bind_options = {
   origins: config.origins,
@@ -56,3 +57,6 @@ process.on('SIGTERM', () => {
   console.log(`${config.env}-FounderLab_replaceme stopping on port ${config.port}`)
   process.exit(0)
 })
+
+
+sendMail({to: 'gwilym.humphreys@gmail.com', subject: 'testsub', text: 'testemailtext'}, (err) => console.log('sent', err))
