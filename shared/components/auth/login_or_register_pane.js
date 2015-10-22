@@ -1,14 +1,15 @@
 import React from 'react'
-import Login from './login'
-import Register from './register'
+import {LoginForm, RegisterForm} from 'fl-auth-react'
 
 export default class LoginOrRegisterPane extends React.Component {
 
   static propTypes = {
     mode: React.PropTypes.oneOf(['login', 'register']),
+    onSubmit: React.PropTypes.func.isRequired,
   }
 
   render() {
+    console.log('this.props', this.props)
     return (
       <section id={this.props.mode}>
         <div className="container">
@@ -17,9 +18,9 @@ export default class LoginOrRegisterPane extends React.Component {
               <h2 className="text-center">{this.props.mode}</h2>
 
               {this.props.mode === 'register' ? (
-                <Register {...this.props} />
+                <RegisterForm {...this.props} />
               ) : (
-                <Login {...this.props} />
+                <LoginForm {...this.props} />
               )}
 
             </div>

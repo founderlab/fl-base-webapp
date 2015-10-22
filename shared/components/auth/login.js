@@ -4,17 +4,12 @@ import {LoginForm} from 'fl-auth-react'
 export default class Login extends React.Component {
 
   static propTypes = {
-    login: React.PropTypes.func.isRequired,
-    config: React.PropTypes.object.isRequired,
-  }
-
-  onLogin = data => {
-    this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password)
+    onLogin: React.PropTypes.func.isRequired,
   }
 
   render() {
     return (
-      <LoginForm onSubmit={this.onLogin} {...this.props} />
+      <LoginForm onSubmit={this.props.onLogin} {...this.props} />
     )
   }
 

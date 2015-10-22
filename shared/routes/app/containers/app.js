@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/navbar'
+import NavBar from './navbar'
 
 export default class App extends React.Component {
 

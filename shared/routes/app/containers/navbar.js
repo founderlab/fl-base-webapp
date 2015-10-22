@@ -1,8 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {actions as auth_actions} from 'fl-auth-react'
-import Login from './auth/login'
+import {actions as auth_actions, LoginForm} from 'fl-auth-react'
 
 @connect((state) => ({auth: state.auth, config: state.config}))
 export default class NavBar extends React.Component {
@@ -13,8 +11,11 @@ export default class NavBar extends React.Component {
     dispatch: React.PropTypes.func.isRequired,
   }
 
+  onLogin = data => {
+    this.props.dispatch(auth_actions.login(`${this.props.config.get('url')}/login`, data.email, data.password))
+  }
+
   render() {
-    const {dispatch} = this.props
     const email = this.props.auth.get('email')
 
     return (
@@ -44,7 +45,7 @@ export default class NavBar extends React.Component {
                     <a href="/logout" className="btn btn-small">logout</a>
                   </span>
                 ) : (
-                  <Login mode="horizontal" {...bindActionCreators(auth_actions, dispatch)} {...this.props} />
+                  <LoginForm onSubmit={this.onLogin} {...this.props} />
                 )}
               </li>
             </ul>
