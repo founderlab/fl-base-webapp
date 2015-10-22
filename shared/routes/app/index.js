@@ -1,18 +1,3 @@
-// import React from 'react'
-// import {Route, IndexRoute} from 'react-router'
-// import App from './routes/app'
-// import Landing from './routes/landing'
-// import Home from './routes/home'
-// import Login from './routes/login'
-// import Register from './routes/register'
-
-// function requireAuth(nextState, replaceState) {
-//   console.log('requireAuth', nextState)
-  // if (!Auth.loggedIn()) {
-  //   console.log('requireAuth fail')
-  //   replaceState({nextPathname: nextState.location.pathname}, '/login')
-  // }
-// }
 class AppRoute {
   constructor() {
     this.path = '/'
@@ -27,10 +12,10 @@ class AppRoute {
   }
 
   getIndexRoute(location, callback) {
-    callback(null, require('./components/landing'))
+    callback(null, {component: require('./components/landing')})
   }
 
-  getComponents(location, callback) {
+  getComponent(location, callback) {
     callback(null, require('./containers/app'))
   }
 }

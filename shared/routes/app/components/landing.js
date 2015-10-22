@@ -3,6 +3,7 @@ import React from 'react'
 export default class Landing extends React.Component {
 
   render() {
+      console.log('making landing')
     return (
       <div className="holds-max-height">
         <header>
