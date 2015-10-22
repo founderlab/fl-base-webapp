@@ -18,7 +18,7 @@ export default class RegisterContainer extends React.Component {
 
   render() {
     return (
-      <Register onSubmit={this.onRegister} />
+      <Register auth={this.props.auth} onSubmit={this.onRegister} />
     )
   }
 

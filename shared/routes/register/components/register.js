@@ -8,7 +8,6 @@ export default class Register extends React.Component {
   }
 
   render() {
-    console.log('login this.props', this.props)
     return (
       <section id="login">
         <div className="container">

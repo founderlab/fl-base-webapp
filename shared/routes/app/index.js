@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 // import {Route, IndexRoute} from 'react-router'
 // import App from './routes/app'
 // import Landing from './routes/landing'
@@ -13,9 +13,8 @@ import React from 'react'
   //   replaceState({nextPathname: nextState.location.pathname}, '/login')
   // }
 // }
-export default class AppRoute extends React.Component {
+class AppRoute {
   constructor() {
-    super()
     this.path = '/'
   }
 
@@ -36,6 +35,7 @@ export default class AppRoute extends React.Component {
   }
 }
 
+export default new AppRoute()
 
   // <Route name="app" component={App} path="/">
   //   <IndexRoute component={Landing} />

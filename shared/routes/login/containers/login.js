@@ -18,7 +18,7 @@ export default class LoginContainer extends React.Component {
 
   render() {
     return (
-      <Login onSubmit={this.onLogin} />
+      <Login auth={this.props.auth} onSubmit={this.onLogin} />
     )
   }
 

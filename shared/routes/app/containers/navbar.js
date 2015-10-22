@@ -45,7 +45,7 @@ export default class NavBar extends React.Component {
                     <a href="/logout" className="btn btn-small">logout</a>
                   </span>
                 ) : (
-                  <LoginForm onSubmit={this.onLogin} {...this.props} />
+                  <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
                 )}
               </li>
             </ul>
