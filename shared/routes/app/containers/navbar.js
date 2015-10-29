@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {actions as auth_actions, LoginForm} from 'fl-auth-react'
+import {actions as auth_actions} from 'fl-auth-redux'
+import {LoginForm} from 'fl-auth-react'
 
 @connect((state) => ({auth: state.auth, config: state.config}))
 export default class NavBar extends React.Component {

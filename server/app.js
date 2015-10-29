@@ -6,7 +6,7 @@ import path from 'path'
 import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import {configure as configureAuth, sessionOrToken} from 'fl-auth'
+import {configure as configureAuth, sessionOrToken} from 'fl-auth-server'
 
 import allow from './lib/cors'
 import config from './config'

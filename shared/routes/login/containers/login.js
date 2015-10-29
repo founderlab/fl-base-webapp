@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {actions as auth_actions} from 'fl-auth-react'
+import {actions as auth_actions} from 'fl-auth-redux'
 import Login from '../components/login'
 
 @connect((state) => ({auth: state.auth, config: state.config}))
