@@ -1,19 +1,20 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin')
 
 // Extract text plugin is not working for some reason
 var css_to_file = !process.env.BUILD
 
 module.exports = {
-  entry:  [
-    'webpack-dev-server/client?http://localhost:8080/',
-    'webpack/hot/only-dev-server',
-    './client/index'
-  ],
+  entry: {
+    dev: 'webpack-dev-server/client?http://localhost:8080/',
+    hot: 'webpack/hot/only-dev-server',
+    bundle: './client/index',
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   resolve: {
     modulesDirectories: ['node_modules'],
@@ -48,6 +49,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new CommonsChunkPlugin('commons.chunk.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({

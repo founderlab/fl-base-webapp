@@ -8,6 +8,7 @@ import moment from 'moment'
 import cookieParser from 'cookie-parser'
 import {configure as configureAuth, sessionOrToken} from 'fl-auth-server'
 
+import {sendResetEmail} from './lib/email'
 import allow from './lib/cors'
 import config from './config'
 import sessionMiddleware from './session'
@@ -36,6 +37,7 @@ app.use(allow(config.origins))
 // Auth after other middleware and before api/client
 configureAuth({
   app,
+  sendResetEmail,
   facebook: {
     app_id: process.env.FACEBOOK_APP_ID,
     app_secret: process.env.FACEBOOK_APP_SECRET,

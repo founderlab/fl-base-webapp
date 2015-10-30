@@ -10,7 +10,6 @@ import {fromJS} from 'immutable'
 
 import reducers from '../shared/reducers'
 import routes from '../shared/routes'
-
 import './css/index.styl'
 
 const initial_state = window.__INITIAL_STATE__

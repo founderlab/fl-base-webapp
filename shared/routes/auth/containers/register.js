@@ -13,7 +13,9 @@ export default class RegisterContainer extends React.Component {
   }
 
   onRegister = data => {
-    this.props.dispatch(auth_actions.register(`${this.props.config.get('url')}/register`, data.email, data.password))
+    this.props.dispatch(auth_actions.register(`${this.props.config.get('url')}/register`, data.email, data.password, (err) => {
+      if (!err) window.location()
+    }))
   }
 
   render() {

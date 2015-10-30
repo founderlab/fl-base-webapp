@@ -15,6 +15,10 @@ export default class UsersController extends RestController {
       model_type: require('fl-auth-server/lib/models/user'),
       route: '/api/users',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
+      whitelist: {
+        index: ['id', 'email'],
+        show: ['id', 'email'],
+      },
     }, options))
   }
 }

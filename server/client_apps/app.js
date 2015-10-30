@@ -52,6 +52,7 @@ export default function app(req, res) {
         </head>
         <body id="app">
           <div id="react-view">${component_html}</div>
+          <script type="application/javascript" src="/commons.chunk.js"></script>
           <script type="application/javascript" src="/bundle.js"></script>
         </body>
       </html>
