@@ -28,6 +28,7 @@ export default (
   <Route>
     <Route getComponents={(location, callback) => callback(null, require('./containers/login'))} path="login" />
 
+    <Route component={require('./containers/reset_request')} path="reset_request" />
     <Route component={require('./containers/reset')} path="reset" />
     <Route component={require('./containers/register')} path="register" />
   </Route>

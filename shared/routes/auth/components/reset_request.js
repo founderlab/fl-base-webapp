@@ -1,7 +1,7 @@
 import React from 'react'
-import {ResetForm} from 'fl-auth-react'
+import {ResetRequestForm} from 'fl-auth-react'
 
-export default class Reset extends React.Component {
+export default class ResetRequest extends React.Component {
 
   static propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
@@ -13,8 +13,8 @@ export default class Reset extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-lg-offset-3">
-              <h2 className="text-center">Enter a new password</h2>
-                <ResetForm {...this.props} />
+              <h2 className="text-center">Reset your password</h2>
+                <ResetRequestForm {...this.props} />
             </div>
           </div>
         </div>

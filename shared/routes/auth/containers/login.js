@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {actions as auth_actions} from 'fl-auth-redux'
 import Login from '../components/login'
 
-@connect((state) => ({auth: state.auth, config: state.config}))
+@connect(state => ({auth: state.auth, config: state.config}))
 export default class LoginContainer extends React.Component {
 
   static propTypes = {

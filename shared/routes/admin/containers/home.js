@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux'
 
 import AdminComponent from 'fl-admin'
 
-@connect((state) => ({auth: state.auth}))
+@connect(state => ({auth: state.auth}))
 export default class Admin extends React.Component {
 
   static propTypes = {

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {actions as auth_actions} from 'fl-auth-redux'
 import Register from '../components/register'
 
-@connect((state) => ({auth: state.auth, config: state.config}))
+@connect(state => ({auth: state.auth, config: state.config}))
 export default class RegisterContainer extends React.Component {
 
   static propTypes = {

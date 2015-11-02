@@ -21,6 +21,7 @@ export default function app(req, res) {
   const server_state = {
     auth: fromJS(req.user ? {email: req.user.get('email')} : {}),
     config: fromJS(config),
+    query: fromJS(req.query),
   }
   const store = applyMiddleware(thunk, requestMiddleware)(createStore)(reducer, server_state)
 

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer'
 import smtpTransport from 'nodemailer-smtp-transport'
 import app_config from '../config'
+import querystring from 'querystring'
 
 let transport = null
 
@@ -31,7 +32,8 @@ export default function sendMail(options, callback) {
 
 export function sendResetEmail(user, callback) {
   const email = user.get('email')
-  const message = `http://localhost:8080/reset?reset_token=${user.get('reset_token')}`
+  const query = querystring.stringify({email: user.get('email'), reset_token: user.get('reset_token')})
+  const message = `http://localhost:8080/reset?${query}`
   console.log('Sending reset email', email, user.get('reset_token'), message)
   sendMail({to: email, subject: `Password reset for ${app_config.url}`, text: message}, callback)
 }
