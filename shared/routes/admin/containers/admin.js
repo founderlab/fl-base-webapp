@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import AdminComponent from 'fl-admin'
+// import AdminComponent from 'fl-admin'
 
 @connect(state => ({auth: state.auth}))
 export default class Admin extends React.Component {

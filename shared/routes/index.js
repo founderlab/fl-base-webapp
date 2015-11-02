@@ -9,6 +9,7 @@ export default (
     <IndexRoute component={require('./app/components/landing')} />
 
     {require('./auth')}
+    {require('./admin')}
 
     <Route component={require('./home/containers/home')} path="home" />
 

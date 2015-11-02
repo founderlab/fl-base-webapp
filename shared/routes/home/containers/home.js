@@ -6,7 +6,6 @@ import {bindActionCreators} from 'redux'
 export default class Home extends React.Component {
 
   static propTypes = {
-    children: React.PropTypes.node.isRequired,
     auth: React.PropTypes.object.isRequired,
     dispatch: React.PropTypes.func.isRequired,
   }
@@ -17,7 +16,18 @@ export default class Home extends React.Component {
 
     return (
       <div id="home">
-        'home'
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="/admin">admin</a>
       </div>
     )
   }
