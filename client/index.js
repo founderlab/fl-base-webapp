@@ -13,7 +13,6 @@ import './css/index.styl'
 const initial_state = window.__INITIAL_STATE__
 const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initial_state)
 
-//
 let to_render = (
   <Provider store={store} key="provider">
     <ReduxRouter routes={getRoutes(store)} />
@@ -30,9 +29,5 @@ if (__DEBUG__) {
     </div>
   )
 }
-
-console.log('--------------------------')
-console.log(to_render)
-console.log('--------------------------')
 
 render(to_render, document.getElementById('react-view'))
