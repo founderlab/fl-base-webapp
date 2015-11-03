@@ -4,14 +4,35 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 
-export default (
-  <Route name="app" component={require('./app/containers/app')} path="/">
-    <IndexRoute component={require('./app/components/landing')} />
+export default function getRoutes(store) {
 
-    {require('./auth')}
-    {require('./admin')}
+  // function requireLogin(nextState, replaceState, cb) {
+  //   function checkAuth() {
+  //     const { auth: { user }} = store.getState()
+  //     if (!user) {
+  //       // oops, not logged in, so can't be here!
+  //       replaceState(null, '/')
+  //     }
+  //     cb()
+  //   }
 
-    <Route component={require('./home/containers/home')} path="home" />
+  //   if (!isAuthLoaded(store.getState())) {
+  //     store.dispatch(loadAuth()).then(checkAuth)
+  //   }
+  //   else {
+  //     checkAuth()
+  //   }
+  // }
 
-  </Route>
-)
+  return (
+    <Route name="app" component={require('./app/containers/app')} path="/">
+      <IndexRoute component={require('./app/components/landing')} />
+
+      {require('./auth')}
+      {require('./admin')}
+
+      <Route component={require('./home/containers/home')} path="home" />
+
+    </Route>
+  )
+}

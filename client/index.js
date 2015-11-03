@@ -1,22 +1,21 @@
 import React from 'react'
-import {Router} from 'react-router'
+import {ReduxRouter} from 'redux-router'
 import {render} from 'react-dom'
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import createHistory from 'history/lib/createBrowserHistory'
 import {Provider} from 'react-redux'
+import {reduxReactRouter} from 'redux-router'
 
-import routes from '../shared/routes'
-import createStore from '../shared/lib/create_store'
+import getRoutes from '../shared/routes'
+import createStore from '../shared/create_store'
 import './css/index.styl'
 
-const history = createBrowserHistory()
-
 const initial_state = window.__INITIAL_STATE__
-const store = createStore(initial_state)
+const store = createStore(reduxReactRouter, getRoutes, createHistory, initial_state)
 
 //
 let to_render = (
-  <Provider store={store}>
-    <Router children={routes} history={history} />
+  <Provider store={store} key="provider">
+    <ReduxRouter />
   </Provider>
 )
 if (__DEBUG__) {

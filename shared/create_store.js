@@ -1,31 +1,37 @@
-import {createStore as _createStore, compose, combineReducers, applyMiddleware} from 'redux'
+import _ from 'lodash'
+import {createStore as _createStore, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import requestMiddleware from 'redux-request-middleware'
 import {fromJS} from 'immutable'
-import reducers from '../reducers'
+
+import reducer from './reducer'
 
 const CLIENT_DEVTOOLS = false
+const MUTABLE_KEYS = ['router']
 
-export default function createStore(initial_state) {
-
-  const reducer = combineReducers(reducers)
+export default function createStore(reduxReactRouter, getRoutes, createHistory, initial_state) {
 
   //
   let finalCreateStore
   const middlewares = applyMiddleware(thunk, requestMiddleware)
+
   if (CLIENT_DEVTOOLS) {
     const {devTools, persistState} = require('redux-devtools')
     finalCreateStore = compose(
       middlewares,
+      reduxReactRouter({getRoutes, createHistory}),
       devTools(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)) // Lets you write ?debug_session=<name> in address bar to persist debug sessions
     )(_createStore)
   }
   else {
-    finalCreateStore = middlewares(_createStore)
+    finalCreateStore = compose(
+      middlewares,
+      reduxReactRouter({getRoutes, createHistory})
+    )(_createStore)
   }
 
-  Object.keys(initial_state).forEach(key => {initial_state[key] = fromJS(initial_state[key])})
+  Object.keys(initial_state).forEach(key => {if (!_.contains(MUTABLE_KEYS, key)) initial_state[key] = fromJS(initial_state[key])})
   const store = finalCreateStore(reducer, initial_state)
 
   return store
