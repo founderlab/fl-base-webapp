@@ -2,28 +2,75 @@ import React from 'react'
 import {renderToString} from 'react-dom/server'
 import {RoutingContext, match} from 'react-router'
 import createMemoryHistory from 'history/lib/createMemoryHistory'
-import {createStore, combineReducers, applyMiddleware} from 'redux'
-import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
-import {fromJS} from 'immutable'
-import requestMiddleware from 'redux-request-middleware'
 
 import config from '../config'
-import reducers from '../../shared/reducers'
+import createStore from '../../shared/lib/create_store'
 import routes from '../../shared/routes'
 
 export default function app(req, res) {
 
   const history = createMemoryHistory()
   const location = history.createLocation(req.url)
-  const reducer = combineReducers(reducers)
 
   const server_state = {
-    auth: fromJS(req.user ? {email: req.user.get('email')} : {}),
-    config: fromJS(config),
-    query: fromJS(req.query),
+    config,
+    auth: req.user ? {email: req.user.get('email')} : {},
+    query: req.query,
   }
-  const store = applyMiddleware(thunk, requestMiddleware)(createStore)(reducer, server_state)
+
+  const store = createStore(server_state)
+
+
+  // store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
+  //   if (redirectLocation) {
+  //     res.redirect(redirectLocation.pathname + redirectLocation.search);
+  //   } else if (error) {
+  //     console.error('ROUTER ERROR:', pretty.render(error));
+  //     res.status(500);
+  //     hydrateOnClient();
+  //   } else if (!routerState) {
+  //     res.status(500);
+  //     hydrateOnClient();
+  //   } else {
+  //     // Workaround redux-router query string issue:
+  //     // https://github.com/rackt/redux-router/issues/106
+  //     if (routerState.location.search && !routerState.location.query) {
+  //       routerState.location.query = qs.parse(routerState.location.search);
+  //     }
+
+  //     store.getState().router.then(() => {
+  //       const component = (
+  //         <Provider store={store} key="provider">
+  //           <ReduxRouter/>
+  //         </Provider>
+  //       );
+
+  //       const status = getStatusFromRoutes(routerState.routes);
+  //       if (status) {
+  //         res.status(status);
+  //       }
+  //       res.send('<!doctype html>\n' +
+  //         ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+  //     }).catch((err) => {
+  //       console.error('DATA FETCHING ERROR:', pretty.render(err));
+  //       res.status(500);
+  //       hydrateOnClient();
+  //     });
+  //   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   match({routes, location}, (err, redirect_location, render_props) => {
     if (err) {
