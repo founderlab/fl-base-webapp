@@ -1,15 +1,16 @@
-import React from 'react'
+import _ from 'lodash'
+import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {actions as auth_actions} from 'fl-auth-redux'
 import Register from '../components/register'
 
-@connect(state => ({auth: state.auth, config: state.config}))
-export default class RegisterContainer extends React.Component {
+@connect(state => _.pick(state, 'auth', 'config'))
+export default class RegisterContainer extends Component {
 
   static propTypes = {
-    auth: React.PropTypes.object,
-    dispatch: React.PropTypes.func,
-    config: React.PropTypes.object.isRequired,
+    auth: PropTypes.object,
+    dispatch: PropTypes.func,
+    config: PropTypes.object.isRequired,
   }
 
   onRegister = data => {

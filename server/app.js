@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
 import {configure as configureAuth, sessionOrToken} from 'fl-auth-server'
+import favicon from 'serve-favicon'
 
 import {sendResetEmail} from './lib/email'
 import allow from './lib/cors'
@@ -45,12 +46,14 @@ configureAuth({
   },
 })
 
+app.all('/ping', (req, res) => res.status(200).end())
+app.all('/time', (req, res) => res.json(moment.utc().toDate()))
+app.use('/public', express.static(path.join(__dirname, '../client/public')))
+app.use(favicon(path.join(__dirname, '../client/public/favicon.ico')))
+
 initApi(bind_options)
 // React app last; handles all other routes
 initClientApps(bind_options)
-
-app.all('/ping', (req, res) => res.status(200).end())
-app.all('/time', (req, res) => res.json(moment.utc().toDate()))
 
 // start the server
 http.createServer(app).listen(config.port, config.ip, () => console.log(`${config.env}-FounderLab_replaceme listening on port ${config.port} and url: ${config.url}`))

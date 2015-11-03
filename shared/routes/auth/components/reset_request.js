@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import {ResetRequestForm} from 'fl-auth-react'
 
-export default class ResetRequest extends React.Component {
+export default class ResetRequest extends Component {
 
   static propTypes = {
-    onSubmit: React.PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   }
 
   render() {

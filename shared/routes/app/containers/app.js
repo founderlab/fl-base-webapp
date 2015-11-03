@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import NavBar from './navbar'
 
-export default class App extends React.Component {
+export default class App extends Component {
 
   static propTypes = {
-    // children: React.PropTypes.node.isRequired,
+    children: PropTypes.node,
   }
 
   render() {

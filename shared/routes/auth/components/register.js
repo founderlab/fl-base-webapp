@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import {RegisterForm} from 'fl-auth-react'
 
-export default class Register extends React.Component {
+export default class Register extends Component {
 
   static propTypes = {
-    onSubmit: React.PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   }
 
   render() {

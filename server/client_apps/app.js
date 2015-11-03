@@ -11,7 +11,7 @@ import getRoutes from '../../shared/routes'
 
 export default function app(req, res) {
 
-  // const location = history.createLocation(req.url)
+  const app_name = 'app'
 
   const server_state = {
     config,
@@ -56,14 +56,10 @@ export default function app(req, res) {
         <body id="app">
           <div id="react-view">${component_html}</div>
           <script type="application/javascript" src="/commons.chunk.js"></script>
-          <script type="application/javascript" src="/bundle.js"></script>
+          <script type="application/javascript" src="/${app_name}.js"></script>
         </body>
       </html>
     `
-
-console.log('--------------------------')
-console.log(component_html)
-console.log('--------------------------')
 
     res.type('html').send(HTML)
   }))

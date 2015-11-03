@@ -10,7 +10,8 @@ module.exports = {
   entry: {
     dev: 'webpack-dev-server/client?http://localhost:8080/',
     hot: 'webpack/hot/only-dev-server',
-    bundle: './client/index',
+    app: './client/app',
+    admin: './client/admin',
   },
   output: {
     path: path.join(__dirname, 'dist'),

@@ -1,16 +1,16 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 // import AdminComponent from 'fl-admin'
 
-@connect(state => ({auth: state.auth}))
-export default class Admin extends React.Component {
+@connect(state => _.pick(state, 'auth', 'config'))
+export default class Admin extends Component {
 
   static propTypes = {
-    children: React.PropTypes.node.isRequired,
-    auth: React.PropTypes.object.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+    auth: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
   }
 
   render() {

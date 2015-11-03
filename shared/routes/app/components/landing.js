@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 
-export default class Landing extends React.Component {
+export default class Landing extends Component {
 
   render() {
-      console.log('making landing')
     return (
       <div className="holds-max-height">
         <header>

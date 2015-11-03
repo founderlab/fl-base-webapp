@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, {PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {actions as auth_actions} from 'fl-auth-redux'
 import ResetRequest from '../components/reset_request'
@@ -8,7 +8,6 @@ import ResetRequest from '../components/reset_request'
 export default class ResetRequestContainer extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     config: PropTypes.object.isRequired,
     reset: PropTypes.func.isRequired,

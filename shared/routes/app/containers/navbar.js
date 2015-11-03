@@ -1,19 +1,22 @@
-import React from 'react'
+import _ from 'lodash'
+import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {actions as auth_actions} from 'fl-auth-redux'
 import {LoginForm} from 'fl-auth-react'
 
-@connect(state => ({auth: state.auth, config: state.config}))
-export default class NavBar extends React.Component {
+@connect(state => _.pick(state, 'auth', 'config'), {login: auth_actions.login})
+export default class NavBar extends Component {
 
   static propTypes = {
-    auth: React.PropTypes.object.isRequired,
-    config: React.PropTypes.object.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    config: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
   }
 
   onLogin = data => {
-    this.props.dispatch(auth_actions.login(`${this.props.config.get('url')}/login`, data.email, data.password))
+    this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password, (err) => {
+      if (!err) console.log('reddd')
+    })
   }
 
   render() {

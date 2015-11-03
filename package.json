@@ -49,6 +49,7 @@
     "redux-request-middleware": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/redux-request-middleware",
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
+    "serve-favicon": "^2.3.0",
     "sessionstore": "^1.2.5",
     "superagent": "0.18.0"
   },
