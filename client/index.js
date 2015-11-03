@@ -7,15 +7,16 @@ import {reduxReactRouter} from 'redux-router'
 
 import getRoutes from '../shared/routes'
 import createStore from '../shared/create_store'
+import patchRouteEntry from '../shared/lib/patch_route_entry'
 import './css/index.styl'
 
 const initial_state = window.__INITIAL_STATE__
-const store = createStore(reduxReactRouter, getRoutes, createHistory, initial_state)
+const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initial_state)
 
 //
 let to_render = (
   <Provider store={store} key="provider">
-    <ReduxRouter />
+    <ReduxRouter routes={getRoutes(store)} />
   </Provider>
 )
 if (__DEBUG__) {
@@ -29,5 +30,9 @@ if (__DEBUG__) {
     </div>
   )
 }
+
+console.log('--------------------------')
+console.log(to_render)
+console.log('--------------------------')
 
 render(to_render, document.getElementById('react-view'))

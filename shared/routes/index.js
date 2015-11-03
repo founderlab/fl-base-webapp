@@ -29,10 +29,10 @@ export default function getRoutes(store) {
       <IndexRoute component={require('./app/components/landing')} />
 
       {require('./auth')}
-      {require('./admin')}
 
       <Route component={require('./home/containers/home')} path="home" />
 
     </Route>
   )
 }
+      // {require('./admin')}

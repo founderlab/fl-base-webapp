@@ -26,7 +26,7 @@ import {Route} from 'react-router'
 
 export default (
   <Route>
-    <Route getComponents={(location, callback) => callback(null, require('./containers/login'))} path="login" />
+    <Route component={require('./containers/login')} path="login" />
 
     <Route component={require('./containers/reset_request')} path="reset_request" />
     <Route component={require('./containers/reset')} path="reset" />

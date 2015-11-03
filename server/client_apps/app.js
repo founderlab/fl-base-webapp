@@ -61,6 +61,10 @@ export default function app(req, res) {
       </html>
     `
 
+console.log('--------------------------')
+console.log(component_html)
+console.log('--------------------------')
+
     res.type('html').send(HTML)
   }))
 }
