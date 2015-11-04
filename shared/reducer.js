@@ -9,5 +9,4 @@ export default combineReducers({
   form,
   router,
   config: (state=new Immutable.Map()) => state,
-  query: (state=new Immutable.Map()) => state,
 })

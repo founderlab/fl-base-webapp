@@ -41,16 +41,17 @@ module.exports = {
 
       // // Needed for the css when [bootstrap-webpack](https://github.com/bline/bootstrap-webpack)
       // // loads bootstrap's css.
-      // { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
-      // { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
-      // { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=application/octet-stream" },
-      // { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
-      // { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=image/svg+xml" },
+      // { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: 'url?limit=10000&mimetype=application/font-woff' },
+      // { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: 'url?limit=10000&mimetype=application/font-woff' },
+      // { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: 'url?limit=10000&mimetype=application/octet-stream' },
+      // { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: 'file' },
+      // { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: 'url?limit=10000&mimetype=image/svg+xml' },
 
     ]
   },
   plugins: [
-    new CommonsChunkPlugin('commons.chunk.js'),
+    new CommonsChunkPlugin('admin-commons.js', ['admin']),
+    new CommonsChunkPlugin('commons.js', ['app', 'admin-commons.js']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({

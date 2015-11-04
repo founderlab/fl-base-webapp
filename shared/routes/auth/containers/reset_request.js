@@ -1,25 +1,26 @@
 import _ from 'lodash'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {actions as auth_actions} from 'fl-auth-redux'
+import {resetRequest} from 'fl-auth-redux'
 import ResetRequest from '../components/reset_request'
 
-@connect(state => _.pick(state, 'auth', 'config'), {reset: auth_actions.reset})
+@connect(state => _.extend(_.pick(state, 'auth', 'config'), {email: state.router.location.query.email}), {resetRequest})
 export default class ResetRequestContainer extends Component {
 
   static propTypes = {
+    email: PropTypes.string,
     auth: PropTypes.object.isRequired,
     config: PropTypes.object.isRequired,
-    reset: PropTypes.func.isRequired,
+    resetRequest: PropTypes.func.isRequired,
   }
 
   onReset = data => {
-    this.props.reset(`${this.props.config.get('url')}/reset_request`, data.email)
+    this.props.resetRequest(`${this.props.config.get('url')}/reset_request`, data.email)
   }
 
   render() {
     return (
-      <ResetRequest auth={this.props.auth} onSubmit={this.onReset}/>
+      <ResetRequest auth={this.props.auth} email={this.props.email} onSubmit={this.onReset}/>
     )
   }
 

@@ -11,12 +11,10 @@ import getRoutes from '../../shared/routes'
 
 export default function app(req, res) {
 
-  const app_name = 'app'
-
+  const scripts = ['commons.js', 'app.js']
   const server_state = {
     config,
     auth: req.user ? {email: req.user.get('email')} : {},
-    query: req.query,
   }
   const store = createStore(reduxReactRouter, getRoutes, createHistory, server_state)
 
@@ -29,11 +27,8 @@ export default function app(req, res) {
 
     if (redirect_location) return res.redirect(redirect_location.pathname + redirect_location.search)
 
-
-          //todo: is this needed?
-    // Workaround redux-router query string issue:
     // https://github.com/rackt/redux-router/issues/106
-    // if (router_state.location.search && !router_state.location.query) router_state.location.query = qs.parse(router_state.location.search)
+    router_state.location.query = req.query
 
     const component_html = renderToString(
       <Provider store={store} key="provider">
@@ -43,6 +38,8 @@ export default function app(req, res) {
     const initial_state = store.getState()
 
           // <link rel="stylesheet" media="all" href="/bootstrap/css/bootstrap.css">
+    const script_tags = scripts.map(script => `<script type="application/javascript" src="/${script}"></script>`).join('\n')
+
     const HTML = `
       <!DOCTYPE html>
       <html>
@@ -55,8 +52,7 @@ export default function app(req, res) {
         </head>
         <body id="app">
           <div id="react-view">${component_html}</div>
-          <script type="application/javascript" src="/commons.chunk.js"></script>
-          <script type="application/javascript" src="/${app_name}.js"></script>
+          ${script_tags}
         </body>
       </html>
     `
