@@ -1,6 +1,6 @@
-
 import _ from 'lodash'
 import inflection from 'inflection'
+import {combineReducers} from 'redux'
 
 import name from './lib/name'
 import createActions from './create_actions'
@@ -11,8 +11,8 @@ const actions = {}
 const reducers = {}
 let reducer
 
-function initModel(model) {
-  const model_redux = {actions: createActions(model), reducer: createReducer(model)}
+function initModel(model_class) {
+  const model_redux = {actions: createActions(model_class), reducer: createReducer(model_class)}
   const us_name = inflection.underscore(name(model_class))
   actions[us_name] = model_redux.actions
   reducers[us_name] = model_redux.reducers
