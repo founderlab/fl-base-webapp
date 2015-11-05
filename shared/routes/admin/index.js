@@ -1,38 +1,34 @@
 
-// class AdminRoute {
-//   constructor() {
-//     this.path = 'admin'
-//   }
+import _ from 'lodash'
+import inflection from 'inflection'
 
-//   getComponents(location, callback) {
-//     console.log('admin requested')
-//     require.ensure(['./containers/admin'], (require) => {
-//       console.log('admin loaded')
-//       const Admin = require('./containers/admin')
-//       console.log(Admin)
-//       callback(null, require('./containers/admin'))
-//     })
-//   }
-// }
+import name from './lib/name'
+import createActions from './create_actions'
+import createReducer from './create_reducer'
 
-// export default new AdminRoute()
+const models = []
+const actions = {}
+const reducers = {}
+let reducer
 
-import React from 'react'
-import {Route} from 'react-router'
+function initModel(model) {
+  const model_redux = {actions: createActions(model), reducer: createReducer(model)}
+  const us_name = inflection.underscore(name(model_class))
+  actions[us_name] = model_redux.actions
+  reducers[us_name] = model_redux.reducers
+  return model_redux
+}
 
-// require.ensure = require.ensure || ((d, c) => c(require))
-if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
+export default function configure(options) {
 
-export default (
-  <Route
-    path="admin"
-    getComponents={(location, callback) => {
-      console.log('admin requested')
-      require.ensure(['./containers/admin'], (require) => {
-        console.log('admin loaded')
-        const Admin = require('./containers/admin')
-        console.log(Admin)
-        callback(null, require('./containers/admin'))
-      })
-    }} />
-)
+  _.forEach(options.models, (model_class) => {
+    initModel(model_class)
+  })
+
+  reducer = combineReducers(reducers)
+
+  console.log('actions, reducers')
+  console.log(actions, reducers)
+}
+
+export {actions, reducer, models}

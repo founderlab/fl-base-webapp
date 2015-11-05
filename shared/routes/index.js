@@ -1,38 +1,39 @@
-// import AppRoute from './app'
-// export default AppRoute
-
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
+import Admin from './admin'
+import AuthRoutes from './auth/routes'
 
 export default function getRoutes(store) {
 
-  // function requireLogin(nextState, replaceState, cb) {
-  //   function checkAuth() {
-  //     const { auth: { user }} = store.getState()
-  //     if (!user) {
-  //       // oops, not logged in, so can't be here!
-  //       replaceState(null, '/')
-  //     }
-  //     cb()
-  //   }
+  function requireAdmin(nextState, replaceState, callback) {
+    const {auth} = store.getState()
+    if (!auth.get('email') || !auth.get('admin')) {
+      console.log('Not an admin:', auth.get('email'), auth.get('admin'))
+      // replaceState(null, '/')
+    }
+    callback()
+  }
 
-  //   if (!isAuthLoaded(store.getState())) {
-  //     store.dispatch(loadAuth()).then(checkAuth)
-  //   }
-  //   else {
-  //     checkAuth()
-  //   }
-  // }
+  function requireLogin(nextState, replaceState, callback) {
+    const {auth} = store.getState()
+    if (!auth.get('email')) {
+      replaceState(null, '/')
+    }
+    callback()
+  }
 
   return (
-    <Route name="app" component={require('./app/containers/app')} path="/">
+    <Route path="/" name="app" component={require('./app/containers/app')}>
       <IndexRoute component={require('./app/components/landing')} />
 
-      {require('./auth')}
+      <Admin path="admin" name="admin" onEnter={requireAdmin} />
 
-      <Route component={require('./home/containers/home')} path="home" />
+      {AuthRoutes}
+
+      <Route onEnter={requireLogin}>
+        <Route path="home" component={require('./home/containers/home')} />
+      </Route>
 
     </Route>
   )
 }
-      // {require('./admin')}

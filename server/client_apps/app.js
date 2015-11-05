@@ -9,6 +9,9 @@ import config from '../config'
 import createStore from '../../shared/create_store'
 import getRoutes from '../../shared/routes'
 
+
+import '../../shared/configure_admin'
+
 export default function app(req, res) {
 
   const scripts = ['commons.js', 'app.js']

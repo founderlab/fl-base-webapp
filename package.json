@@ -18,6 +18,7 @@
   "dependencies": {
     "babel": "^5.8.20",
     "backbone": "^1.2.0",
+    "backbone-http": "^0.7.2",
     "backbone-mongo": "^0.6.10",
     "backbone-rest": "^0.7.2",
     "bcrypt-nodejs": "0.0.3",
@@ -32,6 +33,7 @@
     "fl-auth-redux": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-redux",
     "history": "^1.13.0",
     "immutable": "^3.7.4",
+    "inflection": "^1.7.2",
     "lodash": "*",
     "moment": "*",
     "morgan": "^1.6.1",
@@ -43,7 +45,7 @@
     "react-bootstrap": "^0.27.0",
     "react-dom": "^0.14.0",
     "react-redux": "^3.1.0",
-    "react-router": "^1.0.0-beta3",
+    "react-router": "1.0.0-rc4",
     "redux": "^3.0.0",
     "redux-form": "2.4.5",
     "redux-request-middleware": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/redux-request-middleware",
@@ -51,7 +53,8 @@
     "redux-thunk": "^1.0.0",
     "serve-favicon": "^2.3.0",
     "sessionstore": "^1.2.5",
-    "superagent": "0.18.0"
+    "superagent": "0.18.0",
+    "warning": "^2.1.0"
   },
   "devDependencies": {
     "babel-loader": "^5.3.2",
