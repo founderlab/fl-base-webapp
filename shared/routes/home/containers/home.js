@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import Dashboard from '../components/dashboard'
 
 @connect(state => ({auth: state.auth}))
 export default class Home extends React.Component {
@@ -12,23 +13,10 @@ export default class Home extends React.Component {
 
   render() {
     const {auth, dispatch} = this.props
-    const logged_in = !!auth.get('email')
+    const logged_in = !!auth.get('user')
 
     return (
-      <div id="home">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <a href="/admin">admin</a>
-      </div>
+      <Dashboard />
     )
   }
 }

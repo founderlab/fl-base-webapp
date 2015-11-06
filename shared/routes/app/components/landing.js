@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
 
 export default class Landing extends Component {
 
@@ -23,7 +24,7 @@ export default class Landing extends Component {
                 <h2 className="section-heading">Landing page heading</h2>
                 <hr className="light" />
                 <p className="text-faded">Some explanation or whatever</p>
-                <a href="/register" className="btn btn-default btn-xl">Register</a>
+                <Link to="/register" className="btn btn-default btn-xl">Register</Link>
               </div>
             </div>
           </div>

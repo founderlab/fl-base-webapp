@@ -12,11 +12,10 @@ const reducers = {}
 let reducer
 
 function initModel(model_class) {
-  const model_redux = {actions: createActions(model_class), reducer: createReducer(model_class)}
   const us_name = inflection.underscore(name(model_class))
-  actions[us_name] = model_redux.actions
-  reducers[us_name] = model_redux.reducers
-  return model_redux
+  actions[us_name] = createActions(model_class)
+  reducers[us_name] = createReducer(model_class)
+  return {actions: actions[us_name], reducer: reducers[us_name]}
 }
 
 export default function configure(options) {

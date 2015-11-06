@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {pushState} from 'redux-router'
 import {login} from 'fl-auth-redux'
@@ -36,14 +37,14 @@ export default class NavBar extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand page-scroll" href="/#page-top">FounderLab_replaceme</a>
+            <Link to="/#page-top" className="navbar-brand page-scroll">FounderLab_replaceme</Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul className="nav navbar-nav navbar-right">
               <li>
-                <a className="page-scroll" href="#about">About</a>
+                <Link to="/#about" className="page-scroll">About</Link>
               </li>
               <li>
                 {email ? (
