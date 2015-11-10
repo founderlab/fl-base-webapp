@@ -1,27 +1,21 @@
 import _ from 'lodash'
-import warning from 'warning'
 import {PropTypes} from 'react'
 import {Route, PropTypes as RouterPropTypes} from 'react-router'
 import {createRoutesFromReactChildren} from 'react-router/lib/RouteUtils'
 
 import {model_admins} from './index'
+import AdminApp from './containers/app'
 import AdminHome from './containers/home'
-import List from './containers/list'
+import generateDetailContainer from './containers/generators/detail'
+import generateListContainer from './containers/generators/list'
+import {checkPropTypes} from './lib'
 
-function checkPropTypes(componentName='UnknownComponent', prop_types, props) {
-  for (const prop_name in prop_types) {
-    if (prop_types.hasOwnProperty(prop_name)) {
-      const error = prop_types[prop_name](props, prop_name, componentName)
-      if (error instanceof Error) warning(false, error.message)
-    }
-  }
-}
 
-export class Admin {
-
+export class AdminRoot {
   constructor(options) {
     _.extend(this, options)
-    if (!this.component) this.component = AdminHome
+    if (!this.component) this.component = AdminApp
+    this.indexRoute = {component: AdminHome}
   }
 
   getChildRoutes(location, callback) {
@@ -29,26 +23,19 @@ export class Admin {
     if (!this.child_routes) {
       this.child_routes = []
 
-      console.log('model_admins', model_admins)
-
       model_admins.forEach(model_admin => {
         this.child_routes.push({
           path: model_admin.path,
-          component: List,
+          component: generateListContainer(model_admin),
+        }, {
+          path: `${model_admin.path}/:id`,
+          component: generateDetailContainer(model_admin),
         })
       })
     }
 
-    console.log('this.child_routes', this.child_routes)
-
     callback(null, this.child_routes)
   }
-
-  // getComponents(location, callback) {
-  //   console.log('getcomp')
-  //   callback(null, AdminHome)
-  // }
-
 }
 
 export default class AdminRoute extends Route {
@@ -73,10 +60,6 @@ export default class AdminRoute extends Route {
       delete props.children
     }
 
-    const route = new Admin(props)
-
-console.log('adminroute is ', route)
-    return route
+    return new AdminRoot(props)
   }
-
 }

@@ -15,6 +15,20 @@ export default function app(req, res) {
   const server_state = {
     config,
     auth: req.user ? {email: req.user.get('email')} : {},
+    admin: {
+      groups: {
+        1: {
+          id: 1,
+          name: 'group_1',
+          description: 'group_1 description',
+        },
+        2: {
+          id: 2,
+          name: 'group_2',
+          description: 'group_2 description',
+        },
+      },
+    },
   }
   const store = createStore(reduxReactRouter, getRoutes, createHistory, server_state)
 

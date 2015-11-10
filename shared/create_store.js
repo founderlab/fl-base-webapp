@@ -8,13 +8,33 @@ import './configure_admin'
 import reducer from './reducer'
 
 const CLIENT_DEVTOOLS = false
-const MUTABLE_KEYS = ['router']
+const MUTABLES = {
+  router: 'always',
+  admin: 1,
+}
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, initial_state) {
+function immute(from_obj, parent_key, depth=0) {
+  const obj = {}
 
-  //
-  let finalCreateStore
+  Object.keys(from_obj).forEach(key => {
+    const mutable_key = parent_key || key
+    const immute_at = MUTABLES[mutable_key]
+
+    if (!immute_at || immute_at === depth) {
+      obj[key] = fromJS(from_obj[key])
+    }
+    else if (immute_at > depth) {
+      obj[key] = immute(from_obj[key], mutable_key, depth+1)
+    }
+    else obj[key] = from_obj[key]
+  })
+
+  return obj
+}
+
+export default function createStore(reduxReactRouter, getRoutes, createHistory, _initial_state) {
   const middlewares = applyMiddleware(thunk, requestMiddleware)
+  let finalCreateStore
 
   if (CLIENT_DEVTOOLS) {
     const {devTools, persistState} = require('redux-devtools')
@@ -32,11 +52,9 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
     )(_createStore)
   }
 
-  Object.keys(initial_state).forEach(key => {if (!_.contains(MUTABLE_KEYS, key)) initial_state[key] = fromJS(initial_state[key])})
+  const initial_state = immute(_initial_state)
   const store = finalCreateStore(reducer, initial_state)
-
   return store
-
 }
 
 

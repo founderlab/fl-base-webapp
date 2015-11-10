@@ -46,7 +46,7 @@
     "react-dom": "^0.14.0",
     "react-redux": "^3.1.0",
     "react-router": "^1.0.0",
-    "redux": "^3.0.0",
+    "redux": "^3.0.4",
     "redux-form": "2.4.5",
     "redux-request-middleware": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/redux-request-middleware",
     "redux-router": "^1.0.0-beta3",

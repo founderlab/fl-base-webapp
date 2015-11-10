@@ -26,7 +26,7 @@ export default function getRoutes(store) {
     <Route path="/" name="app" component={require('./app/containers/app')}>
       <IndexRoute component={require('./app/components/landing')} />
 
-      <AdminRoute path="admin" name="admin" onEnter={requireAdmin} />
+      <AdminRoute path="/admin" name="admin" onEnter={requireAdmin} />
 
       {AuthRoutes}
 
