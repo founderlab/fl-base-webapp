@@ -27,7 +27,10 @@ module.exports = {
   module: {
     loaders: [
 
-      {test: /\.(jsx|js)?$/, exclude: /node_modules\/(?!fl-)/, loaders: ['react-hot', 'babel']},
+      {test: /backbone\.js$/, loader: 'imports?define=>false'}, // turn off AMD when loading backbone
+      // {test: /node_modules\/(?!fl-)/, loader: 'imports?define=>false'}, // turn off AMD when loading backbone
+
+      {test: /\.(jsx|js)?$/, exclude: /node_modules/, loaders: ['react-hot', 'babel']},
 
       {test: /\.css$/, loader: css_to_file
    				? 'style!css'
@@ -50,6 +53,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.IgnorePlugin(/^jquery$/), // ignore jquery (used by backbone)
     new CommonsChunkPlugin('admin-commons.js', ['admin']),
     new CommonsChunkPlugin('commons.js', ['app', 'admin-commons.js']),
     new webpack.HotModuleReplacementPlugin(),

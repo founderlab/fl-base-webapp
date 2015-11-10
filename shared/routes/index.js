@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
-import Admin from './admin'
+import {AdminRoute} from '../admin'
 import AuthRoutes from './auth/routes'
 
 export default function getRoutes(store) {
@@ -26,7 +26,7 @@ export default function getRoutes(store) {
     <Route path="/" name="app" component={require('./app/containers/app')}>
       <IndexRoute component={require('./app/components/landing')} />
 
-      <Admin path="admin" name="admin" onEnter={requireAdmin} />
+      <AdminRoute path="admin" name="admin" onEnter={requireAdmin} />
 
       {AuthRoutes}
 

@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 import requestMiddleware from 'redux-request-middleware'
 import {fromJS} from 'immutable'
 
+import './configure_admin'
 import reducer from './reducer'
 
 const CLIENT_DEVTOOLS = false
@@ -38,6 +39,8 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
 }
 
+
+// devtools for 1.4
 
 // import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 // import createMiddleware from './middleware/clientMiddleware';

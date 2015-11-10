@@ -53,7 +53,12 @@ export default class NavBar extends Component {
                     <a href="/logout" className="btn btn-small">logout</a>
                   </span>
                 ) : (
-                  <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
+                  <div>
+                    <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
+                    <br /><Link to="/auth/facebook">Login with Facebook</Link>
+                    <br /><Link to="/register">Register</Link>
+                    <br /><Link to="/reset_request">Forgot?</Link>
+                  </div>
                 )}
               </li>
             </ul>
