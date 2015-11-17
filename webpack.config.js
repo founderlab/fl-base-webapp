@@ -60,7 +60,10 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      __DEBUG__: process.env.DEBUG || false                   // for redux-devtools
+      __DEBUG__: process.env.DEBUG || false,                   // for redux-devtools
+      'process.env': {
+        'CLIENT': true
+      }
     }),
     css_to_file ? new ExtractTextPlugin('app.css', {allChunks: true}) : ''
   ],

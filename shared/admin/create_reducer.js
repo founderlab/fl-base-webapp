@@ -6,7 +6,6 @@ export default function createReducer(model_admin) {
   return function reducer(state=default_state, action={}) {
 
     switch (action.type) {
-
       case model_admin.action_type + '_LOAD_START':
       case model_admin.action_type + '_SAVE_START':
       case model_admin.action_type + '_DEL_START':
@@ -17,29 +16,26 @@ export default function createReducer(model_admin) {
       case model_admin.action_type + '_DEL_ERROR':
         return state.merge({loading: false, error: action.error || action.res.body.error})
 
-      case model_admin.action_type + '_LOAD_ONE_SUCCESS':
-        let models = state.get('models')
-        console.log('models are', models)
-        const data = action.res.body
-        models = models.set(data.id, data)
-        console.log('modesl now', models)
-        console.log(state.merge({
-          loading: false,
-          errors: null,
-          models,
-        }))
-        return state.merge({
-          loading: false,
-          errors: null,
-          models,
-        })
+      // case model_admin.action_type + '_LOAD_ONE_SUCCESS':
+      //   let models = state.get('models')
+      //   const data = action.res.body
+      //   models = models.set(data.id, data)
+      //   return state.merge({
+      //     loading: false,
+      //     errors: null,
+      //     models,
+      //   })
 
-      case model_admin.action_type + 'LOAD_SUCCESS':
-        return state.merge({
+      case model_admin.action_type + '_LOAD_SUCCESS':
+        console.log('state before', state)
+        console.log('by_id', action.by_id)
+        const ss = state.merge({
           loading: false,
           errors: null,
-          models: action.res.body,
+          by_id: action.by_id,
         })
+        console.log('state after', ss)
+        return ss
 
       case model_admin.action_type + '_SAVE_SUCCESS':
         const model = action.res && action.res.toJSON()

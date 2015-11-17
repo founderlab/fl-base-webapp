@@ -8,7 +8,7 @@ export default function createModelActions(model_admin) {
     loadOne: (query={}, callback) => {
       query.$one = true
       return {
-        type: actionType('load'),
+        type: actionType('load_one'),
         request: model_type.cursor(query),
         callback,
       }
@@ -16,13 +16,13 @@ export default function createModelActions(model_admin) {
 
     load: (query, callback) => {
       return {
-        type: actionType('load_collection'),
+        type: actionType('load'),
         request: model_type.cursor(query),
-        parseResponse: res => {
-          const map = {}
-          if (!res.body) return map
-          _.forEach(res.body, model => map[model.id] = model)
-          return map
+        parseResponse: action => {
+          const by_id = {}
+          const models = action.res ? action.res.body || action.res : []
+          _.forEach(models, model => by_id[model.id] = _.omit(model, '_rev'))
+          return {by_id, ...action}
         },
         callback,
       }
@@ -32,7 +32,10 @@ export default function createModelActions(model_admin) {
       return {
         type: actionType('save'),
         request: (new model_type(data)).save,
-        parseResponse: res => res && res.toJSON(),
+        parseResponse: action => {
+          if (action.res) action.res = action.res.toJSON()
+          return action
+        },
         callback,
       }
     },

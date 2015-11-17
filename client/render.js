@@ -5,10 +5,15 @@ import createHistory from 'history/lib/createBrowserHistory'
 import {Provider} from 'react-redux'
 import {reduxReactRouter} from 'redux-router'
 
-import createStore from '../shared/create_store'
-import patchRouteEntry from '../shared/lib/patch_route_entry'
+
+// CommonJS
+var Backbone = require('backbone');
+Backbone.ajax = require('backbone.nativeajax');
 
 import '../shared/configure_admin'
+
+import createStore from '../shared/create_store'
+import patchRouteEntry from '../shared/lib/patch_route_entry'
 
 export default (getRoutes) => {
 

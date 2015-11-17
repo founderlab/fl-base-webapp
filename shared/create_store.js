@@ -4,8 +4,6 @@ import thunk from 'redux-thunk'
 import requestMiddleware from 'redux-request-middleware'
 import {fromJS} from 'immutable'
 
-import reducer from './reducer'
-
 const CLIENT_DEVTOOLS = false
 const MUTABLES = {
   router: 'always',
@@ -32,22 +30,23 @@ function immute(from_obj, parent_key, depth=0) {
 }
 
 export default function createStore(reduxReactRouter, getRoutes, createHistory, _initial_state) {
+  const reducer = require('./reducer') // delay requiring reducers until needed
   const middlewares = applyMiddleware(thunk, requestMiddleware)
   let finalCreateStore
 
   if (CLIENT_DEVTOOLS) {
     const {devTools, persistState} = require('redux-devtools')
     finalCreateStore = compose(
-      middlewares,
       reduxReactRouter({getRoutes, createHistory}),
+      middlewares,
       devTools(),
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)) // Lets you write ?debug_session=<name> in address bar to persist debug sessions
+      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)), // Lets you write ?debug_session=<name> in address bar to persist debug sessions
     )(_createStore)
   }
   else {
     finalCreateStore = compose(
+      reduxReactRouter({getRoutes, createHistory}),
       middlewares,
-      reduxReactRouter({getRoutes, createHistory})
     )(_createStore)
   }
 

@@ -10,6 +10,7 @@ const ACTION_PREFIX = 'FL_ADMIN_'
 const model_admins = []
 const actions = {}
 const reducers = {}
+let reducer
 
 function isAModel(model_type) {
   return !model_type.sync
@@ -18,7 +19,6 @@ function isAModel(model_type) {
 function initModel(model_type) {
   const model_admin = isAModel(model_type) ? {model_type} : model_type
 
-console.log('model_admin', model_admin)
   if (!model_admin.name) model_admin.name = model_type.name
   if (!model_admin.path) model_admin.path = table(model_type)
   if (!model_admin.plural) model_admin.plural = plural(model_type)
@@ -34,20 +34,7 @@ export default function configure(options) {
   _.forEach(options.models, model_type => {
     initModel(model_type)
   })
+  reducer = combineReducers(reducers)
 }
-const getReducer = () => {
-  if (!_.size(reducers)) console.log('[fl-admin] getReducer: Call configure() before getting the admin reducer')
-  return combineReducers(reducers)
-}
-export {actions, getReducer, model_admins, AdminRoute}
 
-
-export default class FLAdmin {
-  constructor(options) {
-    console.log('CONFIGURRE')
-
-    _.forEach(options.models, model_type => {
-      initModel(model_type)
-    })
-  }
-}
+export {actions, reducer, model_admins, AdminRoute}

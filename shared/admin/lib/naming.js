@@ -5,7 +5,7 @@ export function plural(model_type) {
 }
 
 export function upper(model_type) {
-  return inflection.underscore(model_type.name, true)
+  return inflection.underscore(model_type.name).toUpperCase()
 }
 
 export function table(model_type) {

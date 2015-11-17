@@ -50,6 +50,7 @@ module.exports = {
     new webpack.DefinePlugin({
       __DEBUG__: false, // for redux-devtools
       'process.env': {
+        'CLIENT': true,
         'NODE_ENV': JSON.stringify(process.env.DEBUG ? 'development' : 'production') // This has a big effect on the react lib size
       }
     }),
