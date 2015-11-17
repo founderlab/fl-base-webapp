@@ -3,7 +3,7 @@ import {combineReducers} from 'redux'
 import {routerStateReducer as router} from 'redux-router'
 import {reducer as auth} from 'fl-auth-redux'
 import {reducer as form} from 'redux-form'
-import {reducer as admin} from './admin'
+import {getReducer} from './admin'
 
 
 // console.log('admin reducer is', admin)
@@ -19,11 +19,13 @@ import {reducer as admin} from './admin'
 // })
 // console.log('making our own got', combined)
 // console.log('combinedrun', combined(undefined, {}))
+console.log('adminadminadminadmin', getReducer())
+
 export default combineReducers({
   auth,
   form,
   router,
-  admin,
+  admin: getReducer(),
   // combined,
   config: (state=new Immutable.Map()) => state,
 })

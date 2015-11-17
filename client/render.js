@@ -8,6 +8,8 @@ import {reduxReactRouter} from 'redux-router'
 import createStore from '../shared/create_store'
 import patchRouteEntry from '../shared/lib/patch_route_entry'
 
+import '../shared/configure_admin'
+
 export default (getRoutes) => {
 
   const initial_state = window.__INITIAL_STATE__

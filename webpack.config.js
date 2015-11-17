@@ -14,7 +14,8 @@ module.exports = {
     admin: './client/admin',
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public'),
+    publicPath: '/public',
     filename: '[name].js'
   },
   resolve: {

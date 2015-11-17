@@ -4,7 +4,6 @@ import thunk from 'redux-thunk'
 import requestMiddleware from 'redux-request-middleware'
 import {fromJS} from 'immutable'
 
-import './configure_admin'
 import reducer from './reducer'
 
 const CLIENT_DEVTOOLS = false

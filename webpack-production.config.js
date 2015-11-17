@@ -10,7 +10,8 @@ module.exports = {
     './client/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public'),
+    publicPath: '/public'),
     filename: 'bundle.js'
   },
   resolve: {
@@ -49,7 +50,7 @@ module.exports = {
     new webpack.DefinePlugin({
       __DEBUG__: false, // for redux-devtools
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.DEBUG ? 'development' : 'production') // This has effect on the react lib size
+        'NODE_ENV': JSON.stringify(process.env.DEBUG ? 'development' : 'production') // This has a big effect on the react lib size
       }
     }),
     css_to_file ? new ExtractTextPlugin('app.css', {allChunks: true}) : ''

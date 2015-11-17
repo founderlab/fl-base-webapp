@@ -9,6 +9,12 @@ import config from '../config'
 import createStore from '../../shared/create_store'
 import getRoutes from '../../shared/routes'
 
+import Group from '../models/group'
+import admin from '../../shared/admin'
+
+admin({models: [Group]})
+
+
 export default function app(req, res) {
 
   const scripts = ['commons.js', 'app.js']
@@ -52,7 +58,7 @@ export default function app(req, res) {
     const initial_state = store.getState()
 
           // <link rel="stylesheet" media="all" href="/bootstrap/css/bootstrap.css">
-    const script_tags = scripts.map(script => `<script type="application/javascript" src="/${script}"></script>`).join('\n')
+    const script_tags = scripts.map(script => `<script type="application/javascript" src="/public/${script}"></script>`).join('\n')
 
     const HTML = `
       <!DOCTYPE html>

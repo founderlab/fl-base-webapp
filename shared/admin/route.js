@@ -24,12 +24,13 @@ export class AdminRoot {
       this.child_routes = []
 
       model_admins.forEach(model_admin => {
-        this.child_routes.push({
+        this.child_routes.push(model_admin.list_route || {
           path: model_admin.path,
-          component: generateListContainer(model_admin),
-        }, {
+          component: model_admin.list_component || generateListContainer(model_admin),
+        })
+        this.child_routes.push(model_admin.detail_route || {
           path: `${model_admin.path}/:id`,
-          component: generateDetailContainer(model_admin),
+          component: model_admin.detail_component || generateDetailContainer(model_admin),
         })
       })
     }

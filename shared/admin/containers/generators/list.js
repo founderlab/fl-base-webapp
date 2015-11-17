@@ -1,47 +1,53 @@
-import _ from 'lodash'
 import {connect} from 'react-redux'
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
-// import {actions} from '../../index'
+import {List} from '../../components/list'
 
 export default function createModelList(model_admin) {
+  const {load, save, del} = model_admin.actions
 
-  return @connect(state => ({models: state.admin[model_admin.path]}))
+  return @connect(state => ({models: state.admin[model_admin.path]}), {load, save, del})
   class AdminListContainer extends Component {
 
     static propTypes = {
       models: PropTypes.object,
+      load: PropTypes.func,
+      save: PropTypes.func,
+      del: PropTypes.func,
+    }
+
+    constructor() {
+      super()
+      this.state = {
+        loaded: false,
+        loading: false,
+      }
+    }
+
+    componentWillMount() {
+      if (!this.state.loading && !this.state.loaded) {
+        this.fetch()
+      }
+    }
+
+    fetch() {
+      this.state.loading = true
+      this.props.load({}, () => {
+        this.state.loading = false
+        this.state.loaded = true
+      })
+    }
+
+    hasData() {
+      console.log('this.props.models && this.state.loaded', this.props.models, this.state.loaded)
+      return this.props.models && this.state.loaded
     }
 
     render() {
-      const models = this.props.models.toJSON()
-      const links = []
-      _.forEach(models, model => {
-        links.push(<Link to={`/admin/${model_admin.path}/${model.id}`} key={model.id}>{model.name} ({model.id})</Link>)
-      })
+      if (!this.hasData()) return (<p>loading</p>)
+      const models = this.props.models
 
       return (
-        <div className="admin-list">
-          <section>
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-8 col-lg-offset-1">
-                  <h1>{model_admin.name}</h1>
-                  {links}
-                </div>
-              </div>
-            </div>
-          </section>
-          <section>
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <Link to="/admin">Admin home</Link>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+        <List model_admin={model_admin} models={models} />
       )
     }
   }

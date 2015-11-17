@@ -26,7 +26,7 @@ console.log(`************** FounderLab_replaceme (${(require('../package.json'))
 
 app.set('port', config.port)
 app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname, '../dist')))
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
