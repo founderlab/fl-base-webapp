@@ -16,9 +16,7 @@ export default function createModelList(model_admin) {
       del: PropTypes.func,
     }
 
-    static preloadActions() {
-      return [load]
-    }
+    static needs = [load]
 
     hasData() {
       return this.props.admin && !this.props.admin.get('loading')

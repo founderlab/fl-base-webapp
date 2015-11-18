@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 export default function createReducer(model_admin) {
-  const default_state = new Immutable.Map()
+  const default_state = new Immutable.Map({by_id: {}})
 
   return function reducer(state=default_state, action={}) {
 
@@ -27,7 +27,7 @@ export default function createReducer(model_admin) {
       //   })
 
       case model_admin.action_type + '_LOAD_SUCCESS':
-        const ss = state.merge({
+        const ss = state.mergeDeep({
           loading: false,
           errors: null,
           by_id: action.by_id,
@@ -35,18 +35,19 @@ export default function createReducer(model_admin) {
         return ss
 
       case model_admin.action_type + '_SAVE_SUCCESS':
-        return state.merge({
+        return state.mergeDeep({
           loading: false,
           errors: null,
           by_id: action.by_id,
         })
 
-//todo: rm model
       case model_admin.action_type + '_DEL_SUCCESS':
+        const by_id = (state.get('by_id') || {}).toJSON()
+        delete by_id[action.model_id]
         return state.merge({
           loading: false,
           errors: null,
-          by_id: action.by_id,
+          by_id: by_id,
         })
 
       default:
