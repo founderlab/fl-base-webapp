@@ -27,32 +27,26 @@ export default function createReducer(model_admin) {
       //   })
 
       case model_admin.action_type + '_LOAD_SUCCESS':
-        console.log('state before', state)
-        console.log('by_id', action.by_id)
         const ss = state.merge({
           loading: false,
           errors: null,
           by_id: action.by_id,
         })
-        console.log('state after', ss)
         return ss
 
       case model_admin.action_type + '_SAVE_SUCCESS':
-        const model = action.res && action.res.toJSON()
         return state.merge({
-          model,
           loading: false,
           errors: null,
+          by_id: action.by_id,
         })
 
+//todo: rm model
       case model_admin.action_type + '_DEL_SUCCESS':
-        if (state.models) {
-          state.remove
-        }
         return state.merge({
-          model: null,
           loading: false,
           errors: null,
+          by_id: action.by_id,
         })
 
       default:

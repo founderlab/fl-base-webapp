@@ -29,11 +29,15 @@ export default function createModelActions(model_admin) {
     },
 
     save: (data, callback) => {
+      const model = new model_type(data)
+      console.log('saving', model)
       return {
         type: actionType('save'),
-        request: (new model_type(data)).save,
+        request: model.save.bind(model),
         parseResponse: action => {
-          if (action.res) action.res = action.res.toJSON()
+          console.log('save: res action', action)
+          const model_json = action.res ? action.res.toJSON() : {}
+          action.by_id = {[model_json.id]: model_json}
           return action
         },
         callback,
@@ -41,10 +45,10 @@ export default function createModelActions(model_admin) {
     },
 
     del: (data, callback) => {
-      const deleted_id = data.id
+      const model = new model_type(data)
       return {
         type: actionType('del'),
-        request: (new model_type({id: data.id})).destroy,
+        request: model.destroy.bind(model),
         parseResponse: () => ({deleted_id}),
         callback,
       }

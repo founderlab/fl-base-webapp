@@ -9,6 +9,7 @@ import RestController from 'backbone-rest'
 //   callback(null, false)
 // }
 
+
 export default class GroupsController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
@@ -16,9 +17,11 @@ export default class GroupsController extends RestController {
       route: '/api/groups',
       // auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {
+        // update: ['name', 'description'],
         index: ['id', 'name', 'description'],
         show: ['id', 'name', 'description'],
       },
     }, options))
   }
+
 }

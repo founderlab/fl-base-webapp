@@ -24,12 +24,15 @@ export default function createModelList(model_admin) {
       return this.props.admin && !this.props.admin.get('loading')
     }
 
+    onSaveFn = model => () => this.props.save(model)
+    onDeleteFn = model => () => this.props.del(model)
+
     render() {
       if (!this.hasData()) return (<Loader />)
       const admin = this.props.admin
 
       return (
-        <List model_admin={model_admin} admin={admin} />
+        <List model_admin={model_admin} admin={admin} onSaveFn={this.onSaveFn} onDeleteFn={this.onDeleteFn} />
       )
     }
   }
