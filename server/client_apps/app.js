@@ -10,10 +10,7 @@ import createStore from '../../shared/create_store'
 import getRoutes from '../../shared/routes'
 import dispatchNeeds from '../../shared/lib/dispatch_needs'
 
-import loadModel from '../../shared/lib/load_model'
-import admins from '../../shared/admins'
-import admin from '../../shared/admin'
-admin({loadModel, models: admins})
+import '../../shared/configure_admin'
 
 export default function app(req, res) {
 

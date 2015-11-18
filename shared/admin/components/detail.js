@@ -1,50 +1,39 @@
-import _ from 'lodash'
-import {connect} from 'react-redux'
-import React, {Component, PropTypes} from 'react'
+import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
-// import {actions} from '../../index'
 
-export default class AdminModelDetail extends Component {
+export default function AdminModelDetail(props) {
 
-  static propTypes = {
-    admin: PropTypes.object,
-    params: PropTypes.object,
-    model_admin: PropTypes.object,
-  }
+  const model_admin = props.model_admin
+  const by_id = props.admin.get('by_id').toJSON()
+  const model = by_id[props.params.id] || {}
+  console.log('model is', props.params.id, model)
 
-  render() {
-    const model_admin = this.props.model_admin
-    const admin = this.props.admin.toJSON()
-    const model = admin.by_id[this.props.params.id]
-    console.log('model is', this.props.params.id, model)
-
-    // const links = []
-    // _.forEach(models, model => {
-    //   links.push(<Link to={`/admin/${model_admin.path}/${model.id}`} key={model.id}>{model.name} ({model.id})</Link>)
-    // })
-
-    return (
-      <div className="admin-list">
-        <section>
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-1">
-                <h1>{model.id}</h1>
-              </div>
+  return (
+    <div className="admin-detail">
+      <section>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8 col-lg-offset-1">
+              <h1>{model.id}</h1>
             </div>
           </div>
-        </section>
-        <section>
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <Link to={`admin/${model_admin.path}`}>Back</Link>
-              </div>
+        </div>
+      </section>
+      <section>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <Link to={`admin/${model_admin.path}`}>Back</Link>
             </div>
           </div>
-        </section>
-      </div>
-    )
-  }
+        </div>
+      </section>
+    </div>
+  )
+}
 
+AdminModelDetail.propTypes = {
+  admin: PropTypes.object,
+  params: PropTypes.object,
+  model_admin: PropTypes.object,
 }

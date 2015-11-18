@@ -13,7 +13,7 @@ const reducers = {}
 let reducer
 
 const defaults = {
-  isAModel: (model_type) => !!model_type.sync,
+  isAModel: (model_type) => !!model_type.schema,
 }
 
 function initModel(options, model_descriptor) {
@@ -31,7 +31,6 @@ function initModel(options, model_descriptor) {
 
   model_admin.actions = actions[model_admin.path] = createActions(model_admin)
   model_admin.reducer = reducers[model_admin.path] = createReducer(model_admin)
-
   model_admins.push(model_admin)
 }
 

@@ -1,4 +1,5 @@
-import Group from './models/group'
-import configure from './admin'
+import loadModel from '../server/client_apps/load_model'
+import admins from './admins'
+import admin from './admin'
 
-configure({models: [Group]})
+admin({loadModel, models: admins})
