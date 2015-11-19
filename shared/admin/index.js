@@ -18,11 +18,9 @@ const defaults = {
 
 function initModel(options, model_descriptor) {
   const model_admin = {}
-  if (_.isString(model_descriptor) || options.isAModel(model_descriptor)) model_admin.model_type = model_descriptor
+  if (options.isAModel(model_descriptor)) model_admin.model_type = model_descriptor
   else if (_.isObject(model_descriptor)) _.merge(model_admin, model_descriptor)
   else throw new Error('[fl-admin] configure: Unrecognized model descriptor - provide a string or model or model_admin')
-
-  if (options.loadModel && _.isString(model_admin.model_type)) model_admin.model_type = options.loadModel(model_admin.model_type)
 
   if (!model_admin.name) model_admin.name = model_admin.model_type.model_name
   if (!model_admin.path) model_admin.path = table(model_admin.model_type)

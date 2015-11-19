@@ -1,3 +1,4 @@
+const DEFAULT_SECRET = 'CHANGEME'
 
 const config = {
   ip: process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '127.0.0.1',
@@ -18,7 +19,13 @@ const config = {
     password: process.env.EMAIL_PASSWORD,
     from: process.env.EMAIL_FROM,
   },
+
+  secret: DEFAULT_SECRET,
 }
 
 config.url = process.env.URL || `http://${config.ip}:${config.port}`
 export default config
+
+if (process.env.NODE_ENV === 'production' && config.secret === DEFAULT_SECRET) {
+  console.error('config: Change your internal secret to one unique to this project. Its currently', DEFAULT_SECRET)
+}

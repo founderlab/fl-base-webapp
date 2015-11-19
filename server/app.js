@@ -6,7 +6,7 @@ import path from 'path'
 import morgan from 'morgan'
 import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import {configure as configureAuth, sessionOrToken} from 'fl-auth-server'
+import {configure as configureAuth, sessionOrToken, createInternalMiddleware} from 'fl-auth-server'
 import favicon from 'serve-favicon'
 
 import {sendResetEmail} from './lib/email'
@@ -18,9 +18,8 @@ import initClientApps from './client_apps'
 
 const bind_options = {
   origins: config.origins,
-  auth: [sessionOrToken],
+  auth: [createInternalMiddleware({secret: config.secret}), sessionOrToken],
 }
-
 const app = bind_options.app = express()
 console.log(`************** FounderLab_replaceme (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 

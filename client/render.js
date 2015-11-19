@@ -9,7 +9,6 @@ import {reduxReactRouter} from 'redux-router'
 const Backbone = require('backbone')
 Backbone.ajax = require('backbone.nativeajax')
 
-import '../shared/configure_admin'
 import createStore from '../shared/create_store'
 import patchRouteEntry from '../shared/lib/patch_route_entry'
 

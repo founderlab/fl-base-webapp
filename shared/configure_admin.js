@@ -1,5 +1,13 @@
-import loadModel from '../server/client_apps/load_model'
-import admins from './admins'
 import admin from './admin'
 
-admin({loadModel, models: admins})
+admin({
+  models: [
+    {
+      model_type: require('./models/group'),
+      inline: ['name'],
+    },
+    {
+      model_type: require('./models/user'),
+    },
+  ],
+})

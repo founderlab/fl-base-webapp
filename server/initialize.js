@@ -17,3 +17,7 @@ if (!process.env.DATABASE_URL) {
   console.log('process.env.DATABASE_URL set to', process.env.DATABASE_URL)
 
 }
+
+// no jQuery, backbone needs an ajax function
+const Backbone = require('backbone')
+Backbone.ajax = require('./lib/backbone_ajax')

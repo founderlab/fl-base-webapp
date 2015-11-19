@@ -5,6 +5,7 @@ export default function dispatchNeeds(options, callback) {
   const queue = new Queue()
 
   components.forEach(comp => {
+    if (!comp) return
     const needs = (comp.WrappedComponent || comp).needs || []
     needs.forEach(need => {
       const options = need.options || {}

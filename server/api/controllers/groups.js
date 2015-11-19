@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import RestController from 'backbone-rest'
-// import {createAuthMiddleware} from 'fl-auth-server'
+import {createAuthMiddleware} from 'fl-auth-server'
 
-// function canAccess(options, callback) {
-//   const {user, req} = options
-//   if (user.get('superuser')) return callback(null, true)
-//   if (req.params.id && (user.id === req.params.id)) return callback(null, true)
-//   callback(null, false)
-// }
+function canAccess(options, callback) {
+  callback(null, true)
+  // const {user, req} = options
+  // if (user.get('superuser')) return callback(null, true)
+  // if (req.params.id && (user.id === req.params.id)) return callback(null, true)
+  // callback(null, false)
+}
 
 
 export default class GroupsController extends RestController {
@@ -15,7 +16,7 @@ export default class GroupsController extends RestController {
     super(options.app, _.defaults({
       model_type: require('../../models/group'),
       route: '/api/groups',
-      // auth: [...options.auth, createAuthMiddleware({canAccess})],
+      auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {
         // update: ['name', 'description'],
         index: ['id', 'name', 'description'],
