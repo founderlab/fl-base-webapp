@@ -4,7 +4,7 @@ import {createAuthMiddleware} from 'fl-auth-server'
 
 function canAccess(options, callback) {
   const {user, req} = options
-  if (user.get('superuser')) return callback(null, true)
+  if (user.superuser || user.get('superuser')) return callback(null, true)
   if (req.params.id && (user.id === req.params.id)) return callback(null, true)
   callback(null, false)
 }

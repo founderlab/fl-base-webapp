@@ -6,11 +6,12 @@ import Detail from '../../components/detail'
 export default function createModelList(model_admin) {
   const {load, save, del} = model_admin.actions
 
-  return @connect(state => ({admin: state.admin[model_admin.path]}), {load, save, del})
+  return @connect(state => ({admin: state.admin[model_admin.path], id: state.router.params.id}), {load, save, del})
   class AdminListContainer extends Component {
 
     static propTypes = {
       admin: PropTypes.object,
+      id: PropTypes.object,
       load: PropTypes.func,
       save: PropTypes.func,
       del: PropTypes.func,
@@ -24,10 +25,10 @@ export default function createModelList(model_admin) {
 
     render() {
       if (!this.hasData()) return (<Loader />)
-      const admin = this.props.admin
+      const {admin, id} = this.props
 
       return (
-        <Detail model_admin={model_admin} admin={admin} />
+        <Detail id={id} model_admin={model_admin} admin={admin} />
       )
     }
   }

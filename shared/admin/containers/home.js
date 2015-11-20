@@ -13,7 +13,13 @@ export default class AdminHome extends Component {
     const links = []
 
     _.forEach(model_admins, model_admin => {
-      links.push(<Link to={`/admin/${model_admin.path}`} key={model_admin.path}>{model_admin.plural}</Link>)
+      links.push(
+        <div key={model_admin.path} className="row">
+          <div className="col-lg-8 col-lg-offset-1">
+            <Link to={`/admin/${model_admin.path}`}>{model_admin.plural}</Link>
+          </div>
+        </div>
+      )
     })
 
     return (
@@ -23,9 +29,9 @@ export default class AdminHome extends Component {
             <div className="row">
               <div className="col-lg-8 col-lg-offset-1">
                 <h1>Admin Home</h1>
-                {links}
               </div>
             </div>
+            {links}
           </div>
         </section>
       </div>

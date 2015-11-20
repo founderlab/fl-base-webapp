@@ -10,7 +10,6 @@ function canAccess(options, callback) {
   // callback(null, false)
 }
 
-
 export default class GroupsController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({

@@ -3,10 +3,10 @@ import {Link} from 'react-router'
 
 export default function AdminModelDetail(props) {
 
-  const model_admin = props.model_admin
+  const {model_admin, id} = props
   const by_id = props.admin.get('by_id').toJSON()
-  const model = by_id[props.params.id] || {}
-  console.log('model is', props.params.id, model)
+  const model = by_id[id] || {}
+  console.log('model is', id, model)
 
   return (
     <div className="admin-detail">
@@ -34,6 +34,6 @@ export default function AdminModelDetail(props) {
 
 AdminModelDetail.propTypes = {
   admin: PropTypes.object,
-  params: PropTypes.object,
+  id: PropTypes.object,
   model_admin: PropTypes.object,
 }
