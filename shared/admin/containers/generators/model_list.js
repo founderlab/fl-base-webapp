@@ -31,7 +31,7 @@ export default function createModelList(model_admin) {
       const admin = this.props.admin
 
       return (
-        <List model_admin={model_admin} admin={admin} handleSaveFn={this.handleSaveFn} handleDeleteFn={this.handleDeleteFn} />
+        <List model_admin={model_admin} model_store={admin} handleSaveFn={this.handleSaveFn} handleDeleteFn={this.handleDeleteFn} />
       )
     }
   }

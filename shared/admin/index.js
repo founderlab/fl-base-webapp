@@ -16,29 +16,45 @@ const defaults = {
   isAModel: (model_type) => !!model_type.schema,
 }
 
-function initModel(options, model_descriptor) {
+function createModelAdmin(options, model_descriptor) {
   const model_admin = {}
   if (options.isAModel(model_descriptor)) model_admin.model_type = model_descriptor
   else if (_.isObject(model_descriptor)) _.merge(model_admin, model_descriptor)
   else throw new Error('[fl-admin] configure: Unrecognized model descriptor - provide a string or model or model_admin')
 
-  if (!model_admin.name) model_admin.name = model_admin.model_type.model_name
-  if (!model_admin.display) model_admin.display = model => model.name || model.id
-  if (!model_admin.path) model_admin.path = table(model_admin.model_type)
-  if (!model_admin.plural) model_admin.plural = plural(model_admin.model_type)
-  if (!model_admin.action_type) model_admin.action_type = `${ACTION_PREFIX}${upper(model_admin.model_type)}`
+  const {model_type} = model_admin
+
+  const defaults = {
+    name: model_type.model_name,
+    display: model => model.name || model.id,
+    path: table(model_type),
+    plural: plural(model_type),
+    action_type: `${ACTION_PREFIX}${upper(model_type)}`,
+    fields: {},
+  }
+
+  _.defaults(model_admin, defaults)
+
+  const model_fields = (model_type.schema? model_type.schema('schema').fields : model_type.fields) || {}
+  _.forEach(model_fields, (model_field, name) => {
+    const admin_field = model_admin.fields[name] = model_admin.fields[name] || {}
+    _.defaults(admin_field, model_field)
+    admin_field.name = admin_field.name || name
+  })
 
   model_admin.actions = actions[model_admin.path] = createActions(model_admin)
   model_admin.reducer = reducers[model_admin.path] = createReducer(model_admin)
-  model_admins.push(model_admin)
+
+  return model_admin
 }
 
 export default function configure(_options) {
   const options = _.merge(defaults, _options)
 
   _.forEach(options.models, model_descriptor => {
-    initModel(options, model_descriptor)
+    model_admins.push(createModelAdmin(options, model_descriptor))
   })
+
   reducer = combineReducers(reducers)
 }
 

@@ -20,16 +20,16 @@ export class ModelListRow extends React.Component {
     const inputs = []
 
     _.forEach(fields, (field, name) => {
-      const model_field = {name, type: 'text'}
-      inputs.push(<td key={field.name}><ModelFieldInput model_field={model_field} form_field={field} /></td>)
+      const model_field = model_admin.fields[name]
+      inputs.push(<td key={name}><ModelFieldInput model_field={model_field} form_field={field} size="small" /></td>)
     })
 
     return (
       <tr>
         <td><Link to={`/admin/${model_admin.path}/${model.id}`}>{model_admin.display(model)}</Link></td>
         {inputs}
-        <td><Button bsStyle="primary" bsSize="small" onClick={handleSubmit}><Glyphicon glyph="ok" /></Button></td>
-        <td><Button bsStyle="danger" bsSize="small" onClick={handleDelete}><Glyphicon glyph="remove" /></Button></td>
+        {inputs.length && <td><Button bsStyle="primary" onClick={handleSubmit}><Glyphicon glyph="ok" /></Button></td>}
+        <td><Button bsStyle="danger" bsSize="xsmall" onClick={handleDelete}><Glyphicon glyph="remove" /></Button></td>
       </tr>
     )
   }

@@ -4,7 +4,11 @@ admin({
   models: [
     {
       model_type: require('./models/group'),
-      inline: ['name'],
+      fields: {
+        name: {
+          inline: true,
+        },
+      },
     },
     {
       model_type: require('./models/user'),

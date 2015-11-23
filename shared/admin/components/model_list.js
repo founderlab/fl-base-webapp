@@ -6,10 +6,14 @@ import createModelListRow from './generators/model_list_row'
 
 export default function ModelList(props) {
 
-  const {model_admin, admin, handleSaveFn, handleDeleteFn} = props
-  const models_by_id = admin.get('by_id').toJSON()
+  const {model_admin, model_store, handleSaveFn, handleDeleteFn} = props
 
-  const model_list_rows = _.map(models_by_id, model => {
+  const fields = {}
+  _.forEach(model_admin.fields, (field, name) => {
+    if (field.inline) fields[name] = field
+  })
+
+  const model_list_rows = _.map(model_store.get('by_id').toJSON(), model => {
     const ModelListRow = createModelListRow(model)
 
     return (<ModelListRow
@@ -19,9 +23,15 @@ export default function ModelList(props) {
       model_admin={model_admin}
       onSubmit={handleSaveFn(model)}
       onDelete={handleDeleteFn(model)}
-      fields={['name']}
+      fields={_.keys(fields)}
     />)
   })
+
+  const edit_fields = _.map(fields, (field, name) => <th key={name}>{name}</th>)
+  const headings = [<th key="__fl_model">model</th>]
+    .concat(edit_fields)
+    .concat(edit_fields.length ? [<th key="__fl_save">save</th>] : [])
+    .concat([<th key="__fl_delete">delete</th>])
 
   return (
     <div className="admin-list">
@@ -40,6 +50,11 @@ export default function ModelList(props) {
             <div className="col-lg-8 col-lg-offset-1">
               <h1>{model_admin.plural}</h1>
               <Table>
+                <thead>
+                  <tr>
+                    {headings}
+                  </tr>
+                </thead>
                 <tbody>
                   {model_list_rows}
                 </tbody>
@@ -53,7 +68,7 @@ export default function ModelList(props) {
 }
 
 ModelList.propTypes = {
-  admin: PropTypes.object,
+  model_store: PropTypes.object,
   model_admin: PropTypes.object,
   handleSaveFn: PropTypes.func,
   handleDeleteFn: PropTypes.func,
