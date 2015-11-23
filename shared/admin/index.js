@@ -23,6 +23,7 @@ function initModel(options, model_descriptor) {
   else throw new Error('[fl-admin] configure: Unrecognized model descriptor - provide a string or model or model_admin')
 
   if (!model_admin.name) model_admin.name = model_admin.model_type.model_name
+  if (!model_admin.display) model_admin.display = model => model.name || model.id
   if (!model_admin.path) model_admin.path = table(model_admin.model_type)
   if (!model_admin.plural) model_admin.plural = plural(model_admin.model_type)
   if (!model_admin.action_type) model_admin.action_type = `${ACTION_PREFIX}${upper(model_admin.model_type)}`

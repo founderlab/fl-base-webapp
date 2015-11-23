@@ -10,7 +10,7 @@ export class ModelListRow extends React.Component {
   static propTypes = {
     model: PropTypes.object,
     model_admin: PropTypes.object,
-    fields: PropTypes.array,
+    fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     handleDelete: PropTypes.func,
   }
@@ -26,7 +26,7 @@ export class ModelListRow extends React.Component {
 
     return (
       <tr>
-        <td><Link to={`/admin/${model_admin.path}/${model.id}`}>{model.name} ({model.id})</Link></td>
+        <td><Link to={`/admin/${model_admin.path}/${model.id}`}>{model_admin.display(model)}</Link></td>
         {inputs}
         <td><Button bsStyle="primary" bsSize="small" onClick={handleSubmit}><Glyphicon glyph="ok" /></Button></td>
         <td><Button bsStyle="danger" bsSize="small" onClick={handleDelete}><Glyphicon glyph="remove" /></Button></td>
