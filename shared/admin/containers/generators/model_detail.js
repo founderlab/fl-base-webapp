@@ -1,17 +1,17 @@
 import {connect} from 'react-redux'
 import React, {Component, PropTypes} from 'react'
 import Loader from '../../components/loader'
-import Detail from '../../components/detail'
+import Detail from '../../components/model_detail'
 
 export default function createModelList(model_admin) {
   const {load, save, del} = model_admin.actions
 
   return @connect(state => ({admin: state.admin[model_admin.path], id: state.router.params.id}), {load, save, del})
-  class AdminListContainer extends Component {
+  class ModelDetailContainer extends Component {
 
     static propTypes = {
       admin: PropTypes.object,
-      id: PropTypes.object,
+      id: PropTypes.string,
       load: PropTypes.func,
       save: PropTypes.func,
       del: PropTypes.func,

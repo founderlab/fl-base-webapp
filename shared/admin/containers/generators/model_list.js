@@ -1,13 +1,14 @@
+import _ from 'lodash'
 import {connect} from 'react-redux'
 import React, {Component, PropTypes} from 'react'
 import Loader from '../../components/loader'
-import List from '../../components/list'
+import List from '../../components/model_list'
 
 export default function createModelList(model_admin) {
   const {load, save, del} = model_admin.actions
 
   return @connect(state => ({admin: state.admin[model_admin.path]}), {load, save, del})
-  class AdminListContainer extends Component {
+  class ModelListContainer extends Component {
 
     static propTypes = {
       admin: PropTypes.object,
@@ -22,15 +23,15 @@ export default function createModelList(model_admin) {
       return this.props.admin && !this.props.admin.get('loading')
     }
 
-    onSaveFn = model => () => this.props.save(model)
-    onDeleteFn = model => () => this.props.del(model)
+    handleSaveFn = model => data => {this.props.save(_.extend(model, data))}
+    handleDeleteFn = model => () => this.props.del(model)
 
     render() {
       if (!this.hasData()) return (<Loader />)
       const admin = this.props.admin
 
       return (
-        <List model_admin={model_admin} admin={admin} onSaveFn={this.onSaveFn} onDeleteFn={this.onDeleteFn} />
+        <List model_admin={model_admin} admin={admin} handleSaveFn={this.handleSaveFn} handleDeleteFn={this.handleDeleteFn} />
       )
     }
   }

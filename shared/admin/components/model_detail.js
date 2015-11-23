@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
+import {Table, Glyphicon} from 'react-bootstrap'
 
-export default function AdminModelDetail(props) {
+export default function ModelDetail(props) {
 
   const {model_admin, id} = props
   const by_id = props.admin.get('by_id').toJSON()
@@ -13,8 +14,8 @@ export default function AdminModelDetail(props) {
       <section>
         <div className="container">
           <div className="row">
-            <div className="col-lg-8 col-lg-offset-1">
-              <h1>{model.id}</h1>
+            <div className="col-lg-12">
+              <Link to={`/admin/${model_admin.path}`}><Glyphicon glyph="chevron-left" />{model_admin.plural}</Link>
             </div>
           </div>
         </div>
@@ -22,8 +23,10 @@ export default function AdminModelDetail(props) {
       <section>
         <div className="container">
           <div className="row">
-            <div className="col-lg-12">
-              <Link to={`admin/${model_admin.path}`}>Back</Link>
+            <div className="col-lg-8 col-lg-offset-1">
+              <h1>{model.id}</h1>
+              <Table>
+              </Table>
             </div>
           </div>
         </div>
@@ -32,8 +35,8 @@ export default function AdminModelDetail(props) {
   )
 }
 
-AdminModelDetail.propTypes = {
+ModelDetail.propTypes = {
   admin: PropTypes.object,
-  id: PropTypes.object,
+  id: PropTypes.string,
   model_admin: PropTypes.object,
 }
