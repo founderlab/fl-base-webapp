@@ -15,14 +15,12 @@ export class ModelDetailForm extends React.Component {
   }
 
   render() {
-    const {model_admin, model, handleDelete, fields, handleSubmit} = this.props
+    const {model_admin, handleDelete, fields, handleSubmit} = this.props
     const inputs = []
 
     _.forEach(fields, (field, name) => {
       const model_field = model_admin.fields[name]
-      inputs.push(
-        <ModelFieldInput key={name} size="large" model_field={model_field} form_field={field} />
-      )
+      inputs.push(<ModelFieldInput key={name} size="large" model_field={model_field} form_field={field} />)
     })
 
     return (

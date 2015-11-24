@@ -7,7 +7,6 @@ import createModelDetailForm from './generators/model_detail_form'
 export default function ModelDetail(props) {
 
   const {model_admin, model_store, id, handleSaveFn, handleDeleteFn} = props
-  console.log('model_store.get(', model_store.get('by_id'))
   const model_im = model_store.get('by_id').get(id)
   const model = model_im ? model_im.toJSON() : {}
   const ModelDetailForm = createModelDetailForm(model)

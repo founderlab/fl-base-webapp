@@ -5,7 +5,7 @@ import {Link} from 'react-router'
 import {reduxForm} from 'redux-form'
 import ModelFieldInput from '../model_field_input'
 
-export class ModelListRow extends React.Component {
+export class ModelListForm extends React.Component {
 
   static propTypes = {
     model: PropTypes.object,
@@ -35,7 +35,7 @@ export class ModelListRow extends React.Component {
   }
 }
 
-export default function createModelListRow(model) {
+export default function createModelListRowForm(model) {
   return reduxForm(
     {
       form: 'model_list_row',

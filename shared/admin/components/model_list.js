@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 import {Table, Glyphicon} from 'react-bootstrap'
-import createModelListRow from './generators/model_list_row'
+import createModelListForm from './generators/model_list_form'
 
 export default function ModelList(props) {
 
@@ -14,9 +14,9 @@ export default function ModelList(props) {
   })
 
   const model_list_rows = _.map(model_store.get('by_id').toJSON(), model => {
-    const ModelListRow = createModelListRow(model)
+    const ModelListForm = createModelListForm(model)
 
-    return (<ModelListRow
+    return (<ModelListForm
       key={model.id}
       formKey={model.id}
       model={model}
@@ -37,7 +37,7 @@ export default function ModelList(props) {
     <div className="admin-list">
       <section>
         <div className="container">
-          <div className="row">
+          <div className="">
             <div className="col-lg-12">
               <Link to="/admin"><Glyphicon glyph="chevron-left" />Admin home</Link>
             </div>
@@ -46,7 +46,7 @@ export default function ModelList(props) {
       </section>
       <section>
         <div className="container">
-          <div className="row">
+          <div className="">
             <div className="col-lg-8 col-lg-offset-1">
               <h1>{model_admin.plural}</h1>
               <Table>
