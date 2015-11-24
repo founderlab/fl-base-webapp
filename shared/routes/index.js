@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
-import {AdminRoute} from '../admin'
+import {AdminRoute} from 'fl-admin'
 import AuthRoutes from './auth/routes'
 
 export default function getRoutes(store) {

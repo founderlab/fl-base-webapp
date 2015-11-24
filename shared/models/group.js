@@ -6,6 +6,7 @@ export default class Group extends Backbone.Model {
     name: 'String',
     description: 'String',
     created_at: 'Date',
+    target: () => ['belongsTo', require('./target')],
   })
   defaults() { return {created_at: moment.utc().toDate()} }
 }

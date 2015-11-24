@@ -1,4 +1,4 @@
-import admin from './admin'
+import admin from 'fl-admin'
 
 admin({
   models: [
@@ -10,8 +10,11 @@ admin({
         },
       },
     },
+    // {
+    //   model_type: require('./models/user'),
+    // },
     {
-      model_type: require('./models/user'),
+      model_type: require('./models/target'),
     },
   ],
 })
