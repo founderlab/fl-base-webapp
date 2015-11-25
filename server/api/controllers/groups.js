@@ -18,8 +18,8 @@ export default class GroupsController extends RestController {
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {
         // update: ['name', 'description'],
-        index: ['id', 'name', 'description'],
-        show: ['id', 'name', 'description'],
+        // index: ['id', 'name', 'description'],
+        // show: ['id', 'name', 'description'],
       },
     }, options))
   }

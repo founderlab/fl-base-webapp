@@ -8,6 +8,9 @@ admin({
         name: {
           inline: true,
         },
+        target: {
+          inline: true,
+        },
       },
     },
     // {

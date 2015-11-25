@@ -10,7 +10,7 @@ export default class Target extends Backbone.Model {
     name: 'String',
     description: 'String',
     created_at: 'Date',
-    group: () => ['hasMany', require('./group')],
+    groups: () => ['hasMany', require('./group')],
   })
   defaults() { return {created_at: moment.utc().toDate()} }
 }
