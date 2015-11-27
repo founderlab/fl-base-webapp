@@ -10,7 +10,7 @@ const Backbone = require('backbone')
 Backbone.ajax = require('backbone.nativeajax')
 
 import createStore from '../shared/create_store'
-import patchRouteEntry from '../shared/lib/patch_route_entry'
+import {patchRouteEntry} from 'fl-react-utils'
 
 export default (getRoutes) => {
 

@@ -9,8 +9,8 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "start": "eval $(cat .env) nodemon -w server -w shared index.js",
-    "start-prod": "eval $(cat .env) NODE_ENV=production nodemon -w server -w shared index.js",
+    "start": "eval $(cat .env) nodemon -w server -w shared -w node_modules index.js",
+    "start-prod": "eval $(cat .env) NODE_ENV=production nodemon -w server -w shared -w node_modules index.js",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "lint": "eslint server shared",
     "build": "webpack --config webpack-production.config.js --progress --profile --colors"
@@ -33,6 +33,7 @@
     "fl-auth-react": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-react",
     "fl-auth-redux": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-redux",
     "fl-auth-server": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-server",
+    "fl-react-utils": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-react-utils",
     "history": "^1.13.0",
     "immutable": "^3.7.4",
     "inflection": "^1.7.2",
@@ -45,9 +46,7 @@
     "queue-async": "^1.0.7",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.0",
-
     "react-datetime": "^2.0.1",
-
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0",

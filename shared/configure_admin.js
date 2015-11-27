@@ -18,6 +18,9 @@ admin({
     // },
     {
       model_type: require('./models/target'),
+      fields: {
+        is_this_thing_on: {inline: true},
+      },
     },
   ],
 })

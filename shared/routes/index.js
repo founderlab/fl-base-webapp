@@ -8,8 +8,7 @@ export default function getRoutes(store) {
   function requireAdmin(nextState, replaceState, callback) {
     const {auth} = store.getState()
     if (!auth.get('email') || !auth.get('admin')) {
-      console.log('Not an admin:', auth.get('email'), auth.get('admin'))
-      // replaceState(null, '/')
+      replaceState({}, '/login')
     }
     callback()
   }
@@ -17,7 +16,7 @@ export default function getRoutes(store) {
   function requireLogin(nextState, replaceState, callback) {
     const {auth} = store.getState()
     if (!auth.get('email')) {
-      replaceState(null, '/')
+      replaceState(null, '/login')
     }
     callback()
   }
@@ -37,3 +36,5 @@ export default function getRoutes(store) {
     </Route>
   )
 }
+
+

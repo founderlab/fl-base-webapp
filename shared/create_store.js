@@ -2,7 +2,7 @@ import _ from 'lodash'
 import {createStore as _createStore, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import requestMiddleware from 'redux-request-middleware'
-import dispatchNeedsMiddleware from './middleware/dispatch_needs'
+import {dispatchNeedsMiddleware} from 'fl-react-utils'
 import {fromJS} from 'immutable'
 
 const CLIENT_DEVTOOLS = false
