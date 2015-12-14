@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import NavBar from './navbar'
+import NavBar from './NavBar'
 
 export default class App extends Component {
 

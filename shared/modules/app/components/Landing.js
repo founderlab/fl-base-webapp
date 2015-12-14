@@ -10,13 +10,9 @@ export default function Landing() {
           <div className="header-content-inner">
             <h1>1scope wip</h1>
             <hr />
-            <p>no</p>
+            <p>text</p>
 
-            <Link to="/opportunities" className="btn btn-default btn-xl">Find an opportunity</Link>
-
-            <Link to="/applicants/register" className="btn btn-default btn-xl">Register as a student</Link>
-
-            <Link to="/representatives/register" className="btn btn-default btn-xl">Register as a representative</Link>
+            <Link to="/register" className="btn btn-default btn-xl">Register</Link>
 
           </div>
         </div>
@@ -29,7 +25,6 @@ export default function Landing() {
               <h2 className="section-heading">Landing page heading</h2>
               <hr className="light" />
               <p className="text-faded">Some explanation or whatever</p>
-              <Link to="/opportunities" className="btn btn-default btn-xl">opportunities</Link>
             </div>
           </div>
         </div>
