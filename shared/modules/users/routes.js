@@ -26,10 +26,10 @@ import {Route} from 'react-router'
 
 export default (
   <Route>
-    <Route component={require('./containers/login')} path="login" />
+    <Route component={require('./containers/Login')} path="login" />
 
-    <Route component={require('./containers/reset_request')} path="reset_request" />
-    <Route component={require('./containers/reset')} path="reset" />
-    <Route component={require('./containers/register')} path="register" />
+    <Route component={require('./containers/ResetRequest')} path="reset_request" />
+    <Route component={require('./containers/Reset')} path="reset" />
+    <Route component={require('./containers/EmailConfirm')} path="confirm_email" />
   </Route>
 )

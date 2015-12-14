@@ -1,7 +1,7 @@
+import _ from 'lodash' // eslint-disable-line
 import React, {Component, PropTypes} from 'react'
-import {RegisterForm} from 'fl-auth-react'
 
-export default class Register extends Component {
+export default class Profile extends Component {
 
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -13,8 +13,7 @@ export default class Register extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-lg-offset-3">
-              <h2 className="text-center">Register</h2>
-                <RegisterForm {...this.props} />
+              <h2 className="text-center">Profile</h2>
             </div>
           </div>
         </div>

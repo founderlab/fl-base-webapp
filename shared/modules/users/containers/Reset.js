@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {pushState} from 'redux-router'
 import {reset} from 'fl-auth-redux'
-import Reset from '../components/reset'
+import Reset from '../components/Reset'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {reset, pushState})
 export default class ResetContainer extends Component {

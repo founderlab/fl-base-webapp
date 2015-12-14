@@ -17,9 +17,9 @@ export default class Login extends Component {
               <h2 className="text-center">Login</h2>
               <LoginForm {...this.props} />
 
-              <br /><Link to="/auth/facebook">Login with Facebook</Link>
-              <br /><Link to="/register">Register</Link>
+              <br /><Link to="/users/register">Register as a student</Link>
               <br /><Link to="/reset_request">Forgot?</Link>
+
             </div>
           </div>
         </div>
@@ -27,3 +27,5 @@ export default class Login extends Component {
     )
   }
 }
+
+// <br /><Link to="/auth/facebook">Login with Facebook</Link>

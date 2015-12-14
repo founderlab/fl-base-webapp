@@ -1,8 +1,8 @@
-import _ from 'lodash'
+import _ from 'lodash' // eslint-disable-line
 import {createStore as _createStore, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
-import requestMiddleware from 'redux-request-middleware'
-import {dispatchNeedsMiddleware} from 'fl-react-utils'
+import {requestMiddleware, responseParserMiddleware} from 'redux-request-middleware'
+import {fetchComponentDataMiddleware} from 'fl-react-utils'
 import {fromJS} from 'immutable'
 
 const CLIENT_DEVTOOLS = false
@@ -32,7 +32,7 @@ function immute(from_obj, parent_key, depth=0) {
 
 export default function createStore(reduxReactRouter, getRoutes, createHistory, _initial_state) {
   const reducer = require('./reducer') // delay requiring reducers until needed
-  const middlewares = applyMiddleware(thunk, requestMiddleware, dispatchNeedsMiddleware)
+  const middlewares = applyMiddleware(thunk, requestMiddleware, responseParserMiddleware, fetchComponentDataMiddleware)
   let finalCreateStore
 
   if (CLIENT_DEVTOOLS) {

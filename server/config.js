@@ -1,10 +1,13 @@
-const DEFAULT_SECRET = 'CHANGEME'
+// todo: change this when working with more than one server
+const DEFAULT_SECRET = require('crypto').randomBytes(16).toString('hex')
+
+const name = require('../package.json').name.split('.')[0]
 
 const config = {
   ip: process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '127.0.0.1',
   port: process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3000,
 
-  name: require('../package.json').name.split('.')[0],
+
   env: process.env.NODE_ENV || 'development',
   version: require('../package').version,
 
@@ -21,8 +24,19 @@ const config = {
   },
 
   secret: DEFAULT_SECRET,
+
+  s3_bucket: `${process.env.NODE_ENV}-${name}`,
+  s3_region: 'ap-southeast-2',
+
+  max_file_upload_size: 1024 * 1024 * 10, //10mb
+
+  // These keys from this config object are passed to the clients store
+  client_config_keys: ['url', 's3_url', 'max_file_upload_size'],
 }
 
+config.s3_url = `https://${config.s3_bucket}.s3-${config.s3_region}.amazonaws.com`
+
+config.name = name
 config.url = process.env.URL || `http://${config.ip}:${config.port}`
 export default config
 

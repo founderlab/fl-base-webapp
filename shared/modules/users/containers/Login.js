@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {pushState} from 'redux-router'
 import {login} from 'fl-auth-redux'
-import Login from '../components/login'
+import Login from '../components/Login'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {pushState, login})
 export default class LoginContainer extends Component {

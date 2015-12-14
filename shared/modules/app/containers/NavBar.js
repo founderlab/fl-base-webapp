@@ -37,7 +37,7 @@ export default class NavBar extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link to="/#page-top" className="navbar-brand page-scroll">FounderLab_replaceme</Link>
+            <Link to="/#page-top" className="navbar-brand page-scroll">1scope.com</Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,9 +55,6 @@ export default class NavBar extends Component {
                 ) : (
                   <div>
                     <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
-                    <br /><Link to="/auth/facebook">Login with Facebook</Link>
-                    <br /><Link to="/register">Register</Link>
-                    <br /><Link to="/reset_request">Forgot?</Link>
                   </div>
                 )}
               </li>

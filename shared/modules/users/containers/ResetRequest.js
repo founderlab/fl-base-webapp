@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {resetRequest} from 'fl-auth-redux'
-import ResetRequest from '../components/reset_request'
+import ResetRequest from '../components/ResetRequest'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {email: state.router.location.query.email}), {resetRequest})
 export default class ResetRequestContainer extends Component {
