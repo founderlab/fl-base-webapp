@@ -16,7 +16,6 @@ import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
 import initClientApps from './client_apps'
-import User from './models/user'
 
 const bind_options = {
   origins: config.origins,
@@ -39,7 +38,6 @@ app.use(allow(config.origins))
 // Auth after other middleware and before api/client
 configureAuth({
   app,
-  User,
   sendConfirmationEmail,
   sendResetEmail,
   facebook: {

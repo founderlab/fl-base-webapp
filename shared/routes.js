@@ -27,14 +27,7 @@ export default function getRoutes(store) {
 
       {UserRoutes}
 
-      <Route path="opportunities">
-        <IndexRoute component={require('./modules/opportunities/containers/OpportunityFinder')} />
-        <Route path=":id" component={require('./modules/opportunities/containers/OpportunityDetail')} />
-        <Route path=":id/apply" component={require('./modules/opportunities/containers/OpportunityApply')} />
-      </Route>
-
       <Route path="users">
-        <Route component={require('./modules/users/containers/Register')} path="register" />
         <Route onEnter={requireRep}>
           <Route path="profile" component={require('./modules/users/containers/Profile')} />
         </Route>
