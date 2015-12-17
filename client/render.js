@@ -9,7 +9,7 @@ import {reduxReactRouter} from 'redux-router'
 const Backbone = require('backbone')
 Backbone.ajax = require('backbone.nativeajax')
 
-import createStore from '../shared/create_store'
+import createStore from '../shared/createStore'
 import {patchRouteEntry} from 'fl-react-utils'
 
 export default (getRoutes) => {

@@ -3,7 +3,7 @@ import admin from 'fl-admin'
 admin({
   models: [
     {
-      model_type: require('./models/group'),
+      model_type: require('./models/Group'),
       fields: {
         name: {
           inline: true,
@@ -14,10 +14,10 @@ admin({
       },
     },
     // {
-    //   model_type: require('./models/user'),
+    //   model_type: require('./models/User'),
     // },
     {
-      model_type: require('./models/target'),
+      model_type: require('./models/Target'),
       fields: {
         is_this_thing_on: {inline: true},
       },

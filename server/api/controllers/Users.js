@@ -12,7 +12,7 @@ function canAccess(options, callback) {
 export default class UsersController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
-      model_type: require('fl-auth-server/lib/models/user'),
+      model_type: require('fl-auth-server/lib/models/User'),
       route: '/api/users',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {

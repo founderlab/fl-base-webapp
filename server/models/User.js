@@ -2,7 +2,6 @@ import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
 import bcrypt from 'bcrypt-nodejs'
-import crypto from 'crypto'
 
 const db_url = process.env.DATABASE_URL
 if (!db_url) console.log('Missing process.env.DATABASE_URL')
@@ -15,16 +14,9 @@ export default class User extends Backbone.Model {
     // todo
     // refresh_tokens: () => ['hasMany', require('fl-auth-server').RefreshToken],
 
-    // Relations used by organisation representatives
-    opportunities: () => ['hasMany', require('./opportunity'), {as: 'poster'}],
-    organisation: () => ['belongsTo', require('./organisation'), {as: 'representatives'}],
+    school: () => ['belongsTo', require('./School'), {as: 'students'}],
 
-    // Relations used by students
-    applications: () => ['hasMany', require('./application'), {as: 'student'}],
-    engagements: () => ['hasMany', require('./engagement'), {as: 'student'}],
-    school: () => ['belongsTo', require('./school'), {as: 'students'}],
-
-  }, require('../../shared/models/schemas/user'))
+  }, require('../../shared/models/schemas/User'))
 
   static createHash(password) { return bcrypt.hashSync(password) }
 

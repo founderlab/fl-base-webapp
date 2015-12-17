@@ -33,7 +33,7 @@ export default function sendMail(options, callback) {
 export function sendResetEmail(user, callback) {
   const email = user.get('email')
   const query = querystring.stringify({email: user.get('email'), reset_token: user.get('reset_token')})
-  const message = `http://localhost:8080/reset?${query}`
+  const message = `${app_config.url}/reset?${query}`
   console.log('Sending reset email', email, user.get('reset_token'), message)
   sendMail({to: email, subject: `Password reset for ${app_config.url}`, text: message}, callback)
 }

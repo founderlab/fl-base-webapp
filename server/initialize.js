@@ -15,9 +15,8 @@ if (!process.env.DATABASE_URL) {
   process.env.DATABASE_URL = `mongodb://${db.user}:${db.pass}@${db.host}:${db.port}/${db.app_name}`
 
   console.log('process.env.DATABASE_URL set to', process.env.DATABASE_URL)
-
 }
 
 // no jQuery, backbone needs an ajax function
 const Backbone = require('backbone')
-Backbone.ajax = require('./lib/backbone_ajax')
+Backbone.ajax = require('fl-server-utils').createBasicAjax(require('./config'))

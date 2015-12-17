@@ -5,13 +5,6 @@ import Backbone from 'backbone'
 export default class User extends Backbone.Model {
   schema = () => _.extend({
 
-    // Relations used by organisation representatives
-    opportunities: () => ['hasMany', require('./opportunity'), {as: 'poster'}],
-    organisation: () => ['belongsTo', require('./organisation'), {as: 'representatives'}],
-
-    // Relations used by students
-    applications: () => ['hasMany', require('./application'), {as: 'student'}],
-    engagements: () => ['hasMany', require('./engagement'), {as: 'student'}],
     school: () => ['belongsTo', require('./school'), {as: 'students'}],
 
   }, require('./schemas/user'))

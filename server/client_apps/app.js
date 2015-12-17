@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import {createServerRenderer} from 'fl-react-utils'
 import config from '../config'
-import createStore from '../../shared/create_store'
+import createStore from '../../shared/createStore'
 import getRoutes from '../../shared/routes'
 
 export default createServerRenderer({

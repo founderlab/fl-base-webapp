@@ -10,10 +10,10 @@ export default class School extends Backbone.Model {
 
   schema = () => _.extend({
 
-    students: () => ['hasMany', require('./user')],
-    location: () => ['hasMany', require('./location')],
+    students: () => ['hasMany', require('./User')],
+    location: () => ['hasMany', require('./Location')],
 
-  }, require('../../shared/models/schemas/school'))
+  }, require('../../shared/models/schemas/School'))
 
   defaults() { return {created_at: moment.utc().toDate()} }
 }

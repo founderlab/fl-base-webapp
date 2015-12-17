@@ -1,14 +1,10 @@
 import _ from 'lodash'
 import Queue from 'queue-async'
 
-import Application from '../server/models/application'
-import Content from '../server/models/content'
-import Engagement from '../server/models/engagement'
-import Location from '../server/models/location'
-import Opportunity from '../server/models/opportunity'
-import Organisation from '../server/models/organisation'
-import School from '../server/models/school'
-import User from '../server/models/user'
+import Opportunity from '../server/models/Opportunity'
+import Organisation from '../server/models/Organisation'
+import School from '../server/models/School'
+import User from '../server/models/User'
 
 const to_scaffold = {
   user: {

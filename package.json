@@ -36,6 +36,7 @@
     "fl-auth-redux": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-redux",
     "fl-auth-server": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-server",
     "fl-react-utils": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-react-utils",
+    "fl-server-utils": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-server-utils",
     "history": "1.13.x",
     "immutable": "^3.7.4",
     "inflection": "^1.7.2",

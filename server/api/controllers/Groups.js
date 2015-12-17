@@ -13,7 +13,7 @@ function canAccess(options, callback) {
 export default class GroupsController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
-      model_type: require('../../models/group'),
+      model_type: require('../../models/Group'),
       route: '/api/groups',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {

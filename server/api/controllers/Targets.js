@@ -13,7 +13,7 @@ function canAccess(options, callback) {
 export default class TargetsController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
-      model_type: require('../../models/target'),
+      model_type: require('../../models/Target'),
       route: '/api/targets',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {

@@ -5,8 +5,7 @@ import Backbone from 'backbone'
 export default class School extends Backbone.Model {
   schema = () => _.extend({
 
-    students: () => ['hasMany', require('./user')],
-    location: () => ['hasMany', require('./location')],
+    students: () => ['hasMany', require('./User')],
 
   }, require('./schemas/school'))
 
