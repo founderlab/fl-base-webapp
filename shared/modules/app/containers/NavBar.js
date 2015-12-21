@@ -24,7 +24,8 @@ export default class NavBar extends Component {
   }
 
   render() {
-    const email = this.props.auth.get('email')
+    const user = this.props.auth.get('user')
+    const email = user && user.get('email')
 
     return (
       <nav id="mainNav" className="navbar navbar-default navbar-fixed-top affix">

@@ -9,15 +9,16 @@ export default function getRoutes(store) {
   function requireUserFn(checkFn) {
     return function requireUser(next_state, replaceState, callback) {
       const {auth} = store.getState()
-      if (!auth.get('email') || (checkFn && !checkFn(auth))) {
+      const user = auth.get('user')
+      if (!user || (checkFn && !checkFn(user))) {
         replaceState(null, `/login?redirect_to=${next_state.location.pathname}`)
       }
       callback()
     }
   }
 
-  const requireAdmin = requireUserFn(auth => auth.get('admin'))
-  const requireRep = requireUserFn(auth => auth.get('type') === USER_TYPES.REPRESENTATIVE)
+  const requireAdmin = requireUserFn(user => user.get('admin'))
+  const requireRep = requireUserFn(user => user.get('type') === USER_TYPES.REPRESENTATIVE)
 
   return (
     <Route path="/" name="app" component={require('./modules/app/containers/App')}>
