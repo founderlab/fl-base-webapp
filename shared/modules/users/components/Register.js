@@ -15,7 +15,7 @@ export default class Register extends Component {
           <div className="row">
             <div className="col-lg-6 col-lg-offset-3">
               <h2 className="text-center">Register</h2>
-                <RegisterForm {...this.props} />
+                <RegisterForm onSubmit={this.props.onSubmit} />
             </div>
           </div>
         </div>
