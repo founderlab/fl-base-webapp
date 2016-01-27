@@ -5,8 +5,6 @@ import {connect} from 'react-redux'
 import {pushState} from 'redux-router'
 import {login} from 'fl-auth-redux'
 import {LoginForm} from 'fl-auth-react'
-import {NavDropdown} from 'react-bootstrap'
-import {APPLICANT} from '../../../consts/user_types'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {login, pushState})
 export default class NavBar extends Component {
@@ -27,31 +25,10 @@ export default class NavBar extends Component {
 
   render() {
     const user = this.props.auth.get('user')
-    let login_display = null
-
-    if (user) {
-      login_display = (
-        <NavDropdown id="user_dropdown" title={user.get('email')}>
-          {user.get('type') === APPLICANT && <li><Link to="/applications">Applications</Link></li>}
-          {user.get('admin') && <li><a href="/admin">Admin</a></li>}
-          <li><Link to={`/profile`}>Profile</Link></li>
-          <li><a href="/logout">Logout</a></li>
-        </NavDropdown>
-      )
-    }
-    else {
-      login_display = [
-        <li key={0}>
-          <Link to="/register">Register</Link>
-        </li>,
-        <li key={1}>
-          <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
-        </li>,
-      ]
-    }
+    const email = user && user.get('email')
 
     return (
-      <nav className="navbar navbar-default navbar-fixed-top affix">
+      <nav id="mainNav" className="navbar navbar-default navbar-fixed-top affix">
         <div className="container-fluid">
 
           <div className="navbar-header">
@@ -61,28 +38,28 @@ export default class NavBar extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link to="/" className="navbar-brand page-scroll">1scope.com</Link>
+            <Link to="/#page-top" className="navbar-brand page-scroll">1scope.com</Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-            <ul className="nav navbar-nav">
+            <ul className="nav navbar-nav navbar-right">
               <li>
-                <Link to="/#">Home</Link>
+                <Link to="/#about" className="page-scroll">About</Link>
               </li>
-              <NavDropdown id="opportunities_dropdown" title="Opportunities">
-                <li><Link to="/opportunities">View Opportunities</Link></li>
-              </NavDropdown>
-              <NavDropdown id="rep_dropdown" title="Company">
-                <li><Link to="/manage/opportunities">Manage Opportunities</Link></li>
-                <li><Link to="/manage/opportunities/create">Create Opportunity</Link></li>
-              </NavDropdown>
+              <li>
+                {email ? (
+                  <span>
+                    {email}
+                    <a href="/logout" className="btn btn-small">logout</a>
+                  </span>
+                ) : (
+                  <div>
+                    <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
+                  </div>
+                )}
+              </li>
             </ul>
-
-            <ul className="nav navbar-nav navbar-nav-right pull-right">
-              {login_display}
-            </ul>
-
           </div>
         </div>
       </nav>

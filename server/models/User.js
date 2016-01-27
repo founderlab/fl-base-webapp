@@ -14,6 +14,7 @@ export default class User extends Backbone.Model {
     // todo
     // refresh_tokens: () => ['hasMany', require('fl-auth-server').RefreshToken],
 
+    profile: () => ['hasOne', require('./Profile')],
     school: () => ['belongsTo', require('./School'), {as: 'students'}],
 
   }, require('../../shared/models/schemas/User'))

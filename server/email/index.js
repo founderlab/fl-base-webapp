@@ -2,6 +2,8 @@ import nodemailer from 'nodemailer'
 import smtpTransport from 'nodemailer-smtp-transport'
 import app_config from '../config'
 import querystring from 'querystring'
+import passwordReset from './templates/passwordReset'
+import emailConfirmation from './templates/emailConfirmation'
 
 let transport = null
 
@@ -30,10 +32,20 @@ export default function sendMail(options, callback) {
   transport.sendMail(options, callback)
 }
 
+export function sendConfirmationEmail(user, callback) {
+  const email = user.get('email')
+  const query = querystring.stringify({email, token: user.get('email_confirmation_token')})
+  const options = {confirmation_url: `${app_config.url}/confirm_email?${query}`}
+  const message = emailConfirmation(options)
+  console.log('Sending email_confirmation_token email', email, user.get('email_confirmation_token'), message)
+  sendMail({to: email, subject: `Confirm your email for ${app_config.url}`, text: message}, callback)
+}
+
 export function sendResetEmail(user, callback) {
   const email = user.get('email')
-  const query = querystring.stringify({email: user.get('email'), reset_token: user.get('reset_token')})
-  const message = `${app_config.url}/reset?${query}`
+  const query = querystring.stringify({email, reset_token: user.get('reset_token')})
+  const options = {reset_url: `${app_config.url}/reset?${query}`}
+  const message = passwordReset(options)
   console.log('Sending reset email', email, user.get('reset_token'), message)
   sendMail({to: email, subject: `Password reset for ${app_config.url}`, text: message}, callback)
 }
