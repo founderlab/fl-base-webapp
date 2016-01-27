@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {createServerRenderer} from 'fl-react-utils'
+import {createServerRenderer} from 'fl-server-utils'
 import config from '../config'
 import createStore from '../../shared/createStore'
 import getRoutes from '../../shared/routes'
@@ -7,7 +7,7 @@ import getRoutes from '../../shared/routes'
 export default createServerRenderer({
   createStore,
   getRoutes,
-  scripts: _.map(_.pick(require('../../webpack-assets.json'), ['shared.js', 'app']), entry => entry.js),
   omit: 'admin',
+  always_fetch: require('../../shared/modules/app/containers/App'),
   config: _.pick(config, config.client_config_keys),
 })

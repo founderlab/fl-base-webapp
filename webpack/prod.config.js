@@ -6,8 +6,9 @@ var webpack = require('webpack')
 var CleanPlugin = require('clean-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var strip = require('strip-loader')
+var AssetsPlugin = require('assets-webpack-plugin')
 
-var relative_assets_path = '../static/dist'
+var relative_assets_path = '../public/dist'
 var assets_path = path.join(__dirname, relative_assets_path)
 
 module.exports = {
@@ -28,7 +29,7 @@ module.exports = {
     path: assets_path,
     filename: '[name]-[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
-    publicPath: '/public/'
+    publicPath: '/public/dist/'
   },
   module: {
     loaders: [
@@ -37,10 +38,15 @@ module.exports = {
       { test: /\.js$/, exclude: /node_modules/, loaders: [strip.loader('debug'), 'babel'] },
       { test: /\.json$/, loader: 'json-loader' },
 
-      { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
-      { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass' },
-      { test: /\.styl$/, loader: 'style!css!autoprefixer?browsers=last 2 version!stylus' },
-      { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
+      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!less') },
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!sass') },
+      { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!stylus') },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version') },
+
+      // { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
+      // { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass' },
+      // { test: /\.styl$/, loader: 'style!css!autoprefixer?browsers=last 2 version!stylus' },
+      // { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
       { test: /\.(png|jpg|gif|wav|mp3)$/, loader: 'file' },
 
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -48,25 +54,22 @@ module.exports = {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
-    ]
+    ],
+    noParse: /node_modules\/quill\/dist\/quill\.js/
   },
   progress: true,
   resolve: {
     modulesDirectories: [
-      'src',
       'node_modules'
     ],
     extensions: ['', '.json', '.js']
   },
   plugins: [
-    new CleanPlugin([relative_assets_path]),
+    // new CleanPlugin([relative_assets_path]), // note: doesn't work when run from a simlinked project dir
     new AssetsPlugin({prettyPrint: true}),
 
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
-
-    // ignore dev config
-    new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
 
     // set global vars
     new webpack.DefinePlugin({
@@ -78,8 +81,11 @@ module.exports = {
       }
     }),
 
+    // ignore jquery (used by backbone)
+    new webpack.IgnorePlugin(/^jquery$/),
+
     // optimizations
-    new webpack.optimize.CommonsChunkPlugin('shared.js'),
+    new webpack.optimize.CommonsChunkPlugin('shared', 'shared-[chunkhash].js'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -87,9 +93,6 @@ module.exports = {
       compress: {
         warnings: false
       }
-    }),
-
-    webpackIsomorphicToolsPlugin
+    })
   ]
 }
-

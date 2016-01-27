@@ -82,19 +82,19 @@ module.exports = {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-    ]
+    ],
+    noParse: /node_modules\/quill\/dist\/quill\.js/
   },
   progress: true,
   resolve: {
     modulesDirectories: [
-      'shared',
       'node_modules'
     ],
     extensions: ['', '.json', '.js']
   },
   plugins: [
     new AssetsPlugin({prettyPrint: true}),
-    new webpack.optimize.CommonsChunkPlugin('shared.js'),
+    new webpack.optimize.CommonsChunkPlugin('shared', 'shared.js'),
     new webpack.optimize.OccurenceOrderPlugin(),
     // ignore jquery (used by backbone)
     new webpack.IgnorePlugin(/^jquery$/),

@@ -1,17 +1,17 @@
 import _ from 'lodash'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {pushState} from 'redux-router'
+import {routeActions} from 'redux-simple-router'
 import {confirmEmail} from 'fl-auth-redux'
 import EmailConfirm from '../components/EmailConfirm'
 
-@connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {confirmEmail, pushState})
+@connect(state => _.pick(state, 'auth', 'config'), {confirmEmail, pushState: routeActions.push})
 export default class EmailConfirmContainer extends Component {
 
   static propTypes = {
     auth: PropTypes.object,
     config: PropTypes.object.isRequired,
-    query: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     confirmEmail: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired,
   }
@@ -21,8 +21,9 @@ export default class EmailConfirmContainer extends Component {
   }
 
   render() {
+    const {email, token} = this.props.location.query
     return (
-      <EmailConfirm auth={this.props.auth} email={this.props.query.email} token={this.props.query.token} confirmEmail={this.confirmEmail} />
+      <EmailConfirm auth={this.props.auth} email={email} token={token} confirmEmail={this.confirmEmail} />
     )
   }
 }

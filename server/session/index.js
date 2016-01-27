@@ -36,6 +36,6 @@ if (sessions_db_url.match(/^redis/)) {
 }
 
 export default (req, res, next) => {
-  if (!session_middleware || _.contains(NO_SESSION_ROUTES, req.url)) return next()
+  if (!session_middleware || _.includes(NO_SESSION_ROUTES, req.url)) return next()
   session_middleware(req, res, next)
 }
