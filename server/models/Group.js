@@ -9,7 +9,7 @@ export default class Group extends Backbone.Model {
   schema = () => ({
     name: 'String',
     description: 'String',
-    created_at: 'Date',
+    created_at: 'DateTime',
   })
   defaults() { return {created_at: moment.utc().toDate()} }
 }

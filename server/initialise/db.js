@@ -17,7 +17,7 @@ export default (callback) => {
       if (!exists) {
         console.log(`No admin user exists. Running scaffold script for env ${process.env.NODE_ENV}`)
         try {
-          const scaffold = require(`../../scripts/${process.env.NODE_ENV}`)
+          const scaffold = require(`../../scaffold/${process.env.NODE_ENV}`)
           scaffold(callback)
         }
         catch (err) {

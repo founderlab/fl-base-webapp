@@ -9,7 +9,7 @@ export default class Target extends Backbone.Model {
   schema = () => ({
     name: 'String',
     description: 'String',
-    created_at: 'Date',
+    created_at: 'DateTime',
     is_this_thing_on: 'Boolean',
     groups: () => ['hasMany', require('./Group')],
   })

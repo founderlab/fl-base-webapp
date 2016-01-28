@@ -2,8 +2,8 @@ export default {
   title: 'String',
   slug: 'String',
   content: 'String',
-  order: 'Number',
+  order: 'Integer',
   visible: 'Boolean',
   show_in_footer: 'Boolean',
-  created_at: 'Date',
+  created_at: 'DateTime',
 }

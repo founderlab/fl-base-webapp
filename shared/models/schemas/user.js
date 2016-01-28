@@ -9,5 +9,5 @@ module.exports = {
   photo: 'String',
   indigenous_status: 'String',
   description: 'String',
-  created_at: 'Date',
+  created_at: 'DateTime',
 }
