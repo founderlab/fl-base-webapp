@@ -1,6 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
+import {smartSync} from 'fl-server-utils'
 import bcrypt from 'bcrypt-nodejs'
 
 const db_url = process.env.DATABASE_URL
@@ -15,9 +16,17 @@ export default class User extends Backbone.Model {
     // refresh_tokens: () => ['hasMany', require('fl-auth-server').RefreshToken],
 
     profile: () => ['hasOne', require('./Profile')],
-    school: () => ['belongsTo', require('./School'), {as: 'students'}],
 
-  }, require('../../shared/models/schemas/User'))
+    // Relations used by organisation representatives
+    opportunities: () => ['hasMany', require('./Opportunity'), {as: 'poster'}],
+    organisation: () => ['belongsTo', require('./Organisation'), {as: 'representatives'}],
+
+    // Relations used by applicants
+    applications: () => ['hasMany', require('./Application'), {as: 'applicant'}],
+    engagements: () => ['hasMany', require('./Engagement'), {as: 'applicant'}],
+    school: () => ['belongsTo', require('./School'), {as: 'applicants'}],
+
+  }, require('../../shared/models/schemas/user'))
 
   static createHash(password) { return bcrypt.hashSync(password) }
 
@@ -26,4 +35,4 @@ export default class User extends Backbone.Model {
   passwordIsValid(password) { return bcrypt.compareSync(password, this.get('password')) }
 }
 
-User.prototype.sync = require('backbone-mongo').sync(User)
+User.prototype.sync = smartSync(db_url, User)
