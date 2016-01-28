@@ -13,12 +13,13 @@ function canAccess(options, callback) {
 export default class AppSettingsController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
-      model_type: require('../../models/AppSetting'),
+      model_type: require('../../models/AppSettings'),
       route: '/api/app_settings',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
-      whitelist: {
-
+      templates: {
+        detail: require('../templates/app_settings/detail'),
       },
+      default_template: 'detail',
     }, options))
   }
 }
