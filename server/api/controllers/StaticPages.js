@@ -4,6 +4,7 @@ import {createAuthMiddleware} from 'fl-auth-server'
 
 function canAccess(options, callback) {
   const {user, req} = options
+  console.log('req.method', req.method)
   if (req.method === 'GET') return callback(null, true)
   if (!user) return callback(null, false)
   if (user.admin || user.get('admin')) return callback(null, true)
@@ -15,10 +16,12 @@ export default class StaticPagesController extends RestController {
     super(options.app, _.defaults({
       model_type: require('../../models/StaticPage'),
       route: '/api/static_pages',
-      auth: [...options.auth, createAuthMiddleware({canAccess})],
-      whitelist: {
-
+      auth: [...options.auth[0], createAuthMiddleware({canAccess})],
+      templates: {
+        detail: require('../templates/static_pages/detail'),
+        link: require('../templates/static_pages/link'),
       },
+      default_template: 'detail',
     }, options))
   }
 }

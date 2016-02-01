@@ -4,7 +4,7 @@ import config from '../config'
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development'
 
 // aws using rds
-if (process.env.AWS) {
+if (!process.env.DATABASE_URL) {
   console.log('Using RDS database')
   const db = {
     user: process.env.RDS_USERNAME,
@@ -15,21 +15,6 @@ if (process.env.AWS) {
   }
   process.env.DATABASE_URL = `postgres://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}`
   console.log('db values', db)
-  console.log('process.env.DATABASE_URL set to', process.env.DATABASE_URL)
-}
-
-// openshift
-else if (!process.env.DATABASE_URL) {
-  console.log('No process.env.DATABASE_URL present, using openshift values')
-
-  const db = {
-    user: process.env.OPENSHIFT_MONGODB_DB_USERNAME,
-    pass: process.env.OPENSHIFT_MONGODB_DB_PASSWORD,
-    host: process.env.OPENSHIFT_MONGODB_DB_HOST,
-    port: process.env.OPENSHIFT_MONGODB_DB_PORT,
-    name: process.env.OPENSHIFT_APP_NAME,
-  }
-  process.env.DATABASE_URL = `mongodb://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}`
 
   console.log('process.env.DATABASE_URL set to', process.env.DATABASE_URL)
 }

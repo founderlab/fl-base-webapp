@@ -1,15 +1,19 @@
 import Queue from 'queue-async'
 import React, {Component, PropTypes} from 'react'
+import Helmet from 'react-helmet'
+import {connect} from 'react-redux'
 import NavBar from './NavBar'
 import Footer from './Footer'
 import {loadAppSettings} from '../actions'
 import {loadOpportunityTypes, loadIndustries} from '../../opportunities/actions'
 import {loadActiveProfile} from '../../users/profile_actions'
 
+@connect(state => ({name: state.config.get('name')}))
 export default class App extends Component {
 
   static propTypes = {
     children: PropTypes.node,
+    name: PropTypes.string,
   }
 
   static fetchData({store, action}, callback) {
@@ -34,6 +38,13 @@ export default class App extends Component {
   render() {
     return (
       <div id="app-view">
+        <Helmet
+          title=""
+          titleTemplate={`%s - ${this.props.name}`}
+          meta={[
+            {name: 'description', content: this.props.name},
+          ]}
+        />
         <NavBar />
         {this.props.children}
         <Footer />

@@ -27,7 +27,7 @@ export default class StaticPageContainer extends Component {
   }
 
   render() {
-    if (app.get('loading')) return (<Loader />)
+    if (this.props.app.get('loading')) return (<Loader />)
     const page = this.page()
     if (!page) return (<h1>Not found</h1>)
     return (
