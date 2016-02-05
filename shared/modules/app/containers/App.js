@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import NavBar from './NavBar'
 import Footer from './Footer'
+import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
 import {loadOpportunityTypes, loadIndustries} from '../../opportunities/actions'
 import {loadActiveProfile} from '../../users/profile_actions'
@@ -41,9 +42,7 @@ export default class App extends Component {
         <Helmet
           title=""
           titleTemplate={`%s - ${this.props.name}`}
-          meta={[
-            {name: 'description', content: this.props.name},
-          ]}
+          {...headerTags(this.props)}
         />
         <NavBar />
         {this.props.children}

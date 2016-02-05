@@ -62,8 +62,8 @@ app.use('/s3', (req, res, next) => {
 
 app.all('/ping', (req, res) => res.status(200).end())
 app.all('/time', (req, res) => res.json(moment.utc().toDate()))
-app.use('/public', express.static(path.join(__dirname, '../client/public')))
-app.use(favicon(path.join(__dirname, '../client/public/favicon.ico')))
+app.use('/public', express.static(path.join(__dirname, '../public')))
+app.use(favicon(path.join(__dirname, '../public/favicons/favicon.ico')))
 
 initApi(bind_options)
 // React app last; handles all other routes
