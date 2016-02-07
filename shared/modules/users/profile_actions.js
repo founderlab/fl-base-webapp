@@ -1,6 +1,5 @@
 import _ from 'lodash' // eslint-disable-line
 import Profile from '../../models/Profile'
-import Location from '../../models/Location'
 
 // These actions are for user profiles
 // For user actions see fl-auth-redux
@@ -28,21 +27,11 @@ export function loadActiveProfile(query, callback) {
   }
 }
 
-export function updateProfile(data, callback) {
-  const profile = new Profile(data.profile)
-  const location = new Location(data.location)
+export function save(data, callback) {
+  const model = new Profile(data)
   return {
     type: TYPES.PROFILE_SAVE,
-    request: (callback) => {
-      location.save((err, location) => {
-        if (err) return callback(err)
-        profile.set({location})
-        profile.save(err => {
-          if (err) return callback(err)
-          callback(null, {profile, location})
-        })
-      })
-    },
+    request: model.save.bind(model),
     callback,
   }
 }

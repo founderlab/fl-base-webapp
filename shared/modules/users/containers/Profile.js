@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {save} from '../actions'
+import {save} from '../profile_actions'
 import Profile from '../components/Profile'
 
 @connect(state => ({auth: state.auth}), {save})

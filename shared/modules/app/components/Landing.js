@@ -9,9 +9,8 @@ export default class Landing extends React.Component {
         <header>
           <div className="header-content">
             <div className="header-content-inner">
-              <h1>1scope wip</h1>
+              <h1>new project wip</h1>
               <hr />
-              <p>no</p>
 
               <Link to="/opportunities" className="btn btn-default btn-xl">Find an opportunity</Link>
 
