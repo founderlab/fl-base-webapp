@@ -12,7 +12,6 @@ export default class Profile extends Backbone.Model {
   schema = () => _.extend({
 
     user: () => ['belongsTo', require('./User')],
-    location: () => ['belongsTo', require('./Location')],
 
   }, require('../../shared/models/schemas/profile'))
 
