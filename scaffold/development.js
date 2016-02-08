@@ -1,6 +1,9 @@
 import _ from 'lodash' // eslint-disable-line
 import Queue from 'queue-async'
 
+/* ---------------------------------------
+// Example development scaffolding, replace with code to generate your own models
+
 import Lesson from '../server/models/Lesson'
 import LessonCategory from '../server/models/LessonCategory'
 import LessonPart from '../server/models/LessonPart'
@@ -8,43 +11,6 @@ import LessonPartFile from '../server/models/LessonPartFile'
 import LessonPartSession from '../server/models/LessonPartSession'
 import LessonStatus from '../server/models/LessonStatus'
 import School from '../server/models/School'
-
-import USER_TYPES from '../shared/consts/user_types'
-
-const to_scaffold = {
-  admin_user: {
-    email: 'admin@chatterbox.com',
-    name: 'admin',
-    admin: true,
-    password: '1',
-    profile: {
-      name: 'admin',
-    },
-  },
-  student_user: {
-    email: 'student@chatterbox.com',
-    type: USER_TYPES.STUDENT,
-    password: '1',
-    profile: {
-      name: 'Chat Student',
-    },
-  },
-  teacher_user: {
-    email: 'teacher@chatterbox.com',
-    type: USER_TYPES.TEACHER,
-    password: '1',
-    profile: {
-      name: 'Chat Teacher',
-    },
-  },
-  schools: [{
-    name: 'St Marys',
-  }, {
-    name: 'Other School',
-  }],
-}
-
-const models = {}
 
 function addLessonParts(lesson, callback) {
 
@@ -113,13 +79,47 @@ export default function scaffold(callback) {
     lesson_queue.await(callback)
   })
 
-  models.schools = []
-  _.forEach(to_scaffold.schools, (_school) => {
-    queue.defer(callback => {
-      const school = new School(_school)
-      models.schools.push(school)
-      school.save(callback)
-    })
+  queue.await(err => callback(err, models))
+}
+
+--------------------------------------- */
+import USER_TYPES from '../shared/consts/user_types'
+
+const to_scaffold = {
+  admin_user: {
+    email: 'admin@example.com',
+    name: 'admin',
+    admin: true,
+    password: '1',
+    profile: {
+      name: 'admin',
+    },
+  },
+  student_user: {
+    email: 'student@example.com',
+    type: USER_TYPES.STUDENT,
+    password: '1',
+    profile: {
+      name: 'Chat Student',
+    },
+  },
+  teacher_user: {
+    email: 'teacher@example.com',
+    type: USER_TYPES.TEACHER,
+    password: '1',
+    profile: {
+      name: 'Chat Teacher',
+    },
+  },
+}
+
+const models = {}
+
+export default function scaffold(callback) {
+  const queue = new Queue(1)
+
+  queue.defer(callback => {
+    require('./shared')(to_scaffold, (err, _models) => callback(err, _.extend(models, _models)))
   })
 
   queue.await(err => callback(err, models))

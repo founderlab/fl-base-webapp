@@ -5,8 +5,6 @@ import Backbone from 'backbone'
 export default class User extends Backbone.Model {
   schema = () => _.extend({
 
-    school: () => ['belongsTo', require('./School'), {as: 'students'}],
-
   }, require('./schemas/user'))
 
   defaults() { return {created_at: moment.utc().toDate()} }

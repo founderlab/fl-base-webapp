@@ -4,9 +4,6 @@ import Queue from 'queue-async'
 import StaticPage from '../server/models/StaticPage'
 import User from '../server/models/User'
 import AppSettings from '../server/models/AppSettings'
-import LessonCategory from '../server/models/LessonCategory'
-
-import USER_TYPES from '../shared/consts/user_types'
 
 const defaults = {
   app_settings: {
@@ -25,23 +22,6 @@ const defaults = {
     {title: 'Privacy'},
     {title: 'Terms of Service'},
   ],
-  lesson_categories: [{
-    name: 'Beginner',
-    user_type: USER_TYPES.STUDENT,
-    level: 10,
-  }, {
-    name: 'Intermediate',
-    user_type: USER_TYPES.STUDENT,
-    level: 20,
-  }, {
-    name: 'Advanced',
-    user_type: USER_TYPES.STUDENT,
-    level: 30,
-  }, {
-    name: 'Teacher',
-    user_type: USER_TYPES.TEACHER,
-    level: 100,
-  }],
 }
 const models = {}
 
@@ -78,17 +58,6 @@ export default function scaffold(_to_scaffold, callback) {
       const static_page = new StaticPage(_.extend(page_defaults, _static_page))
       models.static_pages.push(static_page)
       static_page.save(callback)
-    })
-  })
-
-  models.lesson_categories = []
-  _.forEach(to_scaffold.lesson_categories, _cat => {
-    queue.defer(callback => {
-
-      const cat = new LessonCategory(_cat)
-      models.lesson_categories.push(cat)
-
-      cat.save(callback)
     })
   })
 
