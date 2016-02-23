@@ -1,0 +1,82 @@
+@import './components/banner.scss';
+@import './components/footer.scss';
+@import './components/forms.scss';
+@import './components/landing.scss';
+@import './components/loader.scss';
+@import './components/navbar.scss';
+@import './components/opportunities.scss';
+@import './components/select.scss';
+@import './components/slider.scss';
+
+html, body, #react-view, #app-view {
+  height: 100%;
+
+  a:focus, a:active,
+  button:focus, button:active {
+    outline: none;
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, p {
+  word-wrap: break-word;
+}
+
+img {
+  width: 100%;
+}
+
+a {
+  cursor: pointer;
+}
+
+.container-fluid.no-margin {
+  padding: 0;
+}
+
+.app-wrapper {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -190px;
+  padding: 0 0 190px;
+
+  &:after {
+    content: "";
+    display: block;
+    height: 190px;
+  }
+}
+
+.jumbotron {
+  border-radius: 10px;
+}
+
+.inner-box {
+  padding: 25px;
+  border: 1px grey solid;
+  border-radius: 10px;
+  margin: 30px 10px;
+  textarea {
+    margin-bottom: 20px;
+  }
+}
+
+.logo {
+  background-color: grey;
+  height: 200px;
+  margin: 10px;
+}
+
+@media screen and (min-width: 992px) {
+  .logo {
+    width: 150px;
+  	height: 150px;
+  }
+}
+
+.shadow-panel {
+  @include bshadow();
+  background-color: #fff;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}

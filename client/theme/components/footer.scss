@@ -1,0 +1,23 @@
+
+.footer {
+  background: #fff;
+  // border-top: solid 1px $gray-lighter;
+  border-top: solid 10px $brand-success;
+  margin-top: 50px;
+  padding: 50px 60px;
+  height: 190px;
+  color: $gray-light;
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .social-icons {
+    font-size: 36px;
+  }
+
+  .social-icons i {
+    margin-right: 6px;
+  }
+}

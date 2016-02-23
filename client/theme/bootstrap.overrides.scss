@@ -1,0 +1,234 @@
+/**
+ * Override Bootstrap styles that you can't modify via variables here.
+ *
+ */
+
+@mixin bshadow($size: 5px, $opacity: 0.3) {
+  // border-width: 0 1px $width 1px;
+  @include box-shadow(0 1px $size rgba(0, 0, 0, $opacity));
+}
+
+@import './index.scss';
+
+// Open Sans
+// -----------------------------------------------------
+$web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:400,300" !default;
+@import url($web-font-path);
+
+
+// Navbar =====================================================================
+
+.navbar {
+  border: none;
+  // border-bottom: solid 1px $gray-lighter;
+  // border-radius: 0;
+  // background-color: $body-bg;
+  // margin: 0;
+  @include bshadow()
+  z-index: 9999;
+  li {
+    border-bottom: solid 2px $body-bg;
+  }
+  li.active {
+    border-bottom: solid 2px $gray;
+  }
+}
+
+// Buttons =====================================================================
+
+.btn-toolbar.pagination-buttons, .per-page-dropdown {
+  .btn {
+    @include box-shadow(none);
+  }
+  .btn-primary {
+    // color: $gray-light;
+    // background: $gray-lighterer;
+    background: transparent;
+    color: $brand-primary;
+    border: solid 1px transparent;
+  }
+  .btn-default {
+    color: $gray-light;
+    background: transparent;
+    border: solid 1px transparent;
+    &:hover {
+      // background: $gray-lighterer;
+      border: solid 1px $gray-lighter;
+    }
+  }
+}
+
+a, button {
+  @include transition(all 0.2s);
+
+  &.btn {
+    border: 0 none;
+    @include box-shadow(0 1px 5px rgba(0, 0, 0, 0.2));
+    &:focus, &.focus {
+      border: 0 none;
+    }
+  }
+}
+.btn:active, .btn.active {
+  // @include box-shadow(none);
+  // @include box-shadow(inset 0 1px 5px rgba(0, 0, 0, 0.1));
+}
+
+.dropdown-menu {
+  @include box-shadow(none);
+}
+
+// Forms ======================================================================
+
+.form-control,
+input {
+  border-width: 2px;
+  border-radius: 3px;
+  @include box-shadow(none);
+
+  &:focus {
+    @include box-shadow(none);
+  }
+}
+
+.has-warning {
+  .help-block,
+  .control-label,
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline,
+  &.radio label,
+  &.checkbox label,
+  &.radio-inline label,
+  &.checkbox-inline label,
+  .form-control-feedback {
+    color: $brand-warning;
+  }
+
+  .form-control,
+  .form-control:focus {
+    border: 2px solid $brand-warning;
+  }
+
+  .input-group-addon {
+    border-color: $brand-warning;
+  }
+}
+
+.has-error {
+  .help-block,
+  .control-label,
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline,
+  &.radio label,
+  &.checkbox label,
+  &.radio-inline label,
+  &.checkbox-inline label,
+  .form-control-feedback {
+    color: $brand-danger;
+  }
+
+  .form-control,
+  .form-control:focus {
+    border: 2px solid $brand-danger;
+  }
+
+  .input-group-addon {
+    border-color: $brand-danger;
+  }
+}
+
+.has-success {
+  .help-block,
+  .control-label,
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline,
+  &.radio label,
+  &.checkbox label,
+  &.radio-inline label,
+  &.checkbox-inline label,
+  .form-control-feedback {
+    color: $brand-success;
+  }
+
+  .form-control,
+  .form-control:focus {
+    border: 2px solid $brand-success;
+  }
+
+  .input-group-addon {
+    border-color: $brand-success;
+  }
+}
+
+
+// Containers =================================================================
+
+.well {
+  @include box-shadow(none);
+}
+
+a.list-group-item {
+
+  &.active,
+  &.active:hover,
+  &.active:focus {
+    border-color: $list-group-border;
+  }
+
+  &-success {
+    &.active {
+      background-color: $state-success-bg;
+    }
+
+    &.active:hover,
+    &.active:focus {
+      background-color: darken($state-success-bg, 5%);
+    }
+  }
+
+  &-warning {
+    &.active {
+      background-color: $state-warning-bg;
+    }
+
+    &.active:hover,
+    &.active:focus {
+      background-color: darken($state-warning-bg, 5%);
+    }
+  }
+
+  &-danger {
+    &.active {
+      background-color: $state-danger-bg;
+    }
+
+    &.active:hover,
+    &.active:focus {
+      background-color: darken($state-danger-bg, 5%);
+    }
+  }
+}
+
+.panel {
+  &-default {
+    .close {
+      color: $text-color;
+    }
+  }
+}
+
+.modal {
+  .close {
+    color: $text-color;
+  }
+}
+
+.popover {
+  color: $text-color;
+}

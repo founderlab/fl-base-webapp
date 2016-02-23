@@ -47,14 +47,14 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     app: [
-      'bootstrap-sass!./shared/theme/bootstrap.config.js',
-      'font-awesome-webpack!./shared/theme/font-awesome.config.js',
+      'bootstrap-sass!./client/theme/bootstrap.config.js',
+      'font-awesome-webpack!./client/theme/font-awesome.config.js',
       './client/app.js',
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr'
     ],
     admin: [
-      'bootstrap-sass!./shared/theme/bootstrap.config.js',
-      'font-awesome-webpack!./shared/theme/font-awesome.config.js',
+      'bootstrap-sass!./client/theme/bootstrap.config.js',
+      'font-awesome-webpack!./client/theme/font-awesome.config.js',
       './client/admin.js',
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr'
     ]

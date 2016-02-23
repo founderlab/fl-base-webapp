@@ -1,12 +1,11 @@
 import _ from 'lodash'
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {pushState} from 'redux-router'
 import {login} from 'fl-auth-redux'
-import {LoginForm} from 'fl-auth-react'
-import {NavDropdown} from 'react-bootstrap'
-import {APPLICANT} from '../../../consts/user_types'
+import {NavDropdown, Navbar, Nav, MenuItem, NavItem} from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
+import {STUDENT, REPRESENTATIVE} from '../../../consts/user_types'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {login, pushState})
 export default class NavBar extends Component {
@@ -17,6 +16,10 @@ export default class NavBar extends Component {
     query: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired,
+  }
+
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired,
   }
 
   onLogin = data => {
@@ -32,60 +35,44 @@ export default class NavBar extends Component {
     if (user) {
       login_display = (
         <NavDropdown id="user_dropdown" title={user.get('email')}>
-          {user.get('type') === APPLICANT && <li><Link to="/applications">Applications</Link></li>}
-          {user.get('admin') && <li><a href="/admin">Admin</a></li>}
-          <li><Link to={`/profile`}>Profile</Link></li>
+          {user.get('type') === STUDENT && <LinkContainer to={'/applications'}><MenuItem>Applications</MenuItem></LinkContainer>}
+          {user.get('admin') && <MenuItem href="/admin">Admin</MenuItem>}
+          <LinkContainer to={'/profile'}><MenuItem>Profile</MenuItem></LinkContainer>
+          <LinkContainer to={'/report'}><MenuItem>Report a Problem</MenuItem></LinkContainer>
           <li><a href="/logout">Logout</a></li>
         </NavDropdown>
       )
     }
     else {
       login_display = [
-        <li key={0}>
-          <Link to="/register">Register</Link>
-        </li>,
-        <li key={1}>
-          <LoginForm mode="horizontal" onSubmit={this.onLogin} {...this.props} />
-        </li>,
+        <LinkContainer key={1} to="/register"><NavItem>Register</NavItem></LinkContainer>,
+        <LinkContainer key={2} to="/login"><NavItem>Sign in</NavItem></LinkContainer>,
       ]
     }
 
     return (
-      <nav className="navbar navbar-default navbar-fixed-top affix">
-        <div className="container-fluid">
+      <Navbar fluid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <LinkContainer to={'/'} onlyActiveOnIndex><a>1scope.com</a></LinkContainer>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
 
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <Link to="/" className="navbar-brand page-scroll">site.com</Link>
-          </div>
+        <Navbar.Collapse>
+          <Nav>
+            <LinkContainer to={'/opportunities'}><NavItem>Opportunities</NavItem></LinkContainer>
+            {user && user.get('type') === REPRESENTATIVE && ([
+              <LinkContainer to={'/manage/opportunities'} key={1} onlyActiveOnIndex><NavItem>Manage Opportunities</NavItem></LinkContainer>,
+              <LinkContainer to={'/manage/opportunities/create'} key={2}><NavItem>Create an Opportunity</NavItem></LinkContainer>,
+            ])}
+          </Nav>
+          <Nav pullRight>
+            {login_display}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-            <ul className="nav navbar-nav">
-              <li>
-                <Link to="/#">Home</Link>
-              </li>
-              <NavDropdown id="opportunities_dropdown" title="Opportunities">
-                <li><Link to="/opportunities">View Opportunities</Link></li>
-              </NavDropdown>
-              <NavDropdown id="rep_dropdown" title="Company">
-                <li><Link to="/manage/opportunities">Manage Opportunities</Link></li>
-                <li><Link to="/manage/opportunities/create">Create Opportunity</Link></li>
-              </NavDropdown>
-            </ul>
-
-            <ul className="nav navbar-nav navbar-nav-right pull-right">
-              {login_display}
-            </ul>
-
-          </div>
-        </div>
-      </nav>
     )
   }
 }

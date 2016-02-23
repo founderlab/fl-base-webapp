@@ -16,13 +16,13 @@ module.exports = {
   entry: {
     app: [
       './client/app.js',
-      'bootstrap-sass!./shared/theme/bootstrap.config.prod.js',
-      'font-awesome-webpack!./shared/theme/font-awesome.config.prod.js'
+      'bootstrap-sass!./client/theme/bootstrap.config.prod.js',
+      'font-awesome-webpack!./client/theme/font-awesome.config.prod.js'
     ],
     admin: [
       './client/admin.js',
-      'bootstrap-sass!./shared/theme/bootstrap.config.prod.js',
-      'font-awesome-webpack!./shared/theme/font-awesome.config.prod.js'
+      'bootstrap-sass!./client/theme/bootstrap.config.prod.js',
+      'font-awesome-webpack!./client/theme/font-awesome.config.prod.js'
     ]
   },
   output: {

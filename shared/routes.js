@@ -18,18 +18,17 @@ export default function getRoutes(store) {
   }
 
   const requireAdmin = requireUserFn(user => user.get('admin'))
-  const requireRep = requireUserFn(user => user.get('type') === USER_TYPES.REPRESENTATIVE)
 
   return (
     <Route path="/" name="app" component={require('./modules/app/containers/App')}>
-      <IndexRoute component={require('./modules/app/components/Landing')} />
+      <IndexRoute component={require('./modules/app/containers/Landing')} />
 
       <AdminRoute path="/admin" name="admin" onEnter={requireAdmin} />
 
       {UserRoutes}
 
       <Route path="users">
-        <Route onEnter={requireRep}>
+        <Route>
           <Route path="profile" component={require('./modules/users/containers/Profile')} />
         </Route>
       </Route>

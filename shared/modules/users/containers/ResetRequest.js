@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash' // eslint-disable-line
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {resetRequest} from 'fl-auth-redux'

@@ -8,7 +8,7 @@ import moment from 'moment'
 import cookieParser from 'cookie-parser'
 import favicon from 'serve-favicon'
 import s3Router from 'react-dropzone-s3-uploader/s3router'
-import {configure as configureAuth, sessionOrToken, createInternalMiddleware} from 'fl-auth-server'
+import {configure as configureAuth, createInternalMiddleware} from 'fl-auth-server'
 import allow from 'fl-server-utils/lib/cors'
 
 import {sendConfirmationEmail, sendResetEmail} from './email'
@@ -16,10 +16,12 @@ import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
 import initClientApps from './client_apps'
+import User from './models/User'
 
 const bind_options = {
   origins: config.origins,
-  auth: [createInternalMiddleware({secret: config.secret}), sessionOrToken],
+  auth: [createInternalMiddleware({secret: config.secret})],
+  db_mongo: config.database === 'mongodb',
 }
 const app = bind_options.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
@@ -38,6 +40,7 @@ app.use(allow(config.origins))
 // Auth after other middleware and before api/client
 configureAuth({
   app,
+  User,
   sendConfirmationEmail,
   sendResetEmail,
   facebook: {

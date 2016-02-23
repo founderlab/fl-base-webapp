@@ -31,6 +31,8 @@ const config = {
 
   // These keys from this config object are passed to the clients store
   client_config_keys: ['name', 'url', 's3_url', 'max_file_upload_size'],
+
+  database: (process.env.DATABASE_URL || '').split(':')[0],
 }
 
 config.s3_url = `https://${config.s3_bucket}.s3-${config.s3_region}.amazonaws.com`

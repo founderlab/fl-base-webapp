@@ -1,0 +1,21 @@
+$nav-bg: #fff;
+
+.navbar {
+  border: none;
+  background: $nav-bg;
+  // border-bottom: solid 1px $gray-lighter;
+  // border-radius: 0;
+  // background-color: $body-bg;
+  // margin: 0;
+  ul.navbar-nav {
+    li {
+      border-bottom: solid 2px $nav-bg;
+    }
+    li.active {
+      border-bottom: solid 2px $gray;
+    }
+    .dropdown-menu li.active {
+      border: none;
+    }
+  }
+}

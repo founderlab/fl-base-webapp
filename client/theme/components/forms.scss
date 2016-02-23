@@ -1,0 +1,25 @@
+
+legend {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.container.forms {
+  max-width: 800px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-control-static {
+  border: solid 1px;
+  padding: 8px;
+  min-height: 38px;
+}
+
+.form-quill {
+  border: 1px solid #e7e7e7;
+}

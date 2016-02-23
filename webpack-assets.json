@@ -1,5 +1,5 @@
 {
-  "shared.js": {
+  "shared": {
     "js": "http://localhost:3001/public/shared.js"
   },
   "admin": {

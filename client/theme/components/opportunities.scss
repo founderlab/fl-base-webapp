@@ -1,0 +1,64 @@
+
+/* finder */
+.opportunity-finder {
+
+  .opportunity-filter {
+    padding: 20px;
+  }
+
+  .opportunity-row {
+    margin: 0 -15px;
+    padding: 20px 0;
+    @include transition(all 0.3s);
+    h3 {
+      margin: 0;
+    }
+    .btn, .opportunity-xs-logo img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    &:hover {
+      background: #fbfbfb;
+    }
+  }
+
+  .per-page-dropdown {
+    .btn.dropdown-toggle, .btn.dropdown-toggle:focus, .btn.dropdown-toggle:hover {
+      @include box-shadow(none);
+      background: transparent;
+      border: solid 1px transparent;
+      padding: 4px;
+    }
+    .open {
+      .btn.dropdown-toggle, .btn.dropdown-toggle:focus, .btn.dropdown-toggle:hover {
+        border: solid 1px $gray-lighter;
+      }
+    }
+  }
+  span.per-page-label, span.results-count {
+    font-size: 12px;
+    color: $gray-light;
+    margin-left: 3px;
+    line-height: 28px;
+  }
+}
+
+.opportunity-rep-list {
+
+  .opportunity-row {
+    margin: 0 -15px;
+    padding: 20px 0;
+    @include transition(all 0.3s);
+
+    h3 {
+      margin: 0;
+    }
+    .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    &:hover {
+      background: #fbfbfb;
+    }
+  }
+}
