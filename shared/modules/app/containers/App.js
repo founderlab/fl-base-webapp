@@ -9,12 +9,30 @@ import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
 import {loadActiveProfile} from '../../users/profile_actions'
 
-@connect(state => ({name: state.config.get('name')}))
+@connect(state => ({config: state.config}))
 export default class App extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    name: PropTypes.string,
+    config: PropTypes.object.isRequired,
+  }
+
+  static childContextTypes = {
+    public_path: React.PropTypes.string,
+    s3_url: React.PropTypes.string,
+  }
+
+  constructor() {
+    super()
+    this.state = {}
+  }
+
+  getChildContext() {
+    return {public_path: this.state.public_path, s3_url: this.state.s3_url}
+  }
+
+  componentWillMount() {
+    if (!this.state.s3_url) this.setState({public_path: this.props.config.get('public_path'), s3_url: this.props.config.get('s3_url')})
   }
 
   static fetchData({store, action}, callback) {
@@ -32,11 +50,12 @@ export default class App extends Component {
   }
 
   render() {
+    const name = this.props.config.get('name')
     return (
       <div id="app-view">
         <Helmet
           title=""
-          titleTemplate={`%s - ${this.props.name}`}
+          titleTemplate={`%s - ${name}`}
           {...headerTags(this.props)}
         />
         <NavBar />

@@ -1,8 +1,10 @@
 export default (props) => ({
 
   meta: [
-    {name: 'description', content: props.name},
-    {name: 'msapplication-TileColor', content: '#da532c'},
+    {charset: 'utf-8'},
+    {'http-equiv': 'X-UA-Compatible', content: 'IE=edge'},
+    {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+
     {name: 'msapplication-TileImage', content: '/public/favicons/mstile-144x144.png'},
     {name: 'msapplication-config', content: '/public/favicons/browserconfig.xml'},
     {name: 'theme-color', content: '#ffffff'},

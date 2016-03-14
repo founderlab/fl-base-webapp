@@ -27,10 +27,11 @@ const config = {
   s3_bucket: `${process.env.NODE_ENV}-${name}`,
   s3_region: 'ap-southeast-2',
 
+  public_path: '/public',
   max_file_upload_size: 1024 * 1024 * 10, //10mb
 
   // These keys from this config object are passed to the clients store
-  client_config_keys: ['name', 'url', 's3_url', 'max_file_upload_size'],
+  client_config_keys: ['name', 'url', 'public_path', 's3_url', 'max_file_upload_size'],
 
   database: (process.env.DATABASE_URL || '').split(':')[0],
 }
