@@ -1,7 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
 import Queue from 'queue-async'
 
-
 /* ---------------------------------------
 // Example development scaffolding, replace with code to generate your own models
 
