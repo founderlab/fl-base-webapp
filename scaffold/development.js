@@ -88,7 +88,6 @@ import USER_TYPES from '../shared/consts/user_types'
 const to_scaffold = {
   admin_user: {
     email: 'admin@example.com',
-    name: 'admin',
     admin: true,
     password: '1',
     profile: {
