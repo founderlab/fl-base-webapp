@@ -37,6 +37,7 @@
     "express": "^4.13.2",
     "express-session": "^1.11.3",
     "fl-admin": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-admin",
+    "fl-initdb": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-initdb",
     "fl-auth-react": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-react",
     "fl-auth-redux": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-redux",
     "fl-auth-server": "git+https://founderlab-dummy:5901023845@bitbucket.org/founderlab/fl-auth-server",
