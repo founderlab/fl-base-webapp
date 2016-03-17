@@ -27,7 +27,7 @@ const app = bind_options.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 
 app.set('port', config.port)
-app.use(morgan('dev'))
+app.use(morgan('dev', {skip: req => req.url === '/ping'}))
 app.use(express.static(path.join(__dirname, '../public')))
 app.use(cookieParser())
 app.use(bodyParser.json())

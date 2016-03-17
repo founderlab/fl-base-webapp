@@ -24,7 +24,7 @@ const config = {
 
   secret: process.env.INTERNAL_SECRET || DEFAULT_SECRET,
 
-  s3_bucket: `${process.env.NODE_ENV}-${name}`,
+  s3_bucket: `${name}-${process.env.NODE_ENV}`,
   s3_region: 'ap-southeast-2',
 
   public_path: '/public',
@@ -40,6 +40,7 @@ config.s3_url = `https://${config.s3_bucket}.s3-${config.s3_region}.amazonaws.co
 
 config.name = name
 config.url = process.env.URL || `http://${config.ip}:${config.port}`
+config.internal_url = process.env.INTERNAL_URL || `http://localhost:${config.port}`
 export default config
 
 if (process.env.NODE_ENV === 'production' && config.secret === DEFAULT_SECRET) {
