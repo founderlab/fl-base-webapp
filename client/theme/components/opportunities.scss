@@ -4,6 +4,11 @@
 
   .opportunity-filter {
     padding: 20px;
+    label, .slider-value {
+      font-size: 12px;
+      font-weight: 300px;
+      color: $gray-light;
+    }
   }
 
   .opportunity-row {
@@ -11,6 +16,7 @@
     padding: 20px 0;
     @include transition(all 0.3s);
     h3 {
+      font-weight: normal;
       margin: 0;
     }
     .btn, .opportunity-xs-logo img {
@@ -60,5 +66,28 @@
     &:hover {
       background: #fbfbfb;
     }
+  }
+}
+
+.opportunity-create {
+
+  .shadow-panel {
+    padding: 20px 30px 10px;
+  }
+
+  .steps {
+    padding: 0 15px 30px;
+  }
+
+  .shaded .row {
+    background: $gray-lighterer;
+  }
+
+  .pad-top {
+    padding-top: 30px;
+  }
+
+  hr {
+    margin: 30px 100px 50px;
   }
 }

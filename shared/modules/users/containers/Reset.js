@@ -17,7 +17,7 @@ export default class ResetContainer extends Component {
   }
 
   onReset = data => {
-    this.props.reset(`${this.props.config.get('url')}/reset`, data.email, data.password, data.reset_token, (err) => {
+    this.props.reset(`${this.props.config.get('url')}/reset`, data.email, data.password, data.reset_token, err => {
       if (!err) this.props.pushState(null, this.props.query.redirect_to || '/')
     })
   }

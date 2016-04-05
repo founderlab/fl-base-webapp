@@ -7,9 +7,11 @@
 @import './components/opportunities.scss';
 @import './components/select.scss';
 @import './components/slider.scss';
+@import './components/step_form.scss';
 
 html, body, #react-view, #app-view {
   height: 100%;
+  font-weight: 300;
 
   a:focus, a:active,
   button:focus, button:active {
@@ -65,6 +67,10 @@ a {
   background-color: grey;
   height: 200px;
   margin: 10px;
+}
+
+section {
+  margin-top: 40px;
 }
 
 @media screen and (min-width: 992px) {

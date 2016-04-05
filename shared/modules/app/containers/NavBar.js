@@ -23,7 +23,7 @@ export default class NavBar extends Component {
   }
 
   onLogin = data => {
-    this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password, (err) => {
+    this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password, err => {
       if (!err) this.props.pushState(null, this.props.query.redirect_to || '/')
     })
   }

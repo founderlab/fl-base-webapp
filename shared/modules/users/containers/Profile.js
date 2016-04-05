@@ -13,7 +13,7 @@ export default class ProfileContainer extends Component {
   }
 
   handleSubmit = data => {
-    this.props.save(data, (err) => {
+    this.props.save(data, err => {
       console.log('saved', err)
     })
   }

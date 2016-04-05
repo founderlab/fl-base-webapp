@@ -1,9 +1,27 @@
+.Select {
 
-.Select-control {
-  border-width: 2px;
-  border-color: #e7e7e7;
-}
+  .Select-control {
+    border-width: 2px;
+    border-color: #e7e7e7;
+  }
 
-.is-open .Select-control {
-  // border-color: $brand-primary;
+  &.is-open .Select-control {
+    border-color: $brand-info;
+  }
+
+  &.is-focused:not(.is-open) > .Select-control {
+    border-color: $brand-info;
+    @include box-shadow(none);
+  }
+
+  // .Select-option {
+  //   background-color: transparent;
+  //   &:hover {
+  //     color: #f00;
+  //   }
+  //   &.is-focused {
+  //     background-color: $select-option-focused-bg;
+  //     color: $select-option-focused-color;
+  //   }
+  // }
 }

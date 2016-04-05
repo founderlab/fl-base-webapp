@@ -9,10 +9,13 @@ $nav-bg: #fff;
   // margin: 0;
   ul.navbar-nav {
     li {
-      border-bottom: solid 2px $nav-bg;
+      border-bottom: solid 3px $nav-bg;
+      > a {
+        font-weight: 300;
+      }
     }
     li.active {
-      border-bottom: solid 2px $gray;
+      border-bottom: solid 3px $brand-primary;
     }
     .dropdown-menu li.active {
       border: none;

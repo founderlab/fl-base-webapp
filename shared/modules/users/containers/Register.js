@@ -18,7 +18,7 @@ export default class RegisterContainer extends Component {
   }
 
   handleSubmit = data => {
-    this.props.register(`${this.props.url}/register`, _.extend(data, {type: USER_TYPES.REPRESENTATIVE}), (err) => {
+    this.props.register(`${this.props.url}/register`, _.extend(data, {type: USER_TYPES.REPRESENTATIVE}), err => {
       if (!err) this.props.pushState(null, this.props.query.redirect_to || '/')
     })
   }

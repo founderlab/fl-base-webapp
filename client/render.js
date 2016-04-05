@@ -7,7 +7,7 @@ import {reduxReactRouter} from 'redux-router'
 
 // no jQuery, backbone needs an ajax function
 const Backbone = require('backbone')
-Backbone.ajax = require('backbone.nativeajax')
+Backbone.ajax = require('fl-backbone.nativeajax')
 
 import createStore from '../shared/createStore'
 import {patchRouteEntry} from 'fl-react-utils'
