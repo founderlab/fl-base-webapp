@@ -90,6 +90,8 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
+      mangle: false,
+      sourceMap: false,
       compress: {
         warnings: false
       }
