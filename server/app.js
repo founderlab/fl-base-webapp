@@ -15,15 +15,15 @@ import {sendConfirmationEmail, sendResetEmail} from './email'
 import config from './config'
 import sessionMiddleware from './session'
 import initApi from './api'
-import initClientApps from './client_apps'
+import initClientApps from './clientApps'
 import User from './models/User'
 
-const bind_options = {
+const bindOptions = {
   origins: config.origins,
   auth: [createInternalMiddleware({secret: config.secret})],
-  db_mongo: config.database === 'mongodb',
+  dbMongo: config.database === 'mongodb',
 }
-const app = bind_options.app = express()
+const app = bindOptions.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
 
 app.set('port', config.port)
@@ -44,20 +44,20 @@ configureAuth({
   sendConfirmationEmail,
   sendResetEmail,
   facebook: {
-    app_id: process.env.FACEBOOK_APP_ID,
-    app_secret: process.env.FACEBOOK_APP_SECRET,
+    appId: process.env.FACEBOOK_APP_ID,
+    appSecret: process.env.FACEBOOK_APP_SECRET,
     url: config.url,
   },
   login: {
-    extra_register_params: ['type'],
+    extraRegisterParams: ['type'],
   },
 })
 
 app.use('/s3', (req, res, next) => {
   //todo: auth
   s3Router({
-    bucket: config.s3_bucket,
-    region: config.s3_region,
+    bucket: config.s3Bucket,
+    region: config.s3Region,
     headers: {'Access-Control-Allow-Origin': '*'},
     ACL: 'public-read',
   })(req, res, next)
@@ -68,9 +68,9 @@ app.all('/time', (req, res) => res.json(moment.utc().toDate()))
 app.use('/public', express.static(path.join(__dirname, '../public')))
 app.use(favicon(path.join(__dirname, '../public/favicons/favicon.ico')))
 
-initApi(bind_options)
+initApi(bindOptions)
 // React app last; handles all other routes
-initClientApps(bind_options)
+initClientApps(bindOptions)
 
 // start the server
 http.createServer(app).listen(config.port, config.ip, () => console.log(`${config.env}-${config.name} listening on port ${config.port} and url: ${config.url}`))

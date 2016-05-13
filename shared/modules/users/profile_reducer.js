@@ -1,15 +1,15 @@
 import _ from 'lodash' // eslint-disable-line
 import {fromJS} from 'immutable'
-import {TYPES} from './profile_actions'
+import {TYPES} from './profileActions'
 
-const default_state = fromJS({
+const defaultState = fromJS({
   active: null,
   loading: false,
   errors: null,
-  by_id: {},
+  models: {},
 })
 
-export default function reducer(state=default_state, action={}) {
+export default function reducer(state=defaultState, action={}) {
 
   switch (action.type) {
     case TYPES.PROFILE_LOAD + '_START':
@@ -24,7 +24,7 @@ export default function reducer(state=default_state, action={}) {
       const to_merge = {
         loading: false,
         errors: null,
-        by_id: action.by_id,
+        models: action.models,
       }
       if (action.active) to_merge.active = action.models[0]
       const ss = state.mergeDeep(to_merge)
@@ -36,7 +36,7 @@ export default function reducer(state=default_state, action={}) {
       const ss1 = state.mergeDeep({
         loading: false,
         errors: null,
-        by_id: {[profile.id]: _.extend(profile, {location})},
+        models: {[profile.id]: _.extend(profile, {location})},
       })
       return ss1
 

@@ -4,19 +4,19 @@ import Backbone from 'backbone'
 import {smartSync} from 'fl-server-utils'
 import Inflection from 'inflection'
 
-const db_url = process.env.DATABASE_URL
-if (!db_url) console.log('Missing process.env.DATABASE_URL')
+const dbUrl = process.env.DATABASE_URL
+if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
 
 export default class StaticPage extends Backbone.Model {
-  url = `${db_url}/static_pages`
+  url = `${dbUrl}/staticPages`
 
   schema = () => _.extend({
 
-  }, require('../../shared/models/schemas/static_page'))
+  }, require('../../shared/models/schemas/staticPage'))
 
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 
   static slugify(string) { return Inflection.dasherize((string || '').toLowerCase()) }
 }
 
-StaticPage.prototype.sync = smartSync(db_url, StaticPage)
+StaticPage.prototype.sync = smartSync(dbUrl, StaticPage)

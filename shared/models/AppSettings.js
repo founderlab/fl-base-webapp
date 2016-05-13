@@ -5,10 +5,10 @@ import Backbone from 'backbone'
 export default class AppSetting extends Backbone.Model {
   schema = () => _.extend({
 
-  }, require('./schemas/app_settings'))
+  }, require('./schemas/appSettings'))
 
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
-AppSetting.prototype.urlRoot = '/api/app_settings'
+AppSetting.prototype.urlRoot = '/api/appSettings'
 AppSetting.prototype.sync = require('backbone-http').sync(AppSetting)

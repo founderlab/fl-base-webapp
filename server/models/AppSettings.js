@@ -3,17 +3,17 @@ import moment from 'moment'
 import Backbone from 'backbone'
 import {smartSync} from 'fl-server-utils'
 
-const db_url = process.env.DATABASE_URL
-if (!db_url) console.log('Missing process.env.DATABASE_URL')
+const dbUrl = process.env.DATABASE_URL
+if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
 
 export default class AppSettings extends Backbone.Model {
-  url = `${db_url}/app_settings`
+  url = `${dbUrl}/appSettings`
 
   schema = () => _.extend({
 
-  }, require('../../shared/models/schemas/app_settings'))
+  }, require('../../shared/models/schemas/appSettings'))
 
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
-AppSettings.prototype.sync = smartSync(db_url, AppSettings)
+AppSettings.prototype.sync = smartSync(dbUrl, AppSettings)

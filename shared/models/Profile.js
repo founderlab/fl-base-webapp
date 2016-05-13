@@ -7,7 +7,7 @@ export default class Profile extends Backbone.Model {
 
   }, require('./schemas/profile'))
 
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
 Profile.prototype.urlRoot = '/api/profiles'

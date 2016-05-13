@@ -6,11 +6,11 @@ import Inflection from 'inflection'
 export default class StaticPage extends Backbone.Model {
   schema = () => _.extend({
 
-  }, require('./schemas/static_page'))
+  }, require('./schemas/staticPage'))
 
   static slugify(string) { return Inflection.dasherize((string || '').toLowerCase()) }
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
-StaticPage.prototype.urlRoot = '/api/static_pages'
+StaticPage.prototype.urlRoot = '/api/staticPages'
 StaticPage.prototype.sync = require('backbone-http').sync(StaticPage)

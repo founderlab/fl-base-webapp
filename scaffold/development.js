@@ -19,14 +19,14 @@ function addLessonParts(lesson, callback) {
   _.forEach(['one', 'two', 'three', 'four', 'five', 'six', 'seven', '8', '9', 'ten'], (name, i) => {
     queue.defer(callback => {
       const level = i
-      const lesson_part = new LessonPart({
+      const lessonPart = new LessonPart({
         lesson,
         level,
         title: `part ${name} ${level}`,
-        video_url: '//player.vimeo.com/video/17409268',
-        content_html: `<p>lesson part ${name} ${level}</p>`,
+        videoUrl: '//player.vimeo.com/video/17409268',
+        contentHtml: `<p>lesson part ${name} ${level}</p>`,
       })
-      lesson_part.save(callback)
+      lessonPart.save(callback)
     })
   })
 
@@ -45,7 +45,7 @@ function addLessons(cat, callback) {
         level,
         category: cat,
         title: `lesson ${cat.get('name')} ${name} ${level}`,
-        published_at: new Date(),
+        publishedDate: new Date(),
       })
       lesson.save(err => {
         if (err) return callback(err)
@@ -64,19 +64,19 @@ export default function scaffold(callback) {
   const queue = new Queue(1)
 
   queue.defer(callback => {
-    require('./shared')(to_scaffold, (err, _models) => callback(err, _.extend(models, _models)))
+    require('./shared')(toScaffold, (err, _models) => callback(err, _.extend(models, _models)))
   })
 
   queue.defer(callback => {
-    const lesson_queue = new Queue()
-    _.forEach(models.lesson_categories, cat => {
-      lesson_queue.defer(callback => {
+    const lessonQueue = new Queue()
+    _.forEach(models.lessonCategories, cat => {
+      lessonQueue.defer(callback => {
         addLessons(cat, (err, {lessons}) => {
           callback(err, models.lessons = lessons)
         })
       })
     })
-    lesson_queue.await(callback)
+    lessonQueue.await(callback)
   })
 
   queue.await(err => callback(err, models))
@@ -85,8 +85,8 @@ export default function scaffold(callback) {
 --------------------------------------- */
 import USER_TYPES from '../shared/consts/user_types'
 
-const to_scaffold = {
-  admin_user: {
+const toScaffold = {
+  adminUser: {
     email: 'admin@example.com',
     admin: true,
     password: '1',
@@ -94,7 +94,7 @@ const to_scaffold = {
       name: 'admin',
     },
   },
-  student_user: {
+  studentUser: {
     email: 'student@example.com',
     type: USER_TYPES.STUDENT,
     password: '1',
@@ -102,7 +102,7 @@ const to_scaffold = {
       name: 'Chat Student',
     },
   },
-  teacher_user: {
+  teacherUser: {
     email: 'teacher@example.com',
     type: USER_TYPES.TEACHER,
     password: '1',
@@ -118,7 +118,7 @@ export default function scaffold(callback) {
   const queue = new Queue(1)
 
   queue.defer(callback => {
-    require('./shared')(to_scaffold, (err, _models) => callback(err, _.extend(models, _models)))
+    require('./shared')(toScaffold, (err, _models) => callback(err, _.extend(models, _models)))
   })
 
   queue.await(err => callback(err, models))

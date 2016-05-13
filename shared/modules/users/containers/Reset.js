@@ -17,14 +17,14 @@ export default class ResetContainer extends Component {
   }
 
   onReset = data => {
-    this.props.reset(`${this.props.config.get('url')}/reset`, data.email, data.password, data.reset_token, err => {
-      if (!err) this.props.pushState(null, this.props.query.redirect_to || '/')
+    this.props.reset(`${this.props.config.get('url')}/reset`, data.email, data.password, data.resetToken, err => {
+      if (!err) this.props.pushState(null, this.props.query.redirectTo || '/')
     })
   }
 
   render() {
     return (
-      <Reset auth={this.props.auth} email={this.props.query.email} reset_token={this.props.query.reset_token} onSubmit={this.onReset} />
+      <Reset auth={this.props.auth} email={this.props.query.email} resetToken={this.props.query.resetToken} onSubmit={this.onReset} />
     )
   }
 }

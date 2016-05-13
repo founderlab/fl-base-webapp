@@ -18,7 +18,7 @@ export default class LoginContainer extends Component {
 
   onLogin = data => {
     this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password, err => {
-      if (!err) this.props.pushState(null, this.props.query.redirect_to || '/')
+      if (!err) this.props.pushState(null, this.props.query.redirectTo || '/')
     })
   }
 

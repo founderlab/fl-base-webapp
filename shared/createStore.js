@@ -11,26 +11,26 @@ const MUTABLES = {
   admin: 1,
 }
 
-function immute(from_obj, parent_key, depth=0) {
+function immute(fromObj, parentKey, depth=0) {
   const obj = {}
 
-  Object.keys(from_obj).forEach(key => {
-    const mutable_key = parent_key || key
-    const immute_at = MUTABLES[mutable_key]
+  Object.keys(fromObj).forEach(key => {
+    const mutableKey = parentKey || key
+    const immuteAt = MUTABLES[mutableKey]
 
-    if (!immute_at || immute_at === depth) {
-      obj[key] = fromJS(from_obj[key])
+    if (!immuteAt || immuteAt === depth) {
+      obj[key] = fromJS(fromObj[key])
     }
-    else if (immute_at > depth) {
-      obj[key] = immute(from_obj[key], mutable_key, depth+1)
+    else if (immuteAt > depth) {
+      obj[key] = immute(fromObj[key], mutableKey, depth+1)
     }
-    else obj[key] = from_obj[key]
+    else obj[key] = fromObj[key]
   })
 
   return obj
 }
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, _initial_state) {
+export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
   const reducer = require('./reducer') // delay requiring reducers until needed
   const middlewares = applyMiddleware(thunk, requestMiddleware, responseParserMiddleware, fetchComponentDataMiddleware)
   let finalCreateStore
@@ -51,44 +51,7 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
     )(_createStore)
   }
 
-  const initial_state = immute(_initial_state)
-  const store = finalCreateStore(reducer, initial_state)
+  const initialState = immute(_initialState)
+  const store = finalCreateStore(reducer, initialState)
   return store
 }
-
-
-// devtools for 1.4
-
-// import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-// import createMiddleware from './middleware/clientMiddleware';
-// import transitionMiddleware from './middleware/transitionMiddleware';
-
-// export default function createStore(reduxReactRouter, getRoutes, createHistory, client, data) {
-//   const middleware = [createMiddleware(client), transitionMiddleware];
-
-//   let finalCreateStore;
-//   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
-//     const { persistState } = require('redux-devtools');
-//     const DevTools = require('../containers/DevTools/DevTools');
-//     finalCreateStore = compose(
-//       applyMiddleware(...middleware),
-//       DevTools.instrument(),
-//       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-//     )(_createStore);
-//   } else {
-//     finalCreateStore = applyMiddleware(...middleware)(_createStore);
-//   }
-
-//   finalCreateStore = reduxReactRouter({ getRoutes, createHistory })(finalCreateStore);
-
-//   const reducer = require('./modules/reducer');
-//   const store = finalCreateStore(reducer, data);
-
-//   if (__DEVELOPMENT__ && module.hot) {
-//     module.hot.accept('./modules/reducer', () => {
-//       store.replaceReducer(require('./modules/reducer'));
-//     });
-//   }
-
-//   return store;
-// }

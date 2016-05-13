@@ -4,7 +4,7 @@ require('babel/polyfill')
 var fs = require('fs')
 var path = require('path')
 var webpack = require('webpack')
-var assets_path = path.resolve(__dirname, '../public')
+var assetsPath = path.resolve(__dirname, '../public')
 var host = (process.env.IP || 'localhost')
 var port = parseInt(process.env.PORT) + 1 || 3001
 
@@ -60,7 +60,7 @@ module.exports = {
     ]
   },
   output: {
-    path: assets_path,
+    path: assetsPath,
     filename: '[name].js',
     publicPath: 'http://' + host + ':' + port + '/public/'
   },

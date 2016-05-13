@@ -6,17 +6,17 @@ import User from '../server/models/User'
 import AppSettings from '../server/models/AppSettings'
 
 const defaults = {
-  app_settings: {
-    facebook_url: 'https://facebook.com/',
-    twitter_url: 'https://twitter.com/',
-    instagram_url: 'https://instagram.com/',
-    footer_contact_info: `
+  appSettings: {
+    facebookUrl: 'https://facebook.com/',
+    twitterUrl: 'https://twitter.com/',
+    instagramUrl: 'https://instagram.com/',
+    footerContactInfo: `
       XX Fake st<br />
       Sydney<br />
       NSW 2000<br />
       Australia`,
   },
-  static_pages: [
+  staticPages: [
     {title: 'About Us'},
     {title: 'FAQ'},
     {title: 'Privacy'},
@@ -25,17 +25,17 @@ const defaults = {
 }
 const models = {}
 
-export default function scaffold(_to_scaffold, callback) {
-  const to_scaffold = _.extend(defaults, _to_scaffold)
+export default function scaffold(_toScaffold, callback) {
+  const toScaffold = _.extend(defaults, _toScaffold)
   const queue = new Queue(1)
 
-  const users = _.pick(to_scaffold, 'admin_user', 'student_user', 'teacher_user')
+  const users = _.pick(toScaffold, 'adminUser', 'studentUser', 'teacherUser')
   _.forEach(users, (_user, key) => {
     queue.defer(callback => {
-      User.findOne({email: _user.email}, (err, existing_user) => {
+      User.findOne({email: _user.email}, (err, existingUser) => {
         if (err) return callback(err)
-        if (existing_user) {
-          models[key] = existing_user
+        if (existingUser) {
+          models[key] = existingUser
           return callback()
         }
         const user = new User(_user)
@@ -49,15 +49,15 @@ export default function scaffold(_to_scaffold, callback) {
     })
   })
 
-  queue.defer(callback => AppSettings.findOrCreate(to_scaffold.app_settings, callback))
+  queue.defer(callback => AppSettings.findOrCreate(toScaffold.appSettings, callback))
 
-  models.static_pages = []
-  _.forEach(to_scaffold.static_pages, (_static_page, i) => {
+  models.staticPages = []
+  _.forEach(toScaffold.staticPages, (_staticPage, i) => {
     queue.defer(callback => {
-      const page_defaults = {visible: true, show_in_footer: true, order: i, slug: StaticPage.slugify(_static_page.title)}
-      const static_page = new StaticPage(_.extend(page_defaults, _static_page))
-      models.static_pages.push(static_page)
-      static_page.save(callback)
+      const pageDefaults = {visible: true, showInFooter: true, order: i, slug: StaticPage.slugify(_staticPage.title)}
+      const staticPage = new StaticPage(_.extend(pageDefaults, _staticPage))
+      models.staticPages.push(staticPage)
+      staticPage.save(callback)
     })
   })
 

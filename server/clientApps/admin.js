@@ -12,6 +12,6 @@ export default createServerRenderer({
   createStore,
   getRoutes,
   entries: ['shared', 'admin'],
-  always_fetch: require('../../shared/modules/app/containers/App'),
-  config: _.pick(config, config.client_config_keys),
+  alwaysFetch: require('../../shared/modules/app/containers/App'),
+  config: _.pick(config, config.clientConfigKeys),
 })

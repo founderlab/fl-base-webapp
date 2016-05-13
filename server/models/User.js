@@ -6,17 +6,17 @@ import bcrypt from 'bcrypt-nodejs'
 
 let Profile = null
 
-const db_url = process.env.DATABASE_URL
-if (!db_url) console.log('Missing process.env.DATABASE_URL')
+const dbUrl = process.env.DATABASE_URL
+if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
 
 export default class User extends Backbone.Model {
-  url = `${db_url}/users`
+  url = `${dbUrl}/users`
 
   schema = () => _.extend({
 
-    access_tokens: () => ['hasMany', require('fl-auth-server').AccessToken],
+    accessTokens: () => ['hasMany', require('fl-auth-server').AccessToken],
     // todo
-    // refresh_tokens: () => ['hasMany', require('fl-auth-server').RefreshToken],
+    // refreshTokens: () => ['hasMany', require('fl-auth-server').RefreshToken],
 
     profile: () => ['hasOne', Profile = require('./Profile')],
 
@@ -24,7 +24,7 @@ export default class User extends Backbone.Model {
 
   static createHash(password) { return bcrypt.hashSync(password) }
 
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 
   onCreate(callback) {
     const profile = new Profile({user: this})
@@ -34,4 +34,4 @@ export default class User extends Backbone.Model {
   passwordIsValid(password) { return bcrypt.compareSync(password, this.get('password')) }
 }
 
-User.prototype.sync = smartSync(db_url, User)
+User.prototype.sync = smartSync(dbUrl, User)

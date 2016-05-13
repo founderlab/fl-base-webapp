@@ -28,8 +28,8 @@ export default (
   <Route>
     <Route component={require('./containers/Login')} path="login" />
     <Route component={require('./containers/Register')} path="register" />
-    <Route component={require('./containers/ResetRequest')} path="reset_request" />
+    <Route component={require('./containers/ResetRequest')} path="reset-request" />
     <Route component={require('./containers/Reset')} path="reset" />
-    <Route component={require('./containers/EmailConfirm')} path="confirm_email" />
+    <Route component={require('./containers/EmailConfirm')} path="confirm-email" />
   </Route>
 )

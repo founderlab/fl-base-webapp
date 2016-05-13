@@ -18,7 +18,7 @@ export default class EmailConfirmContainer extends Component {
   }
 
   confirmEmail = (email, token) => {
-    this.props.confirmEmail(`${this.props.config.get('url')}/confirm_email`, email, token)
+    this.props.confirmEmail(`${this.props.config.get('url')}/confirm-email`, email, token)
   }
 
   render() {

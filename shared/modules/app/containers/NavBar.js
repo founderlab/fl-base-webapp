@@ -24,17 +24,17 @@ export default class NavBar extends Component {
 
   onLogin = data => {
     this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password, err => {
-      if (!err) this.props.pushState(null, this.props.query.redirect_to || '/')
+      if (!err) this.props.pushState(null, this.props.query.redirectTo || '/')
     })
   }
 
   render() {
     const user = this.props.auth.get('user')
-    let login_display = null
+    let loginDisplay = null
 
     if (user) {
-      login_display = (
-        <NavDropdown id="user_dropdown" title={user.get('email')}>
+      loginDisplay = (
+        <NavDropdown id="user-dropdown" title={user.get('email')}>
           {user.get('type') === STUDENT && <LinkContainer to={'/applications'}><MenuItem>Applications</MenuItem></LinkContainer>}
           {user.get('admin') && <MenuItem href="/admin">Admin</MenuItem>}
           <LinkContainer to={'/profile'}><MenuItem>Profile</MenuItem></LinkContainer>
@@ -44,7 +44,7 @@ export default class NavBar extends Component {
       )
     }
     else {
-      login_display = [
+      loginDisplay = [
         <LinkContainer key={1} to="/register"><NavItem>Register</NavItem></LinkContainer>,
         <LinkContainer key={2} to="/login"><NavItem>Sign in</NavItem></LinkContainer>,
       ]
@@ -68,7 +68,7 @@ export default class NavBar extends Component {
             ])}
           </Nav>
           <Nav pullRight>
-            {login_display}
+            {loginDisplay}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

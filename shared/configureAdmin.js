@@ -3,45 +3,45 @@ import admin from 'fl-admin'
 admin({
   models: [
     {
-      model_type: require('./models/User'),
+      Model: require('./models/User'),
       fields: {
         email: {
-          list_edit: true,
+          listEdit: true,
         },
         admin: {
-          list_edit: true,
+          listEdit: true,
         },
       },
     },
     {
-      model_type: require('./models/Profile'),
+      Model: require('./models/Profile'),
       fields: {
-        first_name: {
-          list_edit: true,
+        firstName: {
+          listEdit: true,
         },
-        last_name: {
-          list_edit: true,
+        lastName: {
+          listEdit: true,
         },
       },
     },
     {
-      model_type: require('./models/AppSettings'),
+      Model: require('./models/AppSettings'),
       singleton: true,
       fields: {
-        footer_contact_info: {
+        footerContactInfo: {
           input: 'textarea',
         },
       },
     },
     {
-      model_type: require('./models/StaticPage'),
+      Model: require('./models/StaticPage'),
       fields: {
         title: {
-          list_edit: true,
+          listEdit: true,
           input: 'textarea',
         },
         content: {
-          input: 'rich_text',
+          input: 'rich',
         },
       },
     },

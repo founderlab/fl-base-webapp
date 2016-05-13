@@ -26,7 +26,7 @@ Backbone.ajax = require('fl-server-utils').createBasicAjax(config)
 initdb({
   User: require('./models/User'),
   Models: [require('fl-auth-server').AccessToken, require('fl-auth-server').RefreshToken],
-  database_url: process.env.DATABASE_URL,
-  models_dir: path.resolve(__dirname, './models'),
+  databaseUrl: process.env.DATABASE_URL,
+  modelsDir: path.resolve(__dirname, './models'),
   scaffold: require(`../scaffold/${process.env.NODE_ENV}`),
 }, err => {if (err) console.log('Error initialising database:', err)})

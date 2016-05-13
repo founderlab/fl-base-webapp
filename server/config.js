@@ -11,7 +11,7 @@ const config = {
   version: require('../package').version,
 
   origins: process.env.ORIGINS || '*',
-  session_age: 365 * 24 * 60 * 60 * 1000,
+  sessionAge: 365 * 24 * 60 * 60 * 1000,
 
   email: {
     host: process.env.EMAIL_HOST,
@@ -24,23 +24,23 @@ const config = {
 
   secret: process.env.INTERNAL_SECRET || DEFAULT_SECRET,
 
-  s3_bucket: `${name}-${process.env.NODE_ENV}`,
-  s3_region: 'ap-southeast-2',
+  s3Bucket: `${name}-${process.env.NODE_ENV}`,
+  s3Region: 'ap-southeast-2',
 
-  public_path: '/public',
-  max_file_upload_size: 1024 * 1024 * 10, //10mb
+  publicPath: '/public',
+  maxFileUploadSize: 1024 * 1024 * 10, //10mb
 
   // These keys from this config object are passed to the clients store
-  client_config_keys: ['name', 'url', 'public_path', 's3_url', 'max_file_upload_size'],
+  clientConfigKeys: ['name', 'url', 'publicPath', 's3Url', 'maxFileUploadSize'],
 
   database: (process.env.DATABASE_URL || '').split(':')[0],
 }
 
-config.s3_url = `https://${config.s3_bucket}.s3-${config.s3_region}.amazonaws.com`
+config.s3Url = `https://${config.s3Bucket}.s3-${config.s3Region}.amazonaws.com`
 
 config.name = name
 config.url = process.env.URL || `http://${config.ip}:${config.port}`
-config.internal_url = process.env.INTERNAL_URL || `http://localhost:${config.port}`
+config.internalUrl = process.env.INTERNAL_URL || `http://localhost:${config.port}`
 export default config
 
 if (process.env.NODE_ENV === 'production' && config.secret === DEFAULT_SECRET) {

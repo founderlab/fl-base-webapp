@@ -15,11 +15,11 @@ export default class StaticPagesController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
       model_type: require('../../models/StaticPage'),
-      route: '/api/static_pages',
+      route: '/api/staticPages',
       auth: [...options.auth[0], createAuthMiddleware({canAccess})],
       templates: {
-        detail: require('../templates/static_pages/detail'),
-        link: require('../templates/static_pages/link'),
+        detail: require('../templates/staticPages/detail'),
+        link: require('../templates/staticPages/link'),
       },
       default_template: 'detail',
     }, options))

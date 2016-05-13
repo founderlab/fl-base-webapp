@@ -7,7 +7,7 @@ export default class User extends Backbone.Model {
 
   }, require('./schemas/user'))
 
-  defaults() { return {created_at: moment.utc().toDate()} }
+  defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
 User.prototype.urlRoot = '/api/users'

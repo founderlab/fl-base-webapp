@@ -10,15 +10,15 @@ export default class Landing extends React.Component {
     app: React.PropTypes.object.isRequired,
   }
   static contextTypes = {
-    s3_url: React.PropTypes.string.isRequired,
+    s3Url: React.PropTypes.string.isRequired,
   }
 
   render() {
-    const landing_image = this.props.app.get('settings').get('landing_image')
-    const bg_url = `url(${this.context.s3_url}/${landing_image})`
+    const landingImage = this.props.app.get('settings').get('landingImage')
+    const bgUrl = `url(${this.context.s3Url}/${landingImage})`
     return (
       <div>
-        <header style={{backgroundImage: bg_url}}>
+        <header style={{backgroundImage: bgUrl}}>
           <h1>Opportunities for everyone</h1>
           <p>Something about how great they are or how it works</p>
           <LinkContainer to="/opportunities"><Button bsStyle="primary" bsSize="large">Find an opportunity</Button></LinkContainer>

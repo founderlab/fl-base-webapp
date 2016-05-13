@@ -7,7 +7,7 @@ import {canAccess as profileAuth} from '../../server/api/controllers/Profiles'
 
 const models = {}
 const tests = [
-  {authFn: profileAuth, idFn: (models) => models.student_user.get('profile').id},
+  {authFn: profileAuth, idFn: (models) => models.studentUser.get('profile').id},
 ]
 
 describe('Profile authorisation', () => {
@@ -22,7 +22,7 @@ describe('Profile authorisation', () => {
   _.forEach(tests, ({authFn, idFn}) => {
 
     it('disallows $include', done => {
-      const user = models.student_user
+      const user = models.studentUser
       const req = {
         user,
         query: {$include: 'applications'},
@@ -40,7 +40,7 @@ describe('Profile authorisation', () => {
       const queue = new Queue(1)
       _.forEach(methods, method => {
         queue.defer(callback => {
-          const user = models.admin_user
+          const user = models.adminUser
           const req = {
             user,
             method,
@@ -58,12 +58,12 @@ describe('Profile authorisation', () => {
     })
 
     it('allows get methods for the users own profile by user_id', done => {
-      const user = models.student_user
+      const user = models.studentUser
       const req = {
         user,
         method: 'GET',
         params: {},
-        query: {user_id: models.student_user.id},
+        query: {user_id: models.studentUser.id},
         body: {},
       }
       authFn({user, req}, (err, ok) => {
@@ -75,15 +75,15 @@ describe('Profile authorisation', () => {
 
     it('allows update methods for the users own data', done => {
       const methods = ['PUT', 'DELETE']
-      const model_id = idFn(models)
+      const modelId = idFn(models)
       const queue = new Queue(1)
       _.forEach(methods, method => {
         queue.defer(callback => {
-          const user = models.student_user
+          const user = models.studentUser
           const req = {
             user,
             method,
-            params: {id: model_id},
+            params: {id: modelId},
             query: {},
             body: {},
           }
@@ -99,17 +99,17 @@ describe('Profile authorisation', () => {
     })
 
     it('disallows all methods for other users', done => {
-      const model_id = idFn(models)
+      const modelId = idFn(models)
       const methods = ['GET', 'PUT', 'POST', 'DELETE']
       const queue = new Queue(1)
 
       _.forEach(methods, method => {
         queue.defer(callback => {
-          const user = models.teacher_user
+          const user = models.teacherUser
           const req = {
             user,
             method,
-            params: {id: model_id},
+            params: {id: modelId},
             query: {},
             body: {},
           }

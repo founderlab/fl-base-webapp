@@ -15,7 +15,7 @@ export default class ResetRequestContainer extends Component {
   }
 
   onReset = data => {
-    this.props.resetRequest(`${this.props.config.get('url')}/reset_request`, data.email)
+    this.props.resetRequest(`${this.props.config.get('url')}/reset-request`, data.email)
   }
 
   render() {

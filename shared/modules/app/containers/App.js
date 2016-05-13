@@ -7,7 +7,7 @@ import NavBar from './NavBar'
 import Footer from './Footer'
 import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
-import {loadActiveProfile} from '../../users/profile_actions'
+import {loadActiveProfile} from '../../users/profileActions'
 
 @connect(state => ({config: state.config}))
 export default class App extends Component {
@@ -18,8 +18,8 @@ export default class App extends Component {
   }
 
   static childContextTypes = {
-    public_path: React.PropTypes.string,
-    s3_url: React.PropTypes.string,
+    publicPath: React.PropTypes.string,
+    s3Url: React.PropTypes.string,
   }
 
   constructor() {
@@ -28,11 +28,11 @@ export default class App extends Component {
   }
 
   getChildContext() {
-    return {public_path: this.state.public_path, s3_url: this.state.s3_url}
+    return {publicPath: this.state.publicPath, s3Url: this.state.s3Url}
   }
 
   componentWillMount() {
-    if (!this.state.s3_url) this.setState({public_path: this.props.config.get('public_path'), s3_url: this.props.config.get('s3_url')})
+    if (!this.state.s3Url) this.setState({publicPath: this.props.config.get('publicPath'), s3Url: this.props.config.get('s3Url')})
   }
 
   static fetchData({store, action}, callback) {

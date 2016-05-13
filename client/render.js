@@ -14,19 +14,19 @@ import {patchRouteEntry} from 'fl-react-utils'
 
 export default (getRoutes) => {
 
-  const initial_state = window.__INITIAL_STATE__
-  const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initial_state)
+  const initialState = window.__INITIAL_STATE__
+  const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initialState)
 
-  let to_render = (
+  let toRender = (
     <Provider store={store} key="provider">
       <ReduxRouter routes={getRoutes(store)} />
     </Provider>
   )
   if (__DEBUG__) {
     const {DevTools, DebugPanel, LogMonitor} = require('redux-devtools/lib/react')
-    to_render = (
+    toRender = (
       <div>
-        {to_render}
+        {toRender}
         <DebugPanel top left bottom>
           <DevTools store={store} monitor={LogMonitor} />
         </DebugPanel>
@@ -34,6 +34,6 @@ export default (getRoutes) => {
     )
   }
 
-  render(to_render, document.getElementById('react-view'))
+  render(toRender, document.getElementById('react-view'))
 
 }

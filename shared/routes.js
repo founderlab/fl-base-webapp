@@ -7,11 +7,11 @@ import USER_TYPES from './consts/user_types'
 export default function getRoutes(store) {
 
   function requireUserFn(checkFn) {
-    return function requireUser(next_state, replaceState, callback) {
+    return function requireUser(nextState, replaceState, callback) {
       const {auth} = store.getState()
       const user = auth.get('user')
       if (!user || (checkFn && !checkFn(user))) {
-        replaceState(null, `/login?redirect_to=${next_state.location.pathname}`)
+        replaceState(null, `/login?redirectTo=${nextState.location.pathname}`)
       }
       callback()
     }

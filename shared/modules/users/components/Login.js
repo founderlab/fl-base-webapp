@@ -18,7 +18,7 @@ export default class Login extends Component {
               <LoginForm {...this.props} />
 
               <br /><Link to="/users/register">Register as a student</Link>
-              <br /><Link to="/reset_request">Forgot?</Link>
+              <br /><Link to="/reset-request">Forgot?</Link>
 
             </div>
           </div>

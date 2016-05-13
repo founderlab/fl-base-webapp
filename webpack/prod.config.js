@@ -8,8 +8,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var strip = require('strip-loader')
 var AssetsPlugin = require('assets-webpack-plugin')
 
-var relative_assets_path = '../public/dist'
-var assets_path = path.join(__dirname, relative_assets_path)
+var relativeAssetsPath = '../public/dist'
+var assetsPath = path.join(__dirname, relativeAssetsPath)
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
@@ -26,7 +26,7 @@ module.exports = {
     ]
   },
   output: {
-    path: assets_path,
+    path: assetsPath,
     filename: '[name]-[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
     publicPath: '/public/dist/'
@@ -65,7 +65,7 @@ module.exports = {
     extensions: ['', '.json', '.js']
   },
   plugins: [
-    // new CleanPlugin([relative_assets_path]), // note: doesn't work when run from a simlinked project dir
+    // new CleanPlugin([relativeAssetsPath]), // note: doesn't work when run from a simlinked project dir
     new AssetsPlugin({prettyPrint: true}),
 
     // css files from the extract-text-plugin loader

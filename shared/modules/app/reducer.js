@@ -2,13 +2,13 @@ import _ from 'lodash' // eslint-disable-line
 import {fromJS} from 'immutable'
 import {TYPES} from './actions'
 
-const default_state = fromJS({
-  pages_by_slug: {},
-  static_page_links: {},
+const defaultState = fromJS({
+  pagesBySlug: {},
+  staticPageLinks: {},
   settings: {},
 })
 
-export default function reducer(state=default_state, action={}) {
+export default function reducer(state=defaultState, action={}) {
 
   switch (action.type) {
     case TYPES.APP_SETTINGS_LOAD + '_START':
@@ -24,15 +24,15 @@ export default function reducer(state=default_state, action={}) {
         loading: false,
         loaded: true,
         errors: null,
-        static_page_links: action.res.static_page_links,
-        settings: _.omit(action.res, 'static_page_links'),
+        staticPageLinks: action.res.staticPageLinks,
+        settings: _.omit(action.res, 'staticPageLinks'),
       })
 
     case TYPES.STATIC_PAGE_LOAD + '_SUCCESS':
       return state.mergeDeep({
         loading: false,
         errors: null,
-        pages_by_slug: {[action.res.slug]: action.res},
+        pagesBySlug: {[action.res.slug]: action.res},
       })
 
     default:
