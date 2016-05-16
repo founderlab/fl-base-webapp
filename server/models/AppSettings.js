@@ -7,7 +7,7 @@ const dbUrl = process.env.DATABASE_URL
 if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
 
 export default class AppSettings extends Backbone.Model {
-  url = `${dbUrl}/appSettings`
+  url = `${dbUrl}/app_settings`
 
   schema = () => _.extend({
 

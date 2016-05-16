@@ -10,5 +10,5 @@ export default class AppSetting extends Backbone.Model {
   defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
-AppSetting.prototype.urlRoot = '/api/appSettings'
+AppSetting.prototype.urlRoot = '/api/app_settings'
 AppSetting.prototype.sync = require('backbone-http').sync(AppSetting)

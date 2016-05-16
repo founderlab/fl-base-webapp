@@ -8,7 +8,7 @@ const dbUrl = process.env.DATABASE_URL
 if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
 
 export default class StaticPage extends Backbone.Model {
-  url = `${dbUrl}/staticPages`
+  url = `${dbUrl}/static_pages`
 
   schema = () => _.extend({
 

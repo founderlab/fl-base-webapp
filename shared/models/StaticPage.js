@@ -12,5 +12,5 @@ export default class StaticPage extends Backbone.Model {
   defaults() { return {createdDate: moment.utc().toDate()} }
 }
 
-StaticPage.prototype.urlRoot = '/api/staticPages'
+StaticPage.prototype.urlRoot = '/api/static_pages'
 StaticPage.prototype.sync = require('backbone-http').sync(StaticPage)
