@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser'
 import favicon from 'serve-favicon'
 import s3Router from 'react-dropzone-s3-uploader/s3router'
 import {configure as configureAuth, createInternalMiddleware} from 'fl-auth-server'
-import allow from 'fl-server-utils/lib/cors'
+import {cors} from 'fl-server-utils'
 
 import {sendConfirmationEmail, sendResetEmail} from './email'
 import config from './config'
@@ -34,8 +34,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
 
-// Allow all for now. Remember to keep cors before auth middleware
-app.use(allow(config.origins))
+// Remember to keep cors before auth middleware
+app.use(cors(config.origins))
 
 // Auth after other middleware and before api/client
 configureAuth({

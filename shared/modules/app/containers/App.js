@@ -3,7 +3,7 @@ import Queue from 'queue-async'
 import React, {Component, PropTypes} from 'react'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
-import NavBar from './NavBar'
+import Navbar from './Navbar'
 import Footer from './Footer'
 import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
@@ -58,7 +58,7 @@ export default class App extends Component {
           titleTemplate={`%s - ${name}`}
           {...headerTags(this.props)}
         />
-        <NavBar />
+        <Navbar />
         {this.props.children}
         <Footer />
       </div>

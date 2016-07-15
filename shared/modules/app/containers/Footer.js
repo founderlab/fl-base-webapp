@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
 @connect(state => _.pick(state, 'auth', 'config', 'app'), {})
-export default class NavBar extends Component {
+export default class Navbar extends Component {
 
   static propTypes = {
     app: PropTypes.object.isRequired,

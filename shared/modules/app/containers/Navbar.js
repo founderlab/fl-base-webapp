@@ -1,14 +1,13 @@
 import _ from 'lodash'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {pushState} from 'redux-router'
+import {Link, pushState} from 'redux-router'
 import {login} from 'fl-auth-redux'
 import {NavDropdown, Navbar, Nav, MenuItem, NavItem} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
-import {STUDENT, REPRESENTATIVE} from '../../../consts/user_types'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {login, pushState})
-export default class NavBar extends Component {
+export default class Navbar extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -35,7 +34,6 @@ export default class NavBar extends Component {
     if (user) {
       loginDisplay = (
         <NavDropdown id="user-dropdown" title={user.get('email')}>
-          {user.get('type') === STUDENT && <LinkContainer to={'/applications'}><MenuItem>Applications</MenuItem></LinkContainer>}
           {user.get('admin') && <MenuItem href="/admin">Admin</MenuItem>}
           <LinkContainer to={'/profile'}><MenuItem>Profile</MenuItem></LinkContainer>
           <LinkContainer to={'/report'}><MenuItem>Report a Problem</MenuItem></LinkContainer>
@@ -54,18 +52,14 @@ export default class NavBar extends Component {
       <Navbar fluid>
         <Navbar.Header>
           <Navbar.Brand>
-            <LinkContainer to={'/'} onlyActiveOnIndex><a>1scope.com</a></LinkContainer>
+            <Link to={'/'} onlyActiveOnIndex>FounderLab_replaceme</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
 
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to={'/opportunities'}><NavItem>Opportunities</NavItem></LinkContainer>
-            {user && user.get('type') === REPRESENTATIVE && ([
-              <LinkContainer to={'/manage/opportunities'} key={1} onlyActiveOnIndex><NavItem>Manage Opportunities</NavItem></LinkContainer>,
-              <LinkContainer to={'/manage/opportunities/create'} key={2}><NavItem>Create an Opportunity</NavItem></LinkContainer>,
-            ])}
+            <LinkContainer to={'/'} onlyActiveOnIndex><NavItem>Some link</NavItem></LinkContainer>
           </Nav>
           <Nav pullRight>
             {loginDisplay}

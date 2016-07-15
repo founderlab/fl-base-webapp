@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {createServerRenderer} from 'fl-server-utils'
+import {createServerRenderer} from 'fl-react-server'
 import config from '../config'
 import createStore from '../../shared/createStore'
 import getRoutes from '../../shared/routes'
