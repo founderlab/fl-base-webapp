@@ -18,7 +18,14 @@ export default class LoginContainer extends Component {
 
   onLogin = data => {
     this.props.login(`${this.props.config.get('url')}/login`, data.email, data.password, err => {
-      if (!err) this.props.pushState(null, this.props.query.redirectTo || '/')
+      if (err) return console.log(err)
+      // Full reload if we're heading to the admin site
+      if (this.props.query.redirectTo && this.props.query.redirectTo.match(/^\/admin/)) {
+        window.location.href = this.props.query.redirectTo
+      }
+      else {
+        this.props.pushState(null, this.props.query.redirectTo || '/')
+      }
     })
   }
 

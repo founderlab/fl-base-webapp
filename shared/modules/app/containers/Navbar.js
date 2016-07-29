@@ -7,7 +7,7 @@ import {NavDropdown, Navbar, Nav, MenuItem, NavItem} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {login, pushState})
-export default class Navbar extends Component {
+export default class NavbarContainer extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
