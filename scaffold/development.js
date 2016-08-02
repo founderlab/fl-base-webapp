@@ -83,7 +83,6 @@ export default function scaffold(callback) {
 }
 
 --------------------------------------- */
-import USER_TYPES from '../shared/consts/user_types'
 
 const toScaffold = {
   adminUser: {
@@ -96,7 +95,6 @@ const toScaffold = {
   },
   studentUser: {
     email: 'student@example.com',
-    type: USER_TYPES.STUDENT,
     password: '1',
     profile: {
       name: 'Chat Student',
@@ -104,7 +102,6 @@ const toScaffold = {
   },
   teacherUser: {
     email: 'teacher@example.com',
-    type: USER_TYPES.TEACHER,
     password: '1',
     profile: {
       name: 'Chat Teacher',
