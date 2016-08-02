@@ -78,7 +78,7 @@
     "react-select": "^1.0.0-beta13",
     "react-slider": "^0.6.0",
     "react-transform-catch-errors": "^1.0.0",
-    "redbox-react": "^1.1.1",
+    "redbox-react": "1.1.1",
     "redux": "^3.0.0",
     "redux-form": "^3.0.11",
     "redux-request-middleware": "^0.11.0",
