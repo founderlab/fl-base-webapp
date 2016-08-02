@@ -2,7 +2,6 @@ import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 import {AdminRoute} from 'fl-admin'
 import UserRoutes from './modules/users/routes'
-import USER_TYPES from './consts/user_types'
 
 export default function getRoutes(store) {
 

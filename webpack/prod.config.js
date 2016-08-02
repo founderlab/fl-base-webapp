@@ -43,10 +43,6 @@ module.exports = {
       { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!stylus') },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version') },
 
-      // { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
-      // { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass' },
-      // { test: /\.styl$/, loader: 'style!css!autoprefixer?browsers=last 2 version!stylus' },
-      // { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
       { test: /\.(png|jpg|gif|wav|mp3)$/, loader: 'file' },
 
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -73,7 +69,6 @@ module.exports = {
 
     // set global vars
     new webpack.DefinePlugin({
-      __DEBUG__: false, // for redux-devtools
       'process.env': {
         CLIENT: true,
         SERVER: false,

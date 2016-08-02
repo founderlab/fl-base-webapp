@@ -3,7 +3,6 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {pushState} from 'redux-router'
 import {register} from 'fl-auth-redux'
-import USER_TYPES from '../../../consts/user_types'
 import Register from '../components/Register'
 
 @connect(state => ({auth: state.auth, url: state.config.get('url'), query: state.router.location.query}), {register, pushState})
@@ -18,7 +17,7 @@ export default class RegisterContainer extends Component {
   }
 
   handleSubmit = data => {
-    this.props.register(`${this.props.url}/register`, _.extend(data, {type: USER_TYPES.REPRESENTATIVE}), err => {
+    this.props.register(`${this.props.url}/register`, data, err => {
       if (!err) this.props.pushState(null, this.props.query.redirectTo || '/')
     })
   }

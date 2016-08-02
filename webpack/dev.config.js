@@ -96,13 +96,12 @@ module.exports = {
     new AssetsPlugin({prettyPrint: true}),
     new webpack.optimize.CommonsChunkPlugin('shared', 'shared.js'),
     new webpack.optimize.OccurenceOrderPlugin(),
-    // ignore jquery (used by backbone)
-    new webpack.IgnorePlugin(/^jquery$/),
+
+    new webpack.IgnorePlugin(/^jquery$/),                     // ignore jquery (used by backbone)
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),
     new webpack.DefinePlugin({
-      __DEBUG__: process.env.DEBUG || false,                    // toggle redux-devtools
       'process.env': {
         CLIENT: true,
         SERVER: false

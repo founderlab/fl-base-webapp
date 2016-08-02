@@ -31,14 +31,12 @@ export default function reducer(state=defaultState, action={}) {
       return ss
 
     case TYPES.PROFILE_SAVE + '_SUCCESS':
-      console.log('profile save reducing:', action)
       const {profile, location} = action.res
-      const ss1 = state.mergeDeep({
+      return state.mergeDeep({
         loading: false,
         errors: null,
         models: {[profile.id]: _.extend(profile, {location})},
       })
-      return ss1
 
     default:
       return state

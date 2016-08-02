@@ -5,7 +5,6 @@ import {requestMiddleware, responseParserMiddleware} from 'redux-request-middlew
 import {fetchComponentDataMiddleware} from 'fl-react-utils'
 import {fromJS} from 'immutable'
 
-const CLIENT_DEVTOOLS = false
 const MUTABLES = {
   router: 'always',
   admin: 1,
@@ -33,23 +32,12 @@ function immute(fromObj, parentKey, depth=0) {
 export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
   const reducer = require('./reducer') // delay requiring reducers until needed
   const middlewares = applyMiddleware(thunk, requestMiddleware, responseParserMiddleware, fetchComponentDataMiddleware)
-  let finalCreateStore
 
-  if (CLIENT_DEVTOOLS) {
-    const {devTools, persistState} = require('redux-devtools')
-    finalCreateStore = compose(
-      reduxReactRouter({getRoutes, createHistory}),
-      middlewares,
-      devTools(),
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)), // Lets you write ?debug_session=<name> in address bar to persist debug sessions
-    )(_createStore)
-  }
-  else {
-    finalCreateStore = compose(
-      reduxReactRouter({getRoutes, createHistory}),
-      middlewares,
-    )(_createStore)
-  }
+  const finalCreateStore = compose(
+    reduxReactRouter({getRoutes, createHistory}),
+    middlewares,
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f,
+  )(_createStore)
 
   const initialState = immute(_initialState)
   const store = finalCreateStore(reducer, initialState)

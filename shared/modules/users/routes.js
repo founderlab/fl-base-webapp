@@ -1,26 +1,3 @@
-
-// export default class LoginRoute {
-//   constructor() {
-//     this.path = 'login'
-//   }
-
-//   getComponents(location, callback) {
-//     callback(null, require('./containers/reset'))
-//   }
-
-//   getChildRoutes(location, callback) {
-//     console.log('getchild', location)
-//     callback(null, [{
-//       path: 'reset',
-//       getComponents: (location, callback) => callback(null, require('./containers/login')),
-//     }])
-//   }
-
-// }
-
-// export default new LoginRoute()
-
-
 import React from 'react'
 import {Route} from 'react-router'
 

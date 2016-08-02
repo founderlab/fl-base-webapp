@@ -1,3 +1,4 @@
+/* styles for react-select */
 .Select {
 
   .Select-control {
@@ -14,14 +15,4 @@
     @include box-shadow(none);
   }
 
-  // .Select-option {
-  //   background-color: transparent;
-  //   &:hover {
-  //     color: #f00;
-  //   }
-  //   &.is-focused {
-  //     background-color: $select-option-focused-bg;
-  //     color: $select-option-focused-color;
-  //   }
-  // }
 }
