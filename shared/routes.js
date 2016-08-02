@@ -1,7 +1,6 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 import {AdminRoute} from 'fl-admin'
-import UserRoutes from './modules/users/routes'
 
 export default function getRoutes(store) {
 
@@ -16,21 +15,22 @@ export default function getRoutes(store) {
     }
   }
 
+  const requireUser = requireUserFn()
   const requireAdmin = requireUserFn(user => user.get('admin'))
 
   return (
     <Route path="/" name="app" component={require('./modules/app/containers/App')}>
-      <IndexRoute component={require('./modules/app/containers/Landing')} />
+      <IndexRoute component={require('./modules/app/components/Landing')} />
 
       <AdminRoute path="/admin" name="admin" onEnter={requireAdmin} />
 
-      {UserRoutes}
+      <Route path="login" component={require('./modules/users/containers/Login')} />
+      <Route path="register" component={require('./modules/users/containers/Register')} />
+      <Route path="reset-request" component={require('./modules/users/containers/ResetRequest')} />
+      <Route path="reset" component={require('./modules/users/containers/Reset')} />
+      <Route path="confirm-email" component={require('./modules/users/containers/EmailConfirm')} />
 
-      <Route path="users">
-        <Route>
-          <Route path="profile" component={require('./modules/users/containers/Profile')} />
-        </Route>
-      </Route>
+      <Route path="profile" onEnter={requireUser} component={require('./modules/users/containers/Profile')} />
 
     </Route>
   )

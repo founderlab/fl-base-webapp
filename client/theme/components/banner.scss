@@ -5,7 +5,7 @@
   padding-top: 50%; // take up space while image is loading
   overflow: hidden;
   margin-bottom: 40px;
-  @include bshadow()
+  @include defaultShadow()
 
   img {
     position: absolute;

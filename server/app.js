@@ -20,7 +20,7 @@ import User from './models/User'
 
 const bindOptions = {
   origins: config.origins,
-  auth: [createInternalMiddleware({secret: config.secret})],
+  auth: [createInternalMiddleware({User, secret: config.secret})],
   dbMongo: config.database === 'mongodb',
 }
 const app = bindOptions.app = express()

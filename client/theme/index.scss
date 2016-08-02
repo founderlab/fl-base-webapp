@@ -54,7 +54,7 @@ a {
 
 .inner-box {
   padding: 25px;
-  border: 1px grey solid;
+  border: 1px $gray solid;
   border-radius: 10px;
   margin: 30px 10px;
   textarea {
@@ -63,7 +63,7 @@ a {
 }
 
 .logo {
-  background-color: grey;
+  background-color: $gray;
   height: 200px;
   margin: 10px;
 }
@@ -80,7 +80,7 @@ section {
 }
 
 .shadow-panel {
-  @include bshadow();
+  @include defaultShadow();
   background-color: #fff;
   padding-top: 15px;
   padding-bottom: 15px;

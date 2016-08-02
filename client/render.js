@@ -17,23 +17,10 @@ export default (getRoutes) => {
   const initialState = window.__INITIAL_STATE__
   const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initialState)
 
-  let toRender = (
+  render((
     <Provider store={store} key="provider">
       <ReduxRouter routes={getRoutes(store)} />
     </Provider>
-  )
-  if (__DEBUG__) {
-    const {DevTools, DebugPanel, LogMonitor} = require('redux-devtools/lib/react')
-    toRender = (
-      <div>
-        {toRender}
-        <DebugPanel top left bottom>
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
-      </div>
-    )
-  }
-
-  render(toRender, document.getElementById('react-view'))
+  ), document.getElementById('react-view'))
 
 }

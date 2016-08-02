@@ -3,7 +3,7 @@
  *
  */
 
-@mixin bshadow($size: 5px, $opacity: 0.3) {
+@mixin defaultShadow($size: 5px, $opacity: 0.3) {
   // border-width: 0 1px $width 1px;
   @include box-shadow(0 1px $size rgba(0, 0, 0, $opacity));
 }
@@ -20,11 +20,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:400,300" !def
 
 .navbar {
   border: none;
-  // border-bottom: solid 1px $gray-lighter;
-  // border-radius: 0;
-  // background-color: $body-bg;
-  // margin: 0;
-  @include bshadow()
+  @include defaultShadow()
   z-index: 9999;
   li {
     border-bottom: solid 2px $body-bg;
@@ -41,8 +37,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:400,300" !def
     @include box-shadow(none);
   }
   .btn-primary {
-    // color: $gray-light;
-    // background: $gray-lighterer;
     background: transparent;
     color: $brand-primary;
     border: solid 1px transparent;
@@ -52,7 +46,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:400,300" !def
     background: transparent;
     border: solid 1px transparent;
     &:hover {
-      // background: $gray-lighterer;
       border: solid 1px $gray-lighter;
     }
   }
