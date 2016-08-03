@@ -32,6 +32,8 @@ export default function getRoutes(store) {
 
       <Route path="profile" onEnter={requireUser} component={require('./modules/users/containers/Profile')} />
 
+      <Route path=":slug" component={require('./modules/app/containers/StaticPage')} />
+
     </Route>
   )
 }

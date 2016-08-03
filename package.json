@@ -41,7 +41,7 @@
     "fl-admin": "^0.10.0",
     "fl-auth-react": "^0.10.0",
     "fl-auth-redux": "^0.10.0",
-    "fl-auth-server": "^0.12.1",
+    "fl-auth-server": "^0.13.4",
     "fl-backbone-sql": "^0.7.0",
     "fl-backbone.nativeajax": "^0.4.3",
     "fl-initdb": "^0.10.0",

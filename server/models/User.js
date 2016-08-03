@@ -14,10 +14,6 @@ export default class User extends Backbone.Model {
 
   schema = () => _.extend({
 
-    accessTokens: () => ['hasMany', require('fl-auth-server').AccessToken],
-    // todo
-    // refreshTokens: () => ['hasMany', require('fl-auth-server').RefreshToken],
-
     profile: () => ['hasOne', Profile = require('./Profile')],
 
   }, require('../../shared/models/schemas/user'))
