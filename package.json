@@ -88,7 +88,7 @@
     "serialize-javascript": "^1.1.2",
     "serve-favicon": "^2.3.0",
     "sessionstore": "^1.2.5",
-    "superagent": "0.18.0",
+    "superagent": "0.18.x",
     "warning": "^2.1.0"
   },
   "devDependencies": {
