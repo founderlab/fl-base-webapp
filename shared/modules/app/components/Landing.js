@@ -8,6 +8,7 @@ export default class Landing extends React.Component {
         <header>
           <h1>It's alive!</h1>
           <p>Rarr</p>
+          <k />
         </header>
       </div>
     )

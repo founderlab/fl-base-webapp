@@ -1,5 +1,7 @@
 var Express = require('express')
 var webpack = require('webpack')
+var Dashboard = require('webpack-dashboard')
+var DashboardPlugin = require('webpack-dashboard/plugin')
 
 var webpackConfig = require('./dev.config')
 var compiler = webpack(webpackConfig)
@@ -17,6 +19,9 @@ var serverOptions = {
   headers: {'Access-Control-Allow-Origin': '*'},
   stats: {colors: true}
 }
+
+var dashboard = new Dashboard()
+compiler.apply(new DashboardPlugin(dashboard.setData))
 
 var app = new Express()
 
