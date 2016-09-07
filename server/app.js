@@ -21,7 +21,6 @@ import User from './models/User'
 const bindOptions = {
   origins: config.origins,
   auth: [createInternalMiddleware({User, secret: config.secret})],
-  dbMongo: config.database === 'mongodb',
 }
 const app = bindOptions.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)

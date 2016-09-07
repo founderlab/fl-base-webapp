@@ -1,5 +1,5 @@
 import _ from 'lodash' // eslint-disable-line
-import RestController from 'backbone-rest'
+import RestController from 'fl-backbone-rest'
 import {JSONUtils} from 'backbone-orm'
 import {createAuthMiddleware} from 'fl-auth-server'
 import Profile from '../../models/Profile'
