@@ -2,7 +2,7 @@ import _ from 'lodash' // eslint-disable-line
 import {createStore as _createStore, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {requestMiddleware, responseParserMiddleware} from 'redux-request-middleware'
-import {fetchComponentDataMiddleware} from 'fl-react-utils'
+import {fetchComponentDataMiddleware} from 'fetch-component-data'
 import {fromJS} from 'immutable'
 
 const MUTABLES = {

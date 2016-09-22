@@ -18,8 +18,9 @@ export default class App extends Component {
   }
 
   static childContextTypes = {
-    publicPath: React.PropTypes.string,
+    url: React.PropTypes.string,
     s3Url: React.PropTypes.string,
+    publicPath: React.PropTypes.string,
   }
 
   constructor() {
@@ -28,7 +29,21 @@ export default class App extends Component {
   }
 
   getChildContext() {
-    return {publicPath: this.state.publicPath, s3Url: this.state.s3Url}
+    return {
+      url: this.state.url,
+      s3Url: this.state.s3Url,
+      publicPath: this.state.publicPath,
+    }
+  }
+
+  componentWillMount() {
+    if (!this.state.url) {
+      this.setState({
+        url: this.props.config.get('url'),
+        s3Url: this.props.config.get('s3Url'),
+        publicPath: this.props.config.get('publicPath'),
+      })
+    }
   }
 
   componentWillMount() {
