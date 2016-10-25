@@ -4,11 +4,11 @@ import {connect} from 'react-redux'
 import {save} from '../profileActions'
 import Profile from '../components/Profile'
 
-@connect(state => ({profiles: state.profiles}), {save})
+@connect(state => ({auth: state.auth}), {save})
 export default class ProfileContainer extends Component {
 
   static propTypes = {
-    profiles: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     save: PropTypes.func.isRequired,
   }
 
@@ -19,11 +19,9 @@ export default class ProfileContainer extends Component {
   }
 
   render() {
-    const profileIm = this.props.profiles.get('active')
-    if (!profileIm) return null
-
+    const {user} = this.props.auth
     return (
-      <Profile profile={profileIm.toJSON()} onSubmit={this.handleSubmit} />
+      <Profile user={user} onSubmit={this.handleSubmit} />
     )
   }
 

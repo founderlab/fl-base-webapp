@@ -1,11 +1,11 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {pushState} from 'redux-router'
+import {push} from 'redux-router'
 import {login} from 'fl-auth-redux'
 import Login from '../components/Login'
 
-@connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {pushState, login})
+@connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {push, login})
 export default class LoginContainer extends Component {
 
   static propTypes = {
@@ -13,7 +13,7 @@ export default class LoginContainer extends Component {
     config: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
   }
 
   onLogin = data => {
@@ -24,14 +24,16 @@ export default class LoginContainer extends Component {
         window.location.href = this.props.query.redirectTo
       }
       else {
-        this.props.pushState(null, this.props.query.redirectTo || '/')
+        this.props.push(this.props.query.redirectTo || '/')
       }
     })
   }
 
   render() {
+    const {auth} = this.props
+    const errorMsg = auth.get('errors') && auth.get('errors').get('login')
     return (
-      <Login auth={this.props.auth} onSubmit={this.onLogin} />
+      <Login loading={auth.get('loading')} errorMsg={errorMsg} onSubmit={this.onLogin} />
     )
   }
 

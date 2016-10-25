@@ -15,7 +15,7 @@ export default class Login extends Component {
           <div className="row">
             <div className="col-lg-6 col-lg-offset-3">
               <h2 className="text-center">Login</h2>
-              <LoginForm {...this.props} />
+              <LoginForm facebook {...this.props} />
 
               <br /><Link to="/users/register">Register as a student</Link>
               <br /><Link to="/reset-request">Forgot?</Link>
@@ -27,5 +27,3 @@ export default class Login extends Component {
     )
   }
 }
-
-// <br /><Link to="/auth/facebook">Login with Facebook</Link>

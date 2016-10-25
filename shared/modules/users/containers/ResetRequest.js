@@ -19,8 +19,15 @@ export default class ResetRequestContainer extends Component {
   }
 
   render() {
+    const {auth} = this.props
+    const errorMsg = auth.get('errors') && auth.get('errors').get('resetRequest')
     return (
-      <ResetRequest auth={this.props.auth} email={this.props.email} onSubmit={this.onReset}/>
+      <ResetRequest
+        loading={auth.get('loading')}
+        errorMsg={errorMsg}
+        email={this.props.email}
+        onSubmit={this.onReset}
+      />
     )
   }
 
