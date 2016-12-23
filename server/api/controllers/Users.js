@@ -6,7 +6,7 @@ import User from '../../models/User'
 function canAccess(options, callback) {
   const {user} = options
   if (!user) return callback(null, false)
-  if (user && (user.admin || user.get('admin'))) return callback(null, true)
+  if (user && (user.admin)) return callback(null, true)
   callback(null, false)
 }
 

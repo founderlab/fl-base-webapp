@@ -22,7 +22,7 @@ export function configure(config=appConfig) {
 }
 
 // usage:
-// sendMail({to: 'a@b.com', subject: 'testsubject', text: 'testemailtext'}, err => { ... } )
+// sendMail({to: 'a@b.com', subject: 'testsubject', html: 'testemailtext'}, err => { ... } )
 export default function sendMail(options, callback) {
   if (!transport) configure()
   if (!options.to) return callback(new Error('sendMail: missing options.to'))
@@ -35,17 +35,21 @@ export default function sendMail(options, callback) {
 export function sendConfirmationEmail(user, callback) {
   const email = user.get('email')
   const query = querystring.stringify({email, token: user.get('emailConfirmationToken')})
-  const options = {confirmationUrl: `${appConfig.url}/confirm-email?${query}`}
+  const options = {
+    confirmationUrl: `${appConfig.url}/confirm-email?${query}`,
+  }
   const message = emailConfirmation(options)
-  console.log('Sending emailConfirmationToken email', email, user.get('emailConfirmationToken'), message)
-  sendMail({to: email, subject: `Confirm your email for ${appConfig.url}`, text: message}, callback)
+  console.log('[email sendConfirmationEmail]', email, options, user.get('emailConfirmationToken'), message)
+  sendMail({to: email, subject: `Confirm your email for ${appConfig.url}`, html: message}, callback)
 }
 
 export function sendResetEmail(user, callback) {
   const email = user.get('email')
   const query = querystring.stringify({email, resetToken: user.get('resetToken')})
-  const options = {resetUrl: `${appConfig.url}/reset?${query}`}
+  const options = {
+    resetUrl: `${appConfig.url}/reset?${query}`,
+  }
   const message = passwordReset(options)
-  console.log('Sending reset email', email, user.get('resetToken'), message)
-  sendMail({to: email, subject: `Password reset for ${appConfig.url}`, text: message}, callback)
+  console.log('[email sendResetEmail]', email, options, user.get('resetToken'), message)
+  sendMail({to: email, subject: `Password reset for ${appConfig.url}`, html: message}, callback)
 }

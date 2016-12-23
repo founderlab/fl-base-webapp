@@ -1,8 +1,21 @@
 module.exports = {
-  email: 'String',
-  password: 'String',
+  email: 'Text',
+  password: 'Text',
   admin: 'Boolean',
-  type: 'String',
-  emailConfirmationToken: 'String',
+  type: 'Text',
+
+  emailConfirmationToken: 'Text',
+  emailConfirmedDate: 'DateTime',
+
+  facebookId: 'Text',
+  facebookAccessToken: 'Text',
+
+  linkedinId: 'Text',
+  linkedinAccessToken: 'Text',
+
+  resetToken: 'Text',
+  resetTokenCreatedDate: 'Text',
+
+  lastActiveDate: 'DateTime',
   createdDate: 'DateTime',
 }

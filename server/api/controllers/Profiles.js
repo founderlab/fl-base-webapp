@@ -7,7 +7,7 @@ import Profile from '../../models/Profile'
 export function canAccess(options, callback) {
   const {user, req} = options
   if (!user) return callback(null, false)
-  if (user.admin || user.get('admin')) return callback(null, true)
+  if (user.admin) return callback(null, true)
 
   const query = JSONUtils.parseQuery(req.query)
   if (query.$include) return callback(null, false, 'No $include')
