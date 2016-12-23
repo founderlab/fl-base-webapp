@@ -29,7 +29,7 @@ const bindOptions = {
     createHash: controller => `rl_${controller.route}`,
   },
   origins: config.origins,
-  auth: [createInternalMiddleware({secret: config.secret, deserializeUser: User.deserializeUser})],
+  auth: [createInternalMiddleware({User, secret: config.secret})],
 }
 const app = bindOptions.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
