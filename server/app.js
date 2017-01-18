@@ -14,7 +14,6 @@ import {cors} from 'fl-server-utils'
 
 import initDB from './initDB'
 import {sendConfirmationEmail, sendResetEmail} from './email'
-import geoIp from './geoIp'
 import config from './config'
 import sessionMiddleware from './session'
 import cache from './cache'
@@ -53,7 +52,6 @@ app.use('/s3', (req, res, next) => {
   })(req, res, next)
 })
 
-app.get('/api/locate', geoIp)
 app.all('/ping', (req, res) => res.status(200).end())
 app.all('/time', (req, res) => res.json(moment.utc().toDate()))
 app.use('/public', express.static(path.join(__dirname, '../public')))
