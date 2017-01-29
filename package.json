@@ -130,7 +130,6 @@
     "nodemon": "^1.11.0",
     "react-hot-loader": "^1.2.8",
     "react-transform-hmr": "^1.0.1",
-    "redux-devtools": "^2.1.2",
     "sass-loader": "^3.1.2",
     "strip-loader": "^0.1.1",
     "style-loader": "^0.12.3",

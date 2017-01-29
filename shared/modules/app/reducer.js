@@ -39,11 +39,16 @@ export default function reducer(state=defaultState, action={}) {
       })
 
     case TYPES.STATIC_PAGE_LOAD + '_SUCCESS':
-      return state.mergeDeep({
+      let s = state.merge({
         loading: false,
         errors: {},
-        pagesBySlug: {[action.res.slug]: action.res},
       })
+      if (action.res) {
+        s = s.mergeDeep({
+          pagesBySlug: {[action.res.slug]: action.res},
+        })
+      }
+      return s
 
     default:
       return state
