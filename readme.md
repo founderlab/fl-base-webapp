@@ -4,13 +4,17 @@ A single page Node app with user login. Use this when starting a new project.
 
 Uses React, Redux, BackboneORM, Bootstrap, Webpack.
 
-Run with (in two terminals):
+Requires: node, postgres, redis
 
+##### Basic instructions
 ```
-# Start the node server
+# 1. First install dependencies
+$ npm install
+
+# 2a. Start the node server in one terminal
 $ npm start-dev
 
-# Start the webpack development server
+# 2b. Start the webpack development server in another
 $ npm run client-watch
 ```
 
