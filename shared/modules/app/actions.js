@@ -5,6 +5,7 @@ import StaticPage from '../../models/StaticPage'
 export const TYPES = {
   APP_SETTINGS_LOAD: 'APP_SETTINGS_LOAD',
   STATIC_PAGE_LOAD: 'STATIC_PAGE_LOAD',
+  INDUSTRY_LOAD: 'INDUSTRY_LOAD',
 }
 
 export function loadStaticPage(slug, callback) {
@@ -20,6 +21,15 @@ export function loadAppSettings(callback) {
   return {
     type: TYPES.APP_SETTINGS_LOAD,
     request: AppSettings.cursor({$one: true}),
+    callback,
+  }
+}
+
+export function saveActivity(data, callback) {
+  const model = new Activity(data)
+  return {
+    type: TYPES.ACTIVITY_SAVE,
+    request: model.save.bind(model),
     callback,
   }
 }

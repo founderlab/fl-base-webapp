@@ -25,10 +25,10 @@ const bindOptions = {
   verbose: process.env.VERBOSE,
   cache: {
     cache,
-    createHash: controller => `rl_${controller.route}`,
+    createHash: controller => `fl_${controller.route}`,
   },
   origins: config.origins,
-  auth: [createInternalMiddleware({User, secret: config.secret})],
+  auth: [createInternalMiddleware({secret: config.secret, deserializeUser: User.deserializeUser})],
 }
 const app = bindOptions.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
@@ -41,7 +41,6 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
-app.use(loadOrganisation)
 
 app.use('/s3', (req, res, next) => {
   s3Router({
@@ -55,7 +54,7 @@ app.use('/s3', (req, res, next) => {
 app.all('/ping', (req, res) => res.status(200).end())
 app.all('/time', (req, res) => res.json(moment.utc().toDate()))
 app.use('/public', express.static(path.join(__dirname, '../public')))
-app.use(favicon(path.join(__dirname, '../public/favicons/favicon.ico')))
+// app.use(favicon(path.join(__dirname, '../public/favicons/favicon.ico')))
 
 // Auth after other middleware and before api/client
 configureAuth({

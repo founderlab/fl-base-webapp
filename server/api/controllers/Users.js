@@ -1,12 +1,14 @@
-import _ from 'lodash' // eslint-disable-line
+import _ from 'lodash'
 import RestController from 'fl-backbone-rest'
 import {createAuthMiddleware} from 'fl-auth-server'
-import User from '../../models/User'
+import User from 'fl-auth-server/lib/models/User'
+import {orgUrl} from '../../config'
 
 function canAccess(options, callback) {
-  const {user} = options
+  const {user, req} = options
   if (!user) return callback(null, false)
-  if (user && (user.admin)) return callback(null, true)
+  if (user.admin) return callback(null, true)
+  if (req.params.id && (user.id === req.params.id)) return callback(null, true)
   callback(null, false)
 }
 
@@ -19,13 +21,15 @@ export default class UsersController extends RestController {
       whitelist: {
         index: ['id', 'email', 'admin'],
         show: ['id', 'email', 'admin'],
-        update: ['id', 'email', 'admin'],
       },
       templates: {
         show: {$select: ['id', 'email', 'admin']},
       },
       default_template: 'show',
     }, options))
+
+    this.app.get('/oauth/redirect', this.redirect)
+    this.app.get('/oauth/redirect/:subdomain', this.organisationRedirect)
   }
 
   create(req, res) {
@@ -48,5 +52,21 @@ export default class UsersController extends RestController {
       req.body.password = User.createHash(req.body.password)
     }
     super(req, res)
+  }
+
+  redirect = (req, res) => {
+    if (req.session.returnTo) {
+      return res.redirect(req.session.returnTo)
+    }
+    res.redirect('/')
+  }
+
+  organisationRedirect = (req, res) => {
+    const urlRoot = orgUrl(req.params.subdomain)
+    if (req.session.returnTo) {
+      const returnTo = req.session.returnTo[0] === '/' ? req.session.returnTo : `/${req.session.returnTo}`
+      return res.redirect(`${urlRoot}${returnTo}`)
+    }
+    res.redirect(urlRoot)
   }
 }

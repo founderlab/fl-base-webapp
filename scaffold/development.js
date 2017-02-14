@@ -1,112 +1,62 @@
 import _ from 'lodash' // eslint-disable-line
 import Queue from 'queue-async'
+import moment from 'moment'
+import Organisation from '../server/models/Organisation'
+import Job from '../server/models/Job'
 
-/* ---------------------------------------
-// Example development scaffolding, replace with code to generate your own models
-
-import Lesson from '../server/models/Lesson'
-import LessonCategory from '../server/models/LessonCategory'
-import LessonPart from '../server/models/LessonPart'
-import LessonPartFile from '../server/models/LessonPartFile'
-import LessonPartSession from '../server/models/LessonPartSession'
-import LessonStatus from '../server/models/LessonStatus'
-import School from '../server/models/School'
-
-function addLessonParts(lesson, callback) {
-
-  const queue = new Queue()
-
-  _.forEach(['one', 'two', 'three', 'four', 'five', 'six', 'seven', '8', '9', 'ten'], (name, i) => {
-    queue.defer(callback => {
-      const level = i
-      const lessonPart = new LessonPart({
-        lesson,
-        level,
-        title: `part ${name} ${level}`,
-        videoUrl: '//player.vimeo.com/video/17409268',
-        contentHtml: `<p>lesson part ${name} ${level}</p>`,
-      })
-      lessonPart.save(callback)
-    })
-  })
-
-  queue.await(callback)
+const longDescription = () => {
+  const descriptions = [
+    '###Bacon ipsum dolor amet beef',
+    'Tongue bresaola picanha, jowl rump prosciutto chicken shank landjaeger pancetta beef ribs.',
+    '* One',
+    '* Two ribeye corned beef cupim. Jow',
+    '* Three. Ground round drumstick landjaeger',
+    'Biltong jerky alcatra, frankfurter short loin ribeye corned beef cupim. Jowl drumstick tongue jerky filet mignon meatloaf hamburger. Ground round pork chop flank, short ribs cupim andouille corned beef tail chuck rump kielbasa swine.',
+    'Ground round drumstick landjaeger, jerky capicola jowl venison pork loin strip steak picanha ribeye kevin. Pancetta chicken cow ham hock shankle biltong ham. Jowl tri-tip leberkas, meatloaf pork chop salami chuck porchetta bresaola turducken.',
+  ]
+  return descriptions[Math.floor(Math.random()*descriptions.length)]
 }
-
-function addLessons(cat, callback) {
-
-  const lessons = []
-  const queue = new Queue(1)
-
-  _.forEach(['one', 'two', 'three'], (name, i) => {
-    queue.defer(callback => {
-      const level = i+1
-      const lesson = new Lesson({
-        level,
-        category: cat,
-        title: `lesson ${cat.get('name')} ${name} ${level}`,
-        publishedDate: new Date(),
-      })
-      lesson.save(err => {
-        if (err) return callback(err)
-        lessons.push(lesson)
-        addLessonParts(lesson, callback)
-      })
-    })
-  })
-
-  queue.await(err => {
-    callback(err, {lessons})
-  })
-}
-
-export default function scaffold(callback) {
-  const queue = new Queue(1)
-
-  queue.defer(callback => {
-    require('./shared')(toScaffold, (err, _models) => callback(err, _.extend(models, _models)))
-  })
-
-  queue.defer(callback => {
-    const lessonQueue = new Queue()
-    _.forEach(models.lessonCategories, cat => {
-      lessonQueue.defer(callback => {
-        addLessons(cat, (err, {lessons}) => {
-          callback(err, models.lessons = lessons)
-        })
-      })
-    })
-    lessonQueue.await(callback)
-  })
-
-  queue.await(err => callback(err, models))
-}
-
---------------------------------------- */
 
 const toScaffold = {
-  adminUser: {
-    email: 'admin@example.com',
-    admin: true,
-    password: '1',
-    profile: {
-      name: 'admin',
+  users: {
+    adminUser: {
+      email: 'admin@frameworkstein.com.au',
+      password: 'frameworkstein',
+      admin: true,
+      profile: {
+        nickname: 'admin person',
+        firstName: 'admin',
+        lastName: 'lname',
+      },
+    },
+    seekerUser: {
+      email: 'seeker@frameworkstein.com.au',
+      password: 'frameworkstein',
+      profile: {
+        nickname: 'seeker person',
+        firstName: 'seeker',
+        lastName: 'lname',
+      },
     },
   },
-  studentUser: {
-    email: 'student@example.com',
-    password: '1',
-    profile: {
-      name: 'Chat Student',
+  organisations: [
+    {
+      name: 'Uber',
+      city: 'Sydney',
+      country: 'Australia',
     },
-  },
-  teacherUser: {
-    email: 'teacher@example.com',
-    password: '1',
-    profile: {
-      name: 'Chat Teacher',
+    {
+      name: 'Deliveroo',
+      city: 'Sydney',
+      country: 'Australia',
     },
-  },
+    {
+      name: 'Foodora',
+      city: 'Sydney',
+      country: 'Australia',
+    },
+  ],
+  jobs: require('./data/jobs.js'),
 }
 
 const models = {}
@@ -116,6 +66,29 @@ export default function scaffold(callback) {
 
   queue.defer(callback => {
     require('./shared')(toScaffold, (err, _models) => callback(err, _.extend(models, _models)))
+  })
+
+  models.organisations = []
+  _.forEach(toScaffold.organisations, _org => {
+    queue.defer(callback => {
+      console.log('Creating organisation', _org.name)
+      const org = new Organisation(_org)
+      org.set({descriptionMd: longDescription()})
+      models.organisations.push(org)
+      org.save(callback)
+    })
+  })
+
+  models.jobs = []
+  _.forEach(toScaffold.jobs, (_job, i) => {
+    queue.defer(callback => {
+      console.log('Creating job', _job.title)
+      _job.organisation_id = models.organisations[i % models.organisations.length].id
+      _job.detailsMd = _job.detailsMd || `${longDescription()}`
+      const job = new Job(_job)
+      models.jobs.push(job)
+      job.save(callback)
+    })
   })
 
   queue.await(err => callback(err, models))

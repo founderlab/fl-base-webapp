@@ -1,7 +1,10 @@
-import _ from 'lodash'
+import _ from 'lodash' // eslint-disable-line
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
+import {Grid, Row, Col} from 'react-bootstrap'
+import TermsModal from '../../users/components/TermsModal'
+import PrivacyModal from '../../users/components/PrivacyModal'
 
 @connect(state => _.pick(state, 'auth', 'config', 'app'), {})
 export default class Navbar extends Component {
@@ -12,35 +15,37 @@ export default class Navbar extends Component {
     config: PropTypes.object.isRequired,
   }
 
+  constructor() {
+    super()
+    this.state = {showTermsModal: false, showPrivacyModal: false}
+  }
+
+  openTermsModal = () =>  this.setState({showTermsModal: true})
+  openPrivacyModal = () =>  this.setState({showPrivacyModal: true})
+
+  closeTermsModal = () => this.setState({showTermsModal: false})
+  closePrivacyModal = () => this.setState({showPrivacyModal: false})
+
   render() {
-    const {app} = this.props
-    const staticPageLinks = app.get('staticPageLinks').toJSON()
-    const {footerContactInfo, facebookUrl, twitterUrl, instagramUrl} = app.get('settings').toJSON()
-    const pageLinks = staticPageLinks && _.map(staticPageLinks, p => (<li key={p.slug}><Link to={`/${p.slug}`}>{p.title}</Link></li>))
+    // const {app} = this.props
+    // const staticPageLinks = app.get('staticPageLinks').toJSON()
+    // const {footerContactInfo, facebookUrl, twitterUrl, instagramUrl} = app.get('settings').toJSON()
+    // const pageLinks = staticPageLinks && _.map(staticPageLinks, p => (<li key={p.slug}><Link to={`/${p.slug}`}>{p.title}</Link></li>))
 
     return (
-      <footer className="footer">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-sm-4">
-              <div className="row">
-                <div className="col-xs-12 social-icons">
-                  <a href={facebookUrl}><i className="fa fa-facebook-square"></i></a>
-                  <a href={twitterUrl}><i className="fa fa-twitter-square"></i></a>
-                  <a href={instagramUrl}><i className="fa fa-instagram"></i></a>
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-4">
-              <ul>
-                {pageLinks}
-              </ul>
-            </div>
-            <div className="col-sm-4">
-              <div dangerouslySetInnerHTML={{__html: footerContactInfo}} />
-            </div>
-          </div>
-        </div>
+      <footer>
+        <Grid fluid className="org-footer">
+          <Row>
+            <Col xs={12} md={6} className="copyright">
+              &copy; frameworkstein Pty Ltd 2016
+            </Col>
+            <Col xs={12} md={6} className="terms-privacy text-right">
+              <a href="mailto:hello@frameworkstein.com.au">hello@frameworkstein.com.au</a> | <a onClick={this.openTermsModal}>Terms</a> | <a onClick={this.openPrivacyModal}>Privacy</a>
+            </Col>
+          </Row>
+        </Grid>
+        <TermsModal show={this.state.showTermsModal} onHide={this.closeTermsModal} />
+        <PrivacyModal show={this.state.showPrivacyModal} onHide={this.closePrivacyModal} />
       </footer>
     )
   }

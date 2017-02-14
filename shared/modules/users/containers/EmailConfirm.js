@@ -17,23 +17,35 @@ export default class EmailConfirmContainer extends Component {
     push: PropTypes.func.isRequired,
   }
 
-  confirmEmail = (email, token) => {
-    this.props.confirmEmail(`${this.props.config.get('url')}/confirm-email`, email, token)
+  componentDidMount(props) {
+    this.confirm(props)
+  }
+
+  componentWillReceiveProps(props) {
+    this.confirm(props)
+  }
+
+  confirm(_props) {
+    const props = _props || this.props
+    const {auth, config, query} = props
+    if (!(auth.get('errors') && auth.get('errors').get('confirmEmail')) && !auth.get('loading') && !auth.get('emailConfirmed')) {
+      this.props.confirmEmail(`${config.get('url')}/confirm-email`, query.email, query.token)
+    }
   }
 
   render() {
     const {auth} = this.props
-    const errorMsg = auth.get('errors') && auth.get('errors').get('reset')
+    const loading = auth.get('loading')
+    const err = auth.get('errors') && auth.get('errors').get('confirmEmail')
+    const emailConfirmed = auth.get('emailConfirmed')
+
     return (
       <div>
         <Helmet title="Confirm your email" />
         <EmailConfirm
-          loading={auth.get('loading')}
-          emailConfirmed={auth.get('emailConfirmed')}
-          errorMsg={errorMsg}
-          email={this.props.query.email}
-          token={this.props.query.token}
-          confirmEmail={this.confirmEmail}
+          errorMsg={err ? err.toString() : ''}
+          loading={loading}
+          emailConfirmed={emailConfirmed}
         />
       </div>
     )

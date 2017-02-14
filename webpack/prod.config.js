@@ -3,7 +3,6 @@ require('babel/polyfill')
 // Webpack config for creating the production bundle.
 var path = require('path')
 var webpack = require('webpack')
-var CleanPlugin = require('clean-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var strip = require('strip-loader')
 var AssetsPlugin = require('assets-webpack-plugin')
@@ -43,6 +42,10 @@ module.exports = {
       { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!stylus') },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version') },
 
+      // { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
+      // { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass' },
+      // { test: /\.styl$/, loader: 'style!css!autoprefixer?browsers=last 2 version!stylus' },
+      // { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
       { test: /\.(png|jpg|gif|wav|mp3)$/, loader: 'file' },
 
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -61,7 +64,6 @@ module.exports = {
     extensions: ['', '.json', '.js']
   },
   plugins: [
-    // new CleanPlugin([relativeAssetsPath]), // note: doesn't work when run from a simlinked project dir
     new AssetsPlugin({prettyPrint: true}),
 
     // css files from the extract-text-plugin loader
@@ -69,6 +71,7 @@ module.exports = {
 
     // set global vars
     new webpack.DefinePlugin({
+      __DEBUG__: false,
       'process.env': {
         CLIENT: true,
         SERVER: false,

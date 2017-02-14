@@ -4,30 +4,29 @@ admin({
   models: [
     {
       Model: require('./models/User'),
+      display: model => model.email,
       fields: {
-        email: {
-          listEdit: true,
+        id: {
+          listDisplay: true,
         },
         admin: {
-          listEdit: true,
+          listDisplay: true,
         },
       },
     },
     {
       Model: require('./models/Profile'),
+      display: model => model.nickname,
       fields: {
-        firstName: {
-          listEdit: true,
-        },
-        lastName: {
-          listEdit: true,
-        },
       },
     },
     {
       Model: require('./models/AppSettings'),
       singleton: true,
       fields: {
+        landingPageImage: {
+          input: 'image',
+        },
         footerContactInfo: {
           input: 'textarea',
         },
@@ -38,11 +37,20 @@ admin({
       fields: {
         title: {
           listEdit: true,
-          input: 'textarea',
         },
         content: {
           input: 'rich',
         },
+      },
+    },
+    {
+      Model: require('./models/Job'),
+      fields: {
+      },
+    },
+    {
+      Model: require('./models/Organisation'),
+      fields: {
       },
     },
   ],

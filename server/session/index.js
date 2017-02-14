@@ -18,7 +18,7 @@ if (sessionsDBUrl && sessionsDBUrl.match(/^redis/)) {
     pass: sessionUrlParts.password,
     host: sessionUrlParts.hostname,
     port: +sessionUrlParts.port || 6379,
-    db: +sessionUrlParts.pathname.split('/')[1],
+    db: sessionUrlParts.pathname ? +sessionUrlParts.pathname.split('/')[1] : 1,
     ttl: config.sessionAge/1000,
     prefix: `${process.env.NODE_ENV}-${config.name}-session:`,
     logErrors: true,
@@ -43,5 +43,6 @@ else {
 
 export default (req, res, next) => {
   if (!sessionMiddleware || _.includes(NO_SESSION_ROUTES, req.url)) return next()
+  if (req.query.$auth_secret) return next()
   sessionMiddleware(req, res, next)
 }

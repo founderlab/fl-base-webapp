@@ -6,6 +6,8 @@ const defaultState = fromJS({
   pagesBySlug: {},
   staticPageLinks: {},
   settings: {},
+  errors: {},
+  loading: false,
 })
 
 export default function reducer(state=defaultState, action={}) {
@@ -17,38 +19,33 @@ export default function reducer(state=defaultState, action={}) {
 
     case TYPES.APP_SETTINGS_LOAD + '_ERROR':
     case TYPES.STATIC_PAGE_LOAD + '_ERROR':
-      return state.merge({loading: false, errors: {load: action.error || action.res.body.error}})
+      return state.merge({loading: false, errors: {app: action.error || action.res.body.error}})
 
     case TYPES.APP_SETTINGS_LOAD +'_SUCCESS':
-      let toMerge = {}
-      if (action.model) {
-        const {staticPageLinks, ...rest} = action.model
-        toMerge = {
-          staticPageLinks,
-          settings: rest,
-          errors: {},
-        }
-      }
-      else {
-        toMerge = {errors: {load: 'No app settings model was found'}}
-      }
       return state.merge({
         loading: false,
         loaded: true,
-        ...toMerge,
+        errors: {},
+        staticPageLinks: action.res.staticPageLinks,
+        settings: _.omit(action.res, 'staticPageLinks'),
       })
 
     case TYPES.STATIC_PAGE_LOAD + '_SUCCESS':
-      let s = state.merge({
-        loading: false,
-        errors: {},
-      })
-      if (action.res) {
-        s = s.mergeDeep({
-          pagesBySlug: {[action.res.slug]: action.res},
+      if (action.status === 404) {
+        return state.merge({
+          loading: false,
+          errors: {},
+          pageNotFound: true,
         })
       }
-      return s
+
+      return state.merge({
+        loading: false,
+        errors: {},
+        pageNotFound: false,
+      }).mergeDeep({
+        pagesBySlug: {[action.res.slug]: action.res},
+      })
 
     default:
       return state

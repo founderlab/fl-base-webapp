@@ -1,167 +1,144 @@
+.form-page {
+  min-height: 300px;
+  margin-bottom: 80px;
 
+  header {
+    @include gradientBg($brand-primary);
+    padding: 20px 0;
+    margin-bottom: 40px;
+    color: #fff;
 
-.container.forms {
-  max-width: 800px;
-  margin-top: 20px;
-}
-
-.actions {
-  margin-bottom: 30px;
-}
-
-.form-large {
-  .form-group, .alert {
-    margin-bottom: 30px;
-  }
-}
-
-// Forms ======================================================================
-
-form,
-form .has-success,
-form .has-error,
-form .has-warning {
-  .help-block {
-    color: $gray-light;
-  }
-
-  label.control-label {
-    font-size: 16px;
-    color: $gray;
-    font-weight: normal;
-  }
-}
-
-.checkbox-inline, .radio-inline {
-  padding: 10px 20px 9px 30px;
-  border-radius: 3px;
-  &:hover {
-    background: #fafafa;
-  }
-  font-weight: 300;
-}
-.radio-inline + .radio-inline, .checkbox-inline + .checkbox-inline {
-  margin: 0;
-}
-
-.form-control,
-input {
-  border-width: 2px;
-  border-radius: 3px;
-  @include box-shadow(none);
-
-  &:focus {
-    @include box-shadow(none);
-  }
-}
-
-.has-warning {
-  .radio,
-  .checkbox,
-  .radio-inline,
-  .checkbox-inline,
-  &.radio label,
-  &.checkbox label,
-  &.radio-inline label,
-  &.checkbox-inline label,
-  .form-control-feedback {
-    color: $brand-warning;
-  }
-
-  .form-control,
-  .form-control:focus {
-    border: 2px solid $brand-warning;
-  }
-
-  .input-group-addon {
-    border-color: $brand-warning;
-  }
-}
-
-.has-error {
-  .radio,
-  .checkbox,
-  .radio-inline,
-  .checkbox-inline,
-  &.radio label,
-  &.checkbox label,
-  &.radio-inline label,
-  &.checkbox-inline label,
-  .form-control-feedback {
-    color: $brand-danger;
-  }
-
-  .form-control,
-  .form-control:focus {
-    border: 2px solid $brand-danger;
-  }
-
-  .input-group-addon {
-    border-color: $brand-danger;
-  }
-}
-
-.has-success {
-  .radio,
-  .checkbox,
-  .radio-inline,
-  .checkbox-inline,
-  &.radio label,
-  &.checkbox label,
-  &.radio-inline label,
-  &.checkbox-inline label,
-  .form-control-feedback {
-    color: $brand-success;
-  }
-
-  .form-control,
-  .form-control:focus {
-    border: 2px solid $brand-success;
-  }
-
-  .input-group-addon {
-    border-color: $brand-success;
-  }
-}
-
-legend {
-  margin-left: 15px;
-  margin-right: 15px;
-}
-
-.form-group textarea {
-  resize: vertical;
-}
-
-.form-control-static {
-  border: solid 1px;
-  padding: 8px;
-  min-height: 38px;
-}
-
-.form-quill {
-  background-color : #ffffff;
-  height: 300px;
-
-  .quill {
-    height: 100%;
-
-    .quill-toolbar {
-      background-color: #fafafa;
-    }
-
-    .quill-contents {
-      padding: 0;
-      height: 260px;
-    }
-
-    .ql-editor {
-      padding: 5px;
-      border: 3px solid #e7e7e7;
-      &:focus {
-        border: 3px solid $brand-info;
+    h1 {
+      color: #fff;
+      margin: 60px 0;
+      font-weight: 400;
+      @media (max-width: $screen-sm-min) {
+        font-size: $font-size-h2;
       }
     }
   }
 
+  .panel-form {
+    margin-top: -60px;
+
+    @media (min-width: $screen-md-min) {
+      width: 630px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .panel-heading {
+      background: #fff;
+      padding-top: 20px;
+    }
+
+    .actions {
+      margin-top: 40px;
+      .btn.btn-primary {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &.mentor {
+    header {
+      background: $brand-success;
+    }
+  }
+
+  @media (max-width: $screen-sm-min) {
+    h2 {
+      margin-bottom: 0;
+      font-size: 20px;
+    }
+    .text-inner {
+      visibility: hidden;
+    }
+    header {
+      padding: 0;
+    }
+    .step-header .step {
+      height: 40px !important;
+      margin-bottom: 20px;
+    }
+  }
+
+}
+
+.quill {
+  .ql-editor {
+    min-height: 150px;
+  }
+
+  .form-quill {
+    border: 2px solid #e7e7e7;
+    background-color : #ffffff;
+
+  }
+
+  .ql-container {
+    border: 2px solid #e7e7e7;
+    background-color: #ffffff;
+    border-radius: 00 3px 3px;
+  }
+
+  .ql-toolbar {
+    background-color: $gray-lighter;
+  }
+}
+
+.has-feedback label ~ .form-control-feedback {
+  // top: 32px;
+  // top: inherit;
+  // bottom: 0;
+}
+
+label.control-label {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin-top: 2px;
+}
+
+.help-block {
+  font-size: $font-size-small;
+}
+
+.split-datetime {
+  label {
+    display: block;
+  }
+  .date, .time {
+    display: inline-block;
+  }
+  .date {
+    width: 120px;
+  }
+  .time {
+    width: 120px;
+    margin-left: 10px;
+  }
+  @media (max-width: $screen-sm-min) {
+    .date, .time {
+      display: block;
+    }
+    .time {
+      margin: 10px 0 0;
+    }
+  }
+}
+
+/* Remove mobile browser shadow */
+input[type=text], input[type=email], input[type=password], textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.public-DraftEditor-content {
+  min-height: 220px;
+  font-family: $font-family-base;
 }

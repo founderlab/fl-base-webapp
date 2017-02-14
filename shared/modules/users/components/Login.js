@@ -1,29 +1,30 @@
-import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
-import {LoginForm} from 'fl-auth-react'
+import React, {PropTypes} from 'react'
+import {Grid, Row, Col, Panel} from 'react-bootstrap'
+import LoginForm from './LoginForm'
 
-export default class Login extends Component {
+export default function Login(props) {
+  return (
+    <div className="form-page login">
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  }
+      <header>
+        <Grid fluid>
+          <Row>
+            <Col xs={12}>
+              <h1 className="text-center">Sign in</h1>
+            </Col>
+          </Row>
+        </Grid>
+      </header>
 
-  render() {
-    return (
-      <section id="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 col-lg-offset-3">
-              <h2 className="text-center">Login</h2>
-              <LoginForm facebook {...this.props} />
-
-              <br /><Link to="/users/register">Register as a student</Link>
-              <br /><Link to="/reset-request">Forgot?</Link>
-
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
+      <Grid>
+        <Row>
+          <Col xs={12} sm={10} smOffset={1} md={12} mdOffset={0}>
+            <Panel className="panel-form">
+              <LoginForm {...props} />
+            </Panel>
+          </Col>
+        </Row>
+      </Grid>
+    </div>
+  )
 }

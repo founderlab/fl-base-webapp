@@ -5,8 +5,8 @@ var fs = require('fs')
 var path = require('path')
 var webpack = require('webpack')
 var assetsPath = path.resolve(__dirname, '../public')
-var host = (process.env.IP || 'localhost')
-var port = parseInt(process.env.PORT) + 1 || 3001
+var host = (process.env.HOSTNAME || 'localhost')
+var port = parseInt(process.env.PORT) + 1 || 4001
 
 var AssetsPlugin = require('assets-webpack-plugin')
 
@@ -15,7 +15,8 @@ var babelrcObject = {}
 
 try {
   babelrcObject = JSON.parse(babelrc)
-} catch (err) {
+}
+catch (err) {
   console.error('==>     ERROR: Error parsing your .babelrc.')
   console.error(err)
 }
@@ -96,16 +97,19 @@ module.exports = {
     new AssetsPlugin({prettyPrint: true}),
     new webpack.optimize.CommonsChunkPlugin('shared', 'shared.js'),
     new webpack.optimize.OccurenceOrderPlugin(),
-
-    new webpack.IgnorePlugin(/^jquery$/),                     // ignore jquery (used by backbone)
+    // ignore jquery (used by backbone)
+    new webpack.IgnorePlugin(/^jquery$/),
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),
     new webpack.DefinePlugin({
+      __DEBUG__: process.env.DEBUG || false,
       'process.env': {
         CLIENT: true,
         SERVER: false
       },
     })
-  ]
+  ],
+  quiet: true,
+  stats: 'none'
 }

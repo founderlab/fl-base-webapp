@@ -15,7 +15,7 @@ export default class Profile extends Backbone.Model {
 
   }, require('../../shared/models/schemas/profile'))
 
-  defaults() { return {createdDate: moment.utc().toDate()} }
+  defaults() { return {deleted: false, visible: true, createdDate: moment.utc().toDate()} }
 }
 
 Profile.prototype.sync = smartSync(dbUrl, Profile)

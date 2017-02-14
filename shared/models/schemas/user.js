@@ -3,12 +3,10 @@ module.exports = {
   password: 'Text',
   admin: 'Boolean',
   type: 'Text',
+  mentor: 'Boolean',
 
   emailConfirmationToken: 'Text',
   emailConfirmedDate: 'DateTime',
-
-  facebookId: 'Text',
-  facebookAccessToken: 'Text',
 
   linkedinId: 'Text',
   linkedinAccessToken: 'Text',

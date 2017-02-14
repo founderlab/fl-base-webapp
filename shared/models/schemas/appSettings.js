@@ -1,10 +1,10 @@
 export default {
-  landingPageImage: 'String',
+  landingPageImage: 'Text',
 
-  facebookUrl: 'String',
-  twitterUrl: 'String',
-  instagramUrl: 'String',
-  footerContactInfo: 'String',
+  facebookUrl: 'Text',
+  twitterUrl: 'Text',
+  instagramUrl: 'Text',
+  footerContactInfo: 'Text',
 
   createdDate: 'DateTime',
 }

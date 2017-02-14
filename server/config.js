@@ -23,6 +23,8 @@ const config = {
   secret: process.env.INTERNAL_SECRET || DEFAULT_SECRET,
 
   gaId: process.env.GOOGLE_ANALYTICS_ID,
+  heapId: process.env.HEAP_ID,
+  logRocketId: process.env.LOG_ROCKET_ID,
 
   s3Bucket: process.env.S3_BUCKET || `${name}-${process.env.NODE_ENV}`,
   s3Region: process.env.S3_REGION || 'ap-southeast-2',
@@ -47,6 +49,12 @@ config.protocol = process.env.PROTOCOL || urlParts.protocol || 'http:'
 if (!config.url) config.url = `${config.protocol}//${config.hostname}:${config.port}`
 
 config.internalUrl = process.env.INTERNAL_URL || `http://localhost:${config.port}`
+
+config.orgUrl = org => {
+  if (!org || process.env.NODE_ENV === 'development') return config.url
+  const subdomain = org.subdomain || org
+  return config.url.replace(config.hostname, `${subdomain}.${config.hostname}`)
+}
 
 export default config
 

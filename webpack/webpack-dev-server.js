@@ -6,7 +6,7 @@ var DashboardPlugin = require('webpack-dashboard/plugin')
 var webpackConfig = require('./dev.config')
 var compiler = webpack(webpackConfig)
 
-var host = process.env.IP || 'localhost'
+var host = process.env.HOSTNAME || 'localhost'
 var port = (parseInt(process.env.PORT) + 1) || 3001
 var serverOptions = {
   contentBase: 'http://' + host + ':' + port,

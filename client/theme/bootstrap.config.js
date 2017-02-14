@@ -11,7 +11,8 @@
  */
 
 module.exports = {
-  preBootstrapCustomizations: './client/theme/bootstrap.variables.scss',
+  preBootstrapCustomizations: './client/theme/variables.scss',
+  // mainSass: './client/theme/index.scss',
   mainSass: './client/theme/bootstrap.overrides.scss',
   verbose: false,
   debug: false,

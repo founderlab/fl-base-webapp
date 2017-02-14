@@ -1,6 +1,6 @@
 export default {
-  title: 'String',
-  slug: 'String',
+  title: 'Text',
+  slug: 'Text',
   content: 'Text',
   order: 'Integer',
   visible: 'Boolean',

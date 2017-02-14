@@ -10,6 +10,7 @@ export default class AppNavbar extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
+    openLoginModal: PropTypes.func.isRequired,
   }
 
   render() {
@@ -20,7 +21,7 @@ export default class AppNavbar extends Component {
       loginDisplay = (
         <NavDropdown id="user-dropdown" title={user.get('email')}>
           {user.get('admin') && <MenuItem href="/admin">Admin</MenuItem>}
-          <LinkContainer to="/"><MenuItem>Dashboard</MenuItem></LinkContainer>
+          <LinkContainer to="/" onlyActiveOnIndex><MenuItem>Dashboard</MenuItem></LinkContainer>
           <LinkContainer to="/profile"><MenuItem>Profile</MenuItem></LinkContainer>
           <LinkContainer to="/report"><MenuItem>Report a Problem</MenuItem></LinkContainer>
           <li><a href="/logout">Logout</a></li>
@@ -29,28 +30,26 @@ export default class AppNavbar extends Component {
     }
     else {
       loginDisplay = [
-        <LinkContainer key={1} to="/register"><NavItem>Register</NavItem></LinkContainer>,
-        <LinkContainer key={2} to="/login"><NavItem>Sign in</NavItem></LinkContainer>,
+        <LinkContainer className="nav-login" key={1} to="/register"><NavItem>Register</NavItem></LinkContainer>,
+        <NavItem key={2} onClick={this.props.openLoginModal}>Sign in</NavItem>,
       ]
     }
 
     return (
-      <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/" onlyActiveOnIndex>FounderLab_replaceme</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
+      <Navbar fluid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/" onlyActiveOnIndex>Logo</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
 
-          <Navbar.Collapse>
-            <Nav pullRight>
-              {loginDisplay}
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </div>
+        <Navbar.Collapse>
+          <Nav pullRight>
+            {loginDisplay}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     )
   }
 }

@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component, PropTypes} from 'react'
+import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import {push} from 'redux-router'
 import {reset} from 'fl-auth-redux'
@@ -17,22 +18,17 @@ export default class ResetContainer extends Component {
   }
 
   onReset = data => {
-    this.props.reset(`${this.props.config.get('url')}/reset`, data.email, data.password, data.resetToken, err => {
+    this.props.reset(`${this.props.config.get('url')}/reset`, data.email && data.email.trim(), data.password, data.resetToken, err => {
       if (!err) this.props.push(this.props.query.redirectTo || '/')
     })
   }
 
   render() {
-    const {auth} = this.props
-    const errorMsg = auth.get('errors') && auth.get('errors').get('reset')
     return (
-      <Reset
-        loading={auth.get('loading')}
-        errorMsg={errorMsg}
-        email={this.props.query.email}
-        resetToken={this.props.query.resetToken}
-        onSubmit={this.onReset}
-      />
+      <div>
+        <Helmet title="Reset your password" />
+        <Reset auth={this.props.auth} email={this.props.query.email} resetToken={this.props.query.resetToken} onSubmit={this.onReset} />
+      </div>
     )
   }
 }

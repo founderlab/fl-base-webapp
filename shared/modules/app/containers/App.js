@@ -7,25 +7,38 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
-import {loadActiveProfile} from '../../users/profileActions'
+import {loadActiveProfile} from '../../profiles/actions'
+import LoginModal from '../../users/containers/LoginModal'
 
-@connect(state => ({config: state.config}))
+@connect(state => ({
+  routes: state.router.routes,
+  config: state.config,
+  auth: state.auth,
+  profiles: state.profiles,
+}))
 export default class App extends Component {
 
   static propTypes = {
     children: PropTypes.node,
+    routes: PropTypes.array.isRequired,
     config: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    profiles: PropTypes.object.isRequired,
+  }
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired,
   }
 
   static childContextTypes = {
-    url: React.PropTypes.string,
-    s3Url: React.PropTypes.string,
-    publicPath: React.PropTypes.string,
+    url: PropTypes.string,
+    s3Url: PropTypes.string,
+    publicPath: PropTypes.string,
   }
 
   constructor() {
     super()
-    this.state = {}
+    this.state = {showModal: false}
   }
 
   getChildContext() {
@@ -46,36 +59,50 @@ export default class App extends Component {
     }
   }
 
-  componentWillMount() {
-    if (!this.state.s3Url) this.setState({publicPath: this.props.config.get('publicPath'), s3Url: this.props.config.get('s3Url')})
-  }
-
   static fetchData({store, action}, callback) {
-    const {app, auth, profiles} = store.getState()
-    const queue = new Queue()
+    const {auth, app, profiles} = store.getState()
+    const baseQueue = new Queue()
 
-    if (!app.get('loaded')) queue.defer(callback => store.dispatch(loadAppSettings(callback)))
+    if (!app.get('loaded')) baseQueue.defer(callback => store.dispatch(loadAppSettings(callback)))
 
-    if (auth.get('user') && !profiles.get('loading') && !profiles.get('active')) {
-      const user_id = auth.get('user').get('id')
-      queue.defer(callback => store.dispatch(loadActiveProfile({user_id}, callback)))
-    }
+    baseQueue.await(err => {
+      if (err) return callback(err)
 
-    queue.await(callback)
+      const profileQueue = new Queue()
+
+      if (auth.get('user')) {
+        const userId = auth.get('user').get('id')
+        if (!profiles.get('loading') && !profiles.get('active')) {
+          profileQueue.defer(callback => store.dispatch(loadActiveProfile({user_id: userId}, callback)))
+        }
+      }
+
+      profileQueue.await(callback)
+    })
+
   }
+
+  openLoginModal = (e) => {
+    e.preventDefault()
+    this.setState({showModal: true})
+  }
+
+  closeLoginModal = () => this.setState({showModal: false})
 
   render() {
-    const name = this.props.config.get('name')
     return (
       <div id="app-view">
         <Helmet
           title=""
-          titleTemplate={`%s - ${name}`}
+          titleTemplate={`%s - frameworkstein`}
           {...headerTags(this.props)}
         />
-        <Navbar />
-        {this.props.children}
-        <Footer />
+        <div className="app-content">
+          <Navbar openLoginModal={this.openLoginModal} />
+          {this.props.children}
+          <Footer />
+          <LoginModal show={this.state.showModal} onHide={this.closeLoginModal} />
+        </div>
       </div>
     )
   }

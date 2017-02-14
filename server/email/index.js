@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import smtpTransport from 'nodemailer-smtp-transport'
+import Organisation from '../models/Organisation'
 import appConfig from '../config'
 import querystring from 'querystring'
 import passwordReset from './templates/passwordReset'
