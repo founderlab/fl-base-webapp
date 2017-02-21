@@ -24,34 +24,24 @@ const toScaffold = {
       password: 'frameworkstein',
       admin: true,
       profile: {
-        nickname: 'admin person',
-        firstName: 'admin',
-        lastName: 'lname',
+        nickname: 'Admin McAdminson',
+        firstName: 'Admin',
+        lastName: 'McAdminson',
       },
     },
     seekerUser: {
       email: 'seeker@frameworkstein.com.au',
       password: 'frameworkstein',
       profile: {
-        nickname: 'seeker person',
-        firstName: 'seeker',
-        lastName: 'lname',
+        nickname: 'Seeker McSeekerson',
+        firstName: 'Seeker',
+        lastName: 'McSeekerson',
       },
     },
   },
   organisations: [
     {
-      name: 'Uber',
-      city: 'Sydney',
-      country: 'Australia',
-    },
-    {
-      name: 'Deliveroo',
-      city: 'Sydney',
-      country: 'Australia',
-    },
-    {
-      name: 'Foodora',
+      name: 'UNSW',
       city: 'Sydney',
       country: 'Australia',
     },
