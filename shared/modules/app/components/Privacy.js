@@ -84,16 +84,16 @@ export default () => (
     <div>Our website may contain links to websites operated by third parties. Those links are provided for convenience and may not remain current or be maintained. Unless expressly stated otherwise, we are not responsible for the privacy practices of, or any content on, those linked websites, and have no control over or rights in those linked websites. The privacy policies that apply to those other websites may differ substantially from our Privacy Policy, so we encourage individuals to read them before using those websites.</div>
     <br />
     <div><b>Accessing or correcting your personal information</b></div>
-    <div>You can access the personal information we hold about you by contacting us at hello@frameworkstein.com.au. Sometimes, we may not be able to provide you with access to all of your personal information and, where this is the case, we will tell you why. We may also need to verify your identity when you request your personal information.</div>
+    <div>You can access the personal information we hold about you by contacting us at hello@frameworkstein.com. Sometimes, we may not be able to provide you with access to all of your personal information and, where this is the case, we will tell you why. We may also need to verify your identity when you request your personal information.</div>
     <br />
     <div>If you think that any personal information we hold about you is inaccurate, please contact us and we will take reasonable steps to ensure that it is corrected.</div>
     <br />
     <div><b>Making a complaint</b></div>
-    <div>If you think we have breached the Privacy Act, or you wish to make a complaint about the way we have handled your personal information, you can contact us at hello@frameworkstein.com.au. Please include your name, email address and/or telephone number and clearly describe your complaint. We will acknowledge your complaint and respond to you regarding your complaint within a reasonable period of time. If you think that we have failed to resolve the complaint satisfactorily, we will provide you with information about the further steps you can take. </div>
+    <div>If you think we have breached the Privacy Act, or you wish to make a complaint about the way we have handled your personal information, you can contact us at hello@frameworkstein.com. Please include your name, email address and/or telephone number and clearly describe your complaint. We will acknowledge your complaint and respond to you regarding your complaint within a reasonable period of time. If you think that we have failed to resolve the complaint satisfactorily, we will provide you with information about the further steps you can take. </div>
     <br />
     <div><b>Contact Us</b></div>
     <div>For further information about our Privacy Policy or practices, or to access or correct your personal information, or make a complaint, please contact us using the details set out below:</div>
-    <div>Email: hello@frameworkstein.com.au</div>
+    <div>Email: hello@frameworkstein.com</div>
     <br />
     <div><b>Effective:</b> 4 November 2016</div>
   </div>

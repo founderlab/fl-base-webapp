@@ -40,7 +40,7 @@ export default class Navbar extends Component {
               &copy; frameworkstein Pty Ltd 2016
             </Col>
             <Col xs={12} md={6} className="terms-privacy text-right">
-              <a href="mailto:hello@frameworkstein.com.au">hello@frameworkstein.com.au</a> | <a onClick={this.openTermsModal}>Terms</a> | <a onClick={this.openPrivacyModal}>Privacy</a>
+              <a href="mailto:hello@frameworkstein.com">hello@frameworkstein.com</a> | <a onClick={this.openTermsModal}>Terms</a> | <a onClick={this.openPrivacyModal}>Privacy</a>
             </Col>
           </Row>
         </Grid>

@@ -20,7 +20,7 @@ const longDescription = () => {
 const toScaffold = {
   users: {
     adminUser: {
-      email: 'admin@frameworkstein.com.au',
+      email: 'admin@frameworkstein.com',
       password: 'frameworkstein',
       admin: true,
       profile: {
@@ -30,7 +30,7 @@ const toScaffold = {
       },
     },
     seekerUser: {
-      email: 'seeker@frameworkstein.com.au',
+      email: 'seeker@frameworkstein.com',
       password: 'frameworkstein',
       profile: {
         nickname: 'Seeker McSeekerson',

@@ -35,7 +35,7 @@ export default class ResetRequest extends Component {
               <Panel className="panel-form">
                 <ResetRequestForm initialValues={{email}} {...this.props} />
                 {errorMsg === 'User not found' && (<p>Sorry, we don't have that email registered. You can <Link to="/register">sign up here</Link></p>)}
-                {err && (<p>Sorry, something went wrong while resetting your password. Please <a href="mailto:reseterror@frameworkstein.com.au">get in touch with us</a> so we can fix it up.</p>)}
+                {err && (<p>Sorry, something went wrong while resetting your password. Please <a href="mailto:reseterror@frameworkstein.com">get in touch with us</a> so we can fix it up.</p>)}
               </Panel>
             </Col>
           </Row>

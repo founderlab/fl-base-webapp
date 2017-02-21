@@ -3,7 +3,7 @@ export default () => (
   <div>
     <h2>Website Terms and Conditions</h2>
     <br />
-    <div>Thank you for visiting our website frameworkstein. This website is owned by frameworkstein Pty Ltd (ABN 16614216741). By accessing and/or using this website and related Services, you agree to these Terms and Conditions, which include our Privacy Policy (available https://unsw.frameworkstein.com.au/register/) (<i><b>Terms</b></i>). You should review our Privacy Policy and these Terms carefully and immediately cease using our website if you do not agree to these Terms. </div>
+    <div>Thank you for visiting our website frameworkstein. This website is owned by frameworkstein Pty Ltd (ABN 16614216741). By accessing and/or using this website and related Services, you agree to these Terms and Conditions, which include our Privacy Policy (available https://unsw.frameworkstein.com/register/) (<i><b>Terms</b></i>). You should review our Privacy Policy and these Terms carefully and immediately cease using our website if you do not agree to these Terms. </div>
     <div>&nbsp;</div>
     <div>This website was developed with the support of UNSW Innovations and Arc@UNSW.</div>
     <br />
@@ -12,7 +12,7 @@ export default () => (
     <div><b>1. Registration</b></div>
     <div>You need to be a registered member to access certain features of our website and Services. </div>
     <br />
-    <div>When you register and activate your account, you will provide us with personal information such as your name, email address and password. You may also choose to complete your public profile which includes but is not limited to details of your education background, telephone number, work experience details, skills, awards, group affiliations, achievements, interests, opportunities sought, networking objectives, a bio, individuals and businesses that you follow and other experiences. You may also choose to add business and/or startup details including but is not limited to industry, year founded, opportunities sought, status, funding, type of business, location, staff numbers, business model and awards/ achievements. You must ensure that this information is accurate and current. We will handle all personal information we collect in accordance with our Privacy Policy (https://unsw.frameworkstein.com.au/register/).</div>
+    <div>When you register and activate your account, you will provide us with personal information such as your name, email address and password. You may also choose to complete your public profile which includes but is not limited to details of your education background, telephone number, work experience details, skills, awards, group affiliations, achievements, interests, opportunities sought, networking objectives, a bio, individuals and businesses that you follow and other experiences. You may also choose to add business and/or startup details including but is not limited to industry, year founded, opportunities sought, status, funding, type of business, location, staff numbers, business model and awards/ achievements. You must ensure that this information is accurate and current. We will handle all personal information we collect in accordance with our Privacy Policy (https://unsw.frameworkstein.com/register/).</div>
     <br />
     <div>When you register and activate your account, we will provide you with a user name (your email address) and password. You are responsible for keeping this user name and password secure and are responsible for all use and activity carried out under this user name.</div>
     <div>If you are under the age of 13 years, you may not create an account or register as a member. If you are 13 or older but under the age of 18, you represent that you have reviewed these Terms with your parent or legal guardian to make sure that you and your parent or legal guardian understand these Terms. If you are a parent or guardian permitting a person under the age of 18 (a <i><b>Minor</b></i>) to create an account, you agree to:</div>
@@ -30,11 +30,11 @@ export default () => (
     <div> • agree and warrant to use the website in accordance with these Terms.</div>
     <div>&nbsp;</div>
     <div><b>2. Collection Notice </b></div>
-    <div>We collect personal information about you in order to process your registration and provide you with features and functions to help you find opportunities, information and other founders, employees, mentors, investors or professionals; and to help other founders, employees, mentors, investors or professionals and business opportunities find you and for purposes otherwise set out in our Privacy Policy at (https://unsw.frameworkstein.com.au/register/).</div>
+    <div>We collect personal information about you in order to process your registration and provide you with features and functions to help you find opportunities, information and other founders, employees, mentors, investors or professionals; and to help other founders, employees, mentors, investors or professionals and business opportunities find you and for purposes otherwise set out in our Privacy Policy at (https://unsw.frameworkstein.com/register/).</div>
     <br />
     <div>We may disclose that information to third parties that help us deliver our services (including information technology suppliers, communication suppliers and our business partners) or as required by law. If you do not provide this information, we may not be able to provide all of our services or products to you. We may also disclose your personal information to recipients that are located outside of Australia, including to third party suppliers and cloud providers located in the United States of America, United Kingdom and Canada.</div>
     <br />
-    <div>Our Privacy Policy explains: (i) how we store and use, and how you may access and correct your personal information; (ii) how you can lodge a complaint regarding the handling of your personal information; and (iii) how we will handle any complaint. If you would like any further information about our privacy policies or practices, please contact us at hello@frameworkstein.com.au. </div>
+    <div>Our Privacy Policy explains: (i) how we store and use, and how you may access and correct your personal information; (ii) how you can lodge a complaint regarding the handling of your personal information; and (iii) how we will handle any complaint. If you would like any further information about our privacy policies or practices, please contact us at hello@frameworkstein.com. </div>
     <br />
     <div>By providing your personal information to us, you consent to the collection, use, storage and disclosure of that information as described in the Privacy Policy and these Terms. </div>
     <br />
@@ -57,14 +57,14 @@ export default () => (
     <div> • Taxes are calculated based on the billing information that you provide us at the time of purchase.</div>
     <div> • Your Premium Services may be cancelled by us at any as a result of your breeching these Terms.</div>
     <br />
-    <div>To cancel your Premium Services by contacting us at hello@frameworkstein.com.au. </div>
+    <div>To cancel your Premium Services by contacting us at hello@frameworkstein.com. </div>
     <br />
     <div>Generally, all fees and charges are nonrefundable and there are no refunds or credits for partially used periods. Except as noted here, all paid products including Premium Account subscriptions, Ads or Job Postings are nonrefundable after purchase and delivery.</div>
     <div>An exception we may consider is providing a refund when we've updated your payment information and there are good reasons to believe that you did not intend for an update to be made.</div>
     <br />
     <div>Also, under the laws applicable in your jurisdiction, Premium Account subscribers may qualify for a refund if requested during a short period of time after the beginning of the subscription. For example, citizens of the European Union are entitled to a full refund during the 14 days after the subscription begins. Please note that this 14 day period commences when the subscription service starts, which in the event of free trial promotions happens before you are first charged, and so there may be no fees paid to be refunded.</div>
     <div>Note: All of your Premium features expire as soon as your cancellation takes effect at the end of your current billing cycle, so make sure you use all your entitlements before your account is canceled.</div>
-    <div>Order confirmations will be send via email and you may request an invoice by contacting hello@frameworkstein.com.au.</div>
+    <div>Order confirmations will be send via email and you may request an invoice by contacting hello@frameworkstein.com.</div>
     <br />
     <div>IN AUSTRALIA, OUR GOODS AND SERVICES COME WITH GUARANTEES THAT CANNOT BE EXCLUDED UNDER THE AUSTRALIAN CONSUMER LAW. NOTHING IN THESE TERMS AND CONDITIONS PURPORTS TO MODIFY OR EXCLUDE THE CONDITIONS, WARRANTIES AND UNDERTAKINGS, AND OTHER LEGAL RIGHTS, UNDER THE AUSTRALIAN COMPETITION AND CONSUMER ACT AND OTHER LAWS. ANY AND ALL OTHER WARRANTIES OR CONDITIONS WHICH ARE NOT GUARANTEED BY THE AUSTRALIAN CONSUMER LAW OR THE COMPETITION AND CONSUMER REGULATION 2010 ARE EXPRESSLY EXCLUDED WHERE PERMITTED, INCLUDING LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES CAUSED BY BREACH OF ANY EXPRESS OR IMPLIED WARRANTY OR CONDITION.]</div>
     <div>&nbsp;</div>
