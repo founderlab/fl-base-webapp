@@ -20,7 +20,7 @@ export default class Landing extends React.Component {
         <Grid fluid className="header">
           <Row>
             <Col xs={12} md={6} lg={6}>
-              <h1>It's alive!</h1>
+              <h1>It's alive! Rarr</h1>
               <Link to="/register"><button className="btn btn-lg btn-info">Do things</button></Link>
             </Col>
             <Col xs={12} md={6} lg={6}>
@@ -36,7 +36,7 @@ export default class Landing extends React.Component {
           </Row>
           <Row>
             <Col xs={12}>
-              <Link to="/jobs"><button className="btn btn-lg btn-danger">Find things</button></Link>
+              <Link to="/admin"><button className="btn btn-lg btn-danger">Admin things</button></Link>
             </Col>
           </Row>
         </Grid>
