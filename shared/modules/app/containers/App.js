@@ -15,6 +15,7 @@ import LoginModal from '../../users/containers/LoginModal'
   config: state.config,
   auth: state.auth,
   profiles: state.profiles,
+  router: state.router,
 }))
 export default class App extends Component {
 
@@ -24,6 +25,7 @@ export default class App extends Component {
     config: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     profiles: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
   }
 
   static contextTypes = {
@@ -90,6 +92,20 @@ export default class App extends Component {
   closeLoginModal = () => this.setState({showModal: false})
 
   render() {
+    const isAdmin = this.props.router.routes[1] && this.props.router.routes[1].name === 'admin'
+
+    let content = this.props.children
+    if (!isAdmin) {
+      content = (
+        <div>
+          <Navbar openLoginModal={this.openLoginModal} />
+          {this.props.children}
+          <Footer />
+          <LoginModal show={this.state.showModal} onHide={this.closeLoginModal} />
+        </div>
+      )
+    }
+
     return (
       <div id="app-view">
         <Helmet
@@ -98,10 +114,7 @@ export default class App extends Component {
           {...headerTags(this.props)}
         />
         <div className="app-content">
-          <Navbar openLoginModal={this.openLoginModal} />
-          {this.props.children}
-          <Footer />
-          <LoginModal show={this.state.showModal} onHide={this.closeLoginModal} />
+          {content}
         </div>
       </div>
     )
