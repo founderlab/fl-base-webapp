@@ -9,7 +9,7 @@ export default function testInitDB(callback) {
     databaseUrl: process.env.DATABASE_URL,
     modelsDir: path.resolve(__dirname, '../server/models'),
     scaffold: require(`../scaffold/${process.env.NODE_ENV}`),
-    __dangerouslyWipeTheEntireDatabase: true,
+    __dangerouslyWipeTheEntireDatabase: process.env.NO_RESET ? false : true,
   }, (err, models) => {
     if (err) console.trace('Error initialising database:', err)
     callback(err, models)

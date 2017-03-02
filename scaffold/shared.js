@@ -38,11 +38,10 @@ export default function scaffold(_toScaffold, callback) {
       User.findOne({email: _user.email}, (err, existingUser) => {
         if (err) return callback(err)
         if (existingUser) {
-          models[key] = existingUser
+          models.users[key] = existingUser
           return callback()
         }
-        const {educations, workExperiences, ...__user} = _user
-        const user = new User(__user)
+        const user = new User(_user)
         models.users[key] = user
         user.set({password: User.createHash(user.get('password'))})
         user.save(err => {
