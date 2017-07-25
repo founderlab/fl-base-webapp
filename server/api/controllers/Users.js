@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import RestController from 'fl-backbone-rest'
 import {createAuthMiddleware} from 'fl-auth-server'
-import User from 'fl-auth-server/lib/models/User'
-import {orgUrl} from '../../config'
+import User from '../../models/User'
 
 function canAccess(options, callback) {
   const {user, req} = options
@@ -29,7 +28,6 @@ export default class UsersController extends RestController {
     }, options))
 
     this.app.get('/oauth/redirect', this.redirect)
-    this.app.get('/oauth/redirect/:subdomain', this.organisationRedirect)
   }
 
   create(req, res) {
@@ -61,12 +59,4 @@ export default class UsersController extends RestController {
     res.redirect('/')
   }
 
-  organisationRedirect = (req, res) => {
-    const urlRoot = orgUrl(req.params.subdomain)
-    if (req.session.returnTo) {
-      const returnTo = req.session.returnTo[0] === '/' ? req.session.returnTo : `/${req.session.returnTo}`
-      return res.redirect(`${urlRoot}${returnTo}`)
-    }
-    res.redirect(urlRoot)
-  }
 }
