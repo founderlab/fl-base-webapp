@@ -3,8 +3,8 @@ import cacheManager from 'cache-manager'
 import redisStore from 'fl-cache-manager-redis'
 
 const cacheUrl = process.env.SESSIONS_DATABASE_URL
-const ttlMs = process.env.NODE_ENV === 'development' ? 0 * 1000 : 5 * 60 * 1000 // 5 minutes in production
-// const ttlMs = process.env.NODE_ENV === 'development' ? 60 * 1000 : 5 * 60 * 1000 // 5 minutes in production
+const ttlMs = process.env.NODE_ENV === 'production' ? 5 * 1000 * 60 : 0 // 5 minutes in production
+// const ttlMs = 5 * 1000 * 60
 
 const options = {
   store: 'memory',

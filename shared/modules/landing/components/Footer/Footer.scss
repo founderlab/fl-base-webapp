@@ -1,0 +1,81 @@
+@import "../../styles/vars";
+.footer {
+  background-color: $black-dark-hard;
+  padding: 40px 70px;
+}
+.footer-menu {
+  .logo, nav {
+  display: inline-block;
+  vertical-align: middle;
+  }
+  ul {
+  margin-bottom: 0;
+  font-size: 18px;
+  padding-left: 20px;
+  li {
+    margin: 0 15px;
+    display: inline-block;
+    a {
+    color: $grey-soft-hard;
+    }
+  }
+  }
+}
+.social {
+  a {
+  cursor: pointer;
+  font-size: 24px;
+  margin: 0 15px;
+  display: inline-block;
+  color: $black-dark;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1199px) {
+  .footer {
+  padding: 40px 15px;
+  }
+}
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+  .footer-menu {
+  ul {
+    font-size: 16px;
+    li {
+    margin: 0 10px;
+    }
+  }
+  }
+  .social {
+  margin-top: 7px;
+  a {
+    font-size: 16px;
+    margin: 0 10px;
+  }
+  }
+}
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+  .footer-menu {
+  text-align: center;
+  .logo, nav {
+    display: block;
+  }
+  .logo {
+    margin-bottom: 15px;
+  }
+  ul {
+    font-size: 16px;
+    padding: 0;
+    li {
+    margin: 5px;
+    display: block;
+    }
+  }
+  }
+  .social {
+  text-align: center;
+  margin-top: 7px;
+  }
+}

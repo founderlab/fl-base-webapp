@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Grid, Row, Col, Panel} from 'react-bootstrap'
 import {ResetForm} from 'fl-auth-react'
 
@@ -13,7 +14,7 @@ export default class Reset extends Component {
       <div className="form-page password-reset">
 
         <header>
-          <Grid fluid>
+          <Grid>
             <Row>
               <Col xs={12}>
                 <h1 className="text-center">Enter a new password</h1>

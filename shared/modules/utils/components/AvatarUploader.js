@@ -1,9 +1,10 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
 import {Row, Col, FormGroup, ControlLabel, HelpBlock, ProgressBar} from 'react-bootstrap'
 import {S3Image} from 'fl-react-utils'
-import ProfileAvatar from '../components/Avatar'
+import Avatar from '../components/Avatar'
 
 const MAX_FILE_SIZE = 1024 * 1024 * 10 //10mb
 
@@ -23,10 +24,11 @@ export default class AvatarUploader extends React.Component {
     autoSave: PropTypes.bool,
   }
 
-  constructor() {
-    super()
-    this.state = {editing: false}
+  static contextTypes = {
+    s3Url: PropTypes.string,
   }
+
+  state = {editing: false}
 
   handleToggleEdit = () => {
     this.setState({editing: !this.state.editing})
@@ -42,19 +44,22 @@ export default class AvatarUploader extends React.Component {
     })
   }
 
+  renderUploadedFile = () => (<div className="avatar"><S3Image className="avatar" filename={this.props.input.value} /></div>)
+
   render() {
     const {name, label, help, validationState} = this.props
     const style = this.props.style || {}
 
     const uploaderProps = {
       style,
-      maxFileSize: MAX_FILE_SIZE,
+      maxSize: MAX_FILE_SIZE,
       s3Url: this.context.s3Url,
       host: this.context.url,
       progressComponent: ({progress}) => (<ProgressBar to={progress} />),
     }
 
     const filename = this.props.input.value
+    const FileComponent = this.renderUploadedFile
 
     return (
       <FormGroup className="profile-editor text-center" controlId={name} validationState={validationState}>
@@ -68,9 +73,9 @@ export default class AvatarUploader extends React.Component {
           <Col xs={12}>
             <DropzoneS3Uploader onFinish={this.handleFinishedUpload} {...uploaderProps}>
               {filename ? (
-                <div className="avatar"><S3Image className="avatar" filename={filename} /></div>
+                <FileComponent />
               ) : (
-                <ProfileAvatar source={this.props.profile} size={80} />
+                <Avatar source={this.props.profile} size={80} />
               )}
             </DropzoneS3Uploader>
           </Col>

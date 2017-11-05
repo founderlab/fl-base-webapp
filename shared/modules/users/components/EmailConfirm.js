@@ -1,11 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 import {Grid, Row, Col, Panel} from 'react-bootstrap'
 
 export default class EmailConfirm extends Component {
 
   static propTypes = {
-    errorMsg: PropTypes.string,
+    errorMsg: PropTypes.node,
     loading: PropTypes.bool,
     emailConfirmed: PropTypes.bool,
   }
@@ -16,7 +17,7 @@ export default class EmailConfirm extends Component {
     return (
       <div className="form-page email-confirm">
         <header>
-          <Grid fluid>
+          <Grid>
             <Row>
               <Col xs={12}>
                 <h1 className="text-center">Email confirmed</h1>
@@ -35,7 +36,7 @@ export default class EmailConfirm extends Component {
                 {emailConfirmed && (
                   <div className="text-center">
                     <h2 className="text-center">Thanks! Your email is confirmed.</h2>
-                    <h3><Link to="/" className="text-center">Head back to your dashboard</Link></h3>
+                    <h3><Link to="/profile" className="text-center">Head back to your dashboard</Link></h3>
                   </div>
                 )}
               </Panel>

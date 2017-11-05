@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 import {Grid, Row, Col, Panel} from 'react-bootstrap'
 import {ResetRequestForm} from 'fl-auth-react'
@@ -7,7 +8,7 @@ export default class ResetRequest extends Component {
 
   static propTypes = {
     email: PropTypes.string,
-    errorMsg: PropTypes.string,
+    errorMsg: PropTypes.node,
     onSubmit: PropTypes.func.isRequired,
   }
 
@@ -20,7 +21,7 @@ export default class ResetRequest extends Component {
       <div className="form-page reset-request">
 
         <header>
-          <Grid fluid>
+          <Grid>
             <Row>
               <Col xs={12}>
                 <h1 className="text-center">Reset your password</h1>

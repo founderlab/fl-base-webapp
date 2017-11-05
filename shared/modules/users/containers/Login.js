@@ -1,5 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import {formValueSelector} from 'redux-form'
 import {push} from 'redux-router'
@@ -27,7 +29,7 @@ export default class LoginContainer extends Component {
   handleSubmit = data => {
     this.props.login(`${this.props.config.get('url')}/login`, data.email && data.email.trim(), data.password, err => {
       if (!err) {
-        this.setState({loaded: true}, () => window.location.href = this.props.query.redirectTo || '/')
+        this.setState({loaded: true}, () => window.location.href = this.props.query.redirectTo || '/profile')
       }
     })
   }
@@ -42,6 +44,10 @@ export default class LoginContainer extends Component {
 
     return (
       <div>
+        <Helmet>
+          <title itemProp="name" lang="en">Log in or Register & Find Work</title>
+          <meta name="description" content="Register and access visa applicants who are looking to immigrate and need the help of migration agents." />
+        </Helmet>
         <Login loading={loading} errorMsg={errorMsg} onSubmit={this.handleSubmit} email={email} />
       </div>
     )

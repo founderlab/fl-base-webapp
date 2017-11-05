@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Alert, Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router'
 import {reduxForm, Field} from 'redux-form'
@@ -13,7 +14,7 @@ export default class LoginForm extends Component {
   static propTypes = {
     email: PropTypes.string,
     loading: PropTypes.bool,
-    errorMsg: PropTypes.string,
+    errorMsg: PropTypes.node,
     handleSubmit: PropTypes.func.isRequired,
   }
 
@@ -24,17 +25,19 @@ export default class LoginForm extends Component {
     return (
       <form onSubmit={handleSubmit} className="login">
         <Row>
-          <Col sm={8} smOffset={2}>
+          <Col xs={12}>
             <Field
               type="email"
+              label="Email"
               name="email"
-              inputProps={{placeholder: 'Email'}}
+              inputProps={{placeholder: 'you@example.com'}}
               component={Input}
             />
             <Field
+              label="Password"
               type="password"
               name="password"
-              inputProps={{placeholder: 'Password (6 or more characters)'}}
+              // inputProps={{placeholder: 'Password (6 or more characters)'}}
               component={Input}
             />
 
@@ -45,16 +48,18 @@ export default class LoginForm extends Component {
               </Alert>
             )}
 
-            <Button loading={loading} type="submit" bsStyle="primary" block onClick={handleSubmit}>Sign in</Button>
+            <Link className="reset-link" to={`/reset-request?email=${email}`}>Forgot password?</Link>
+
+            <div className="text-center">
+              <Button loading={loading} type="submit" bsStyle="primary" onClick={handleSubmit}>Sign in</Button>
+            </div>
 
           </Col>
         </Row>
 
-        <div className="text-center">
-          <hr />
+        {/*<div className="text-center">
           <p>Don't have an account? <Link to="/register">Register here</Link></p>
-          <p>Forgot your password?<Link to={`/reset-request?email=${email}`}> Reset it here</Link></p>
-        </div>
+        </div>*/}
       </form>
     )
   }

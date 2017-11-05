@@ -15,7 +15,7 @@ export default class StaticPagesController extends RestController {
     super(options.app, _.defaults({
       model_type: require('../../models/StaticPage'),
       route: '/api/static_pages',
-      auth: [...options.auth[0], createAuthMiddleware({canAccess})],
+      auth: [...options.auth, createAuthMiddleware({canAccess})],
       templates: {
         detail: require('../templates/staticPages/detail'),
         link: require('../templates/staticPages/link'),

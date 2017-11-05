@@ -1,0 +1,24 @@
+.features-section {
+  position: relative; }
+  .features-section img {
+  width: 100%;
+  margin-left: -80px;
+  margin-bottom: -50px; }
+  .features-section .features-right {
+  margin-top: 80px; }
+  .features-section .description {
+  margin-bottom: 25px; }
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  .features-section img {
+  padding: 0 50px;
+  margin-left: 0;
+  margin-bottom: 15px; }
+  .features-section .features-right {
+  margin-top: 0; } }
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+  .features-section img {
+  padding: 10px; } }

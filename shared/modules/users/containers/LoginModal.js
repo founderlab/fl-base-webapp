@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {formValueSelector} from 'redux-form'
 import {login} from 'fl-auth-redux'
@@ -26,7 +27,7 @@ export default class LoginModalContainer extends Component {
   handleSubmit = data => {
     this.props.login(`${this.props.url}/login`, data.email && data.email.trim(), data.password, err => {
       if (!err) {
-        this.setState({loaded: true}, () => window.location.href = this.props.query.redirectTo || '/')
+        this.setState({loaded: true}, () => window.location.href = this.props.query.redirectTo || '/profile')
       }
     })
   }

@@ -3,6 +3,7 @@ import {Route, IndexRoute} from 'react-router'
 import {AdminRoute} from 'fl-admin'
 
 export default function getRoutes(store) {
+
   function requireUserFn(checkFn) {
     return function requireUser(nextState, replace, callback) {
       const {auth} = store.getState()
@@ -14,6 +15,17 @@ export default function getRoutes(store) {
     }
   }
 
+  /**
+   * Redirect to another path
+   * @param  {string} path - new path to redirect to
+   */
+  function redirectFn(path) {
+    return (nextState, replace, callback) => {
+      replace(path)
+      callback()
+    }
+  }
+
   const requireUser = requireUserFn()
   const requireAdmin = requireUserFn(user => user.get('admin'))
 
@@ -21,25 +33,17 @@ export default function getRoutes(store) {
     <Route path="/" name="app" component={require('./modules/app/containers/App')}>
       <IndexRoute sidebarIfUser component={require('./modules/app/containers/Landing')} />
 
-      <AdminRoute path="/admin" name="admin" onEnter={requireAdmin} />
-
-      <Route component={require('./modules/users/containers/Login')} path="login" />
-      <Route component={require('./modules/users/containers/ResetRequest')} path="reset-request" />
-      <Route component={require('./modules/users/containers/Reset')} path="reset" />
-      <Route component={require('./modules/users/containers/EmailConfirm')} path="confirm-email" />
+      <AdminRoute hideNav hideFooter path="/admin" name="admin" onEnter={requireAdmin} />
 
       <Route path="register" component={require('./modules/users/containers/Register')} />
-
-      <Route onEnter={requireUser}>
-        <Route path="profile" sidebar component={require('./modules/profiles/containers/Profile')} />
-      </Route>
-
-      <Route path="people/:profileId" sidebar component={require('./modules/profiles/containers/Profile')} />
-
-      <Route path="organisations/:organisationId" sidebar component={require('./modules/organisations/containers/OrganisationDetail')} />
-
-      <Route path="jobs" sidebar component={require('./modules/jobs/containers/JobFinder')} />
-      <Route path="jobs/:jobId" sidebar component={require('./modules/jobs/containers/JobDetail')} />
+      <Route path="login" component={require('./modules/users/containers/Login')} />
+      <Route path="reset-request" component={require('./modules/users/containers/ResetRequest')} />
+      <Route path="reset" component={require('./modules/users/containers/Reset')} />
+      <Route path="confirm-email" component={require('./modules/users/containers/EmailConfirm')} />
+      <Route path="contact" component={require('./modules/app/containers/Contact')} />
+      <Route path="privacy" component={require('./modules/app/components/Privacy')} />
+      <Route path="terms" component={require('./modules/app/components/Terms')} />
+      <Route path="faq" component={require('./modules/app/containers/Faq')} />
 
       <Route path="/p/:slug" component={require('./modules/app/containers/StaticPage')} />
     </Route>

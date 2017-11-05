@@ -1,6 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import Queue from 'queue-async'
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import Navbar from './Navbar'
@@ -15,7 +16,6 @@ import LoginModal from '../../users/containers/LoginModal'
   config: state.config,
   auth: state.auth,
   profiles: state.profiles,
-  router: state.router,
 }))
 export default class App extends Component {
 
@@ -25,7 +25,6 @@ export default class App extends Component {
     config: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     profiles: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
   }
 
   static contextTypes = {
@@ -36,6 +35,8 @@ export default class App extends Component {
     url: PropTypes.string,
     s3Url: PropTypes.string,
     publicPath: PropTypes.string,
+    stripePublishableApiKey: PropTypes.string,
+    markdownProps: PropTypes.object,
   }
 
   constructor() {
@@ -48,6 +49,13 @@ export default class App extends Component {
       url: this.state.url,
       s3Url: this.state.s3Url,
       publicPath: this.state.publicPath,
+      stripePublishableApiKey: this.state.stripePublishableApiKey,
+      markdownProps: {
+        escapeHtml: true,
+        renderers: {
+          Link: props => (<a href={props.href} target="_blank">{props.children}</a>),
+        },
+      },
     }
   }
 
@@ -57,6 +65,7 @@ export default class App extends Component {
         url: this.props.config.get('url'),
         s3Url: this.props.config.get('s3Url'),
         publicPath: this.props.config.get('publicPath'),
+        stripePublishableApiKey: this.props.config.get('stripePublishableApiKey'),
       })
     }
   }
@@ -81,7 +90,6 @@ export default class App extends Component {
 
       profileQueue.await(callback)
     })
-
   }
 
   openLoginModal = (e) => {
@@ -92,29 +100,26 @@ export default class App extends Component {
   closeLoginModal = () => this.setState({showModal: false})
 
   render() {
-    const isAdmin = this.props.router.routes[1] && this.props.router.routes[1].name === 'admin'
-
-    let content = this.props.children
-    if (!isAdmin) {
-      content = (
-        <div>
-          <Navbar openLoginModal={this.openLoginModal} />
-          {this.props.children}
-          <Footer />
-          <LoginModal show={this.state.showModal} onHide={this.closeLoginModal} />
-        </div>
-      )
-    }
+    const route = this.props.routes[1]
+    const hideFooter = route && route.hideFooter
+    const hideNav = route && route.hideNav
+    const pageUrl = `${this.state.url}${location.pathname}`
 
     return (
       <div id="app-view">
-        <Helmet
-          title=""
-          titleTemplate={`%s - frameworkstein`}
-          {...headerTags(this.props)}
-        />
+        <Helmet titleTemplate={`%s | Frameworkstein`}>
+          {headerTags(this.props)}
+          <meta property="og:image"       content="https://www.frameworkstein.com/public/images/logo.png" />
+          <meta property="og:type"        content="website" />
+          <meta property="og:url"         content={pageUrl} />
+        </Helmet>
         <div className="app-content">
-          {content}
+          {!hideNav && <Navbar openLoginModal={this.openLoginModal} />}
+          <div className="app">
+            {this.props.children}
+          </div>
+          {!hideFooter && <Footer />}
+          <LoginModal show={this.state.showModal} onHide={this.closeLoginModal} />
         </div>
       </div>
     )

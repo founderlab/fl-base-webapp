@@ -24,6 +24,6 @@ export function formatLocation(loc) {
   let locationStr = ''
   if (loc.city) locationStr = `${loc.city}, `
   if (loc.country) locationStr = `${locationStr}${loc.country}`
-  if (!locationStr) locationStr = 'Earth'
+  if (!locationStr) locationStr = ''
   return locationStr
 }

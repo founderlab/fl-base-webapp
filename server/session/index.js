@@ -25,7 +25,7 @@ if (sessionsDBUrl && sessionsDBUrl.match(/^redis/)) {
   }
   const sessionStore = new RedisStore(redisOptions)
   console.log(`Using redis sessions: ${redisOptions.host}:${redisOptions.port}/${redisOptions.db}`)
-  sessionMiddleware = session({saveUninitialized: true, resave: true, secret: 'Ag8ajdD&asdaq3k234HpDkJ', cookie: {maxAge: config.sessionAge}, store: sessionStore})
+  sessionMiddleware = session({saveUninitialized: true, resave: true, secret: 'Ag8ajKJDSNF#82sdj9tv53ndf02%^pDkJ', cookie: {maxAge: config.sessionAge}, store: sessionStore})
 }
 else {
   if (sessionsDBUrl && !sessionsDBUrl.match(/^memory/)) console.log(`Unknown session db protocol: ${sessionsDBUrl}`)

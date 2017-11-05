@@ -1,27 +1,16 @@
 import _ from 'lodash' // eslint-disable-line
 import Queue from 'queue-async'
-import moment from 'moment'
-import Organisation from '../server/models/Organisation'
 
 const toScaffold = {
   users: {
     adminUser: {
       email: 'admin@frameworkstein.com',
-      password: 'frameworkstein',
+      password: 'qBdiWIdoAa9sdhuj3eatSDorir9J6A2m',
       admin: true,
       profile: {
-        nickname: 'admin person',
+        displayName: 'admin person',
         firstName: 'admin',
-        lastName: 'lname',
-      },
-    },
-    seekerUser: {
-      email: 'seeker@frameworkstein.com',
-      password: 'frameworkstein',
-      profile: {
-        nickname: 'seeker person',
-        firstName: 'seeker',
-        lastName: 'lname',
+        lastName: '',
       },
     },
   },

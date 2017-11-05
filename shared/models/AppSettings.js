@@ -1,6 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
+import {beforeSend} from '../lib/headers'
 
 export default class AppSetting extends Backbone.Model {
   schema = () => _.extend({
@@ -11,4 +12,4 @@ export default class AppSetting extends Backbone.Model {
 }
 
 AppSetting.prototype.urlRoot = '/api/app_settings'
-AppSetting.prototype.sync = require('backbone-http').sync(AppSetting)
+AppSetting.prototype.sync = require('backbone-http').sync(AppSetting, {beforeSend})

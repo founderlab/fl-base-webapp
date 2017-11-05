@@ -1,67 +1,88 @@
-require('babel/polyfill')
+require('babel-polyfill')
 
 // Webpack config for creating the production bundle.
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var strip = require('strip-loader')
-var AssetsPlugin = require('assets-webpack-plugin')
 
-var relativeAssetsPath = '../public/dist'
-var assetsPath = path.join(__dirname, relativeAssetsPath)
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const AssetsPlugin = require('assets-webpack-plugin')
+
+const relativeAssetsPath = '../public/dist'
+const assetsPath = path.join(__dirname, relativeAssetsPath)
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     app: [
+      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/app.js',
-      'bootstrap-sass!./client/theme/bootstrap.config.prod.js',
-      'font-awesome-webpack!./client/theme/font-awesome.config.prod.js'
     ],
     admin: [
+      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/admin.js',
-      'bootstrap-sass!./client/theme/bootstrap.config.prod.js',
-      'font-awesome-webpack!./client/theme/font-awesome.config.prod.js'
-    ]
+    ],
   },
   output: {
     path: assetsPath,
     filename: '[name]-[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
-    publicPath: '/public/dist/'
+    publicPath: '/public/dist/',
   },
   module: {
-    loaders: [
-      { test: /backbone\.js$/, loader: 'imports?define=>false' }, // turn off AMD when loading backbone
+    rules: [
+      // turn off AMD when loading backbone
+      {
+        test: /backbone\.js$/,
+        use: 'imports-loader?define=>false',
+      },
 
-      { test: /\.js$/, exclude: /node_modules/, loaders: [strip.loader('debug'), 'babel'] },
-      { test: /\.json$/, loader: 'json-loader' },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: ['babel-loader'],
+      },
 
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!less') },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!sass') },
-      { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version!stylus') },
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css!autoprefixer?browsers=last 2 version') },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            'autoprefixer-loader',
+            'sass-loader',
+          ],
+        }),
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            'autoprefixer-loader',
+          ],
+        }),
+      },
 
-      // { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
-      // { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass' },
-      // { test: /\.styl$/, loader: 'style!css!autoprefixer?browsers=last 2 version!stylus' },
-      // { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
-      { test: /\.(png|jpg|gif|wav|mp3)$/, loader: 'file' },
+      {test: /\.(png|jpg|gif|wav|mp3)$/, use: 'file-loader'},
 
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
+      {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff'},
+      {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff'},
+      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/octet-stream'},
+      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: 'file-loader'},
+      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=image/svg+xml'},
     ],
-    noParse: /node_modules\/quill\/dist\/quill\.js/
   },
-  progress: true,
   resolve: {
-    modulesDirectories: [
-      'node_modules'
+    modules: [
+      'node_modules',
     ],
-    extensions: ['', '.json', '.js']
   },
   plugins: [
     new AssetsPlugin({prettyPrint: true}),
@@ -71,28 +92,35 @@ module.exports = {
 
     // set global vars
     new webpack.DefinePlugin({
-      __DEBUG__: false,
       'process.env': {
+        DEBUG: false,
         CLIENT: true,
         SERVER: false,
-        NODE_ENV: JSON.stringify('production') // This has a big effect on the react lib size
-      }
+        NODE_ENV: JSON.stringify('production'), // This has a big effect on the react lib size
+      },
     }),
 
     // ignore jquery (used by backbone)
     new webpack.IgnorePlugin(/^jquery$/),
+    new webpack.IgnorePlugin(/^bootstrap-sass$/),
 
     // optimizations
-    new webpack.optimize.CommonsChunkPlugin('shared', 'shared-[chunkhash].js'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({name: 'shared', filename: 'shared-[chunkhash].js'}),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
-      mangle: false,
+      // mangle: false,
       sourceMap: false,
       compress: {
-        warnings: false
-      }
-    })
-  ]
+        warnings: false, // Suppress uglification warnings
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+      },
+      output: {
+        comments: false,
+      },
+      exclude: [/\.min\.js$/gi], // skip pre-minified libs
+    }),
+  ],
 }

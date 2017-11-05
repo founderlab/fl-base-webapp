@@ -1,12 +1,13 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
+import {beforeSend} from '../lib/headers'
 
 export default class Profile extends Backbone.Model {
   schema = () => _.extend({
 
-    // Don't specify the user relation on the client to save headaches when updating profiles
-    // user: () => ['belongsTo', require('./User')],
+    user: () => ['belongsTo', require('./User')],
+    hotel: () => ['belongsTo', require('./Hotel')],
 
   }, require('./schemas/profile'))
 
@@ -14,4 +15,4 @@ export default class Profile extends Backbone.Model {
 }
 
 Profile.prototype.urlRoot = '/api/profiles'
-Profile.prototype.sync = require('backbone-http').sync(Profile)
+Profile.prototype.sync = require('backbone-http').sync(Profile, {beforeSend})

@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {Link} from 'react-router'
 import Gravatar from 'react-gravatar'
@@ -9,29 +10,32 @@ import Icon from '../../utils/components/Icon'
 export default class Avatar extends React.Component {
 
   static propTypes = {
-    source: PropTypes.object.isRequired,
+    source: PropTypes.object,
+    profile: PropTypes.object,
+    hotel: PropTypes.object,
     size: PropTypes.number.isRequired,
     linked: PropTypes.bool,
     className: PropTypes.string,
     defaultIcon: PropTypes.string,
     getLink: PropTypes.func,
-    profile: PropTypes.bool,
-    startup: PropTypes.bool,
     bordered: PropTypes.bool,
+    small: PropTypes.bool,
+    smaller: PropTypes.bool,
   }
 
   static defaultProps = {
-    size: 80,
-    getLink: source => `/people/${source.id}`,
-    defaultIcon: 'flaticon/motorcyclist',
+    size: 150,
+    getLink: source => `/agents/${source.slug}`,
+    defaultIcon: 'user',
   }
 
   render() {
-    const {source, className, size} = this.props
+    const {className, size} = this.props
+    const source = this.props.source || this.props.profile || this.props.hotel
     let image = null
     let fallback = (
       <div className="avatar-backup">
-        <Icon icon={this.props.defaultIcon} />
+        <Icon root="/public" icon={this.props.defaultIcon} />
       </div>
     )
 
@@ -46,20 +50,21 @@ export default class Avatar extends React.Component {
     else if (source.emailMd5) {
       image = (
         <div>
-          <Gravatar alt={null} md5={source.emailMd5} size={this.props.size} default="blank" />
+          <Gravatar alt={null} md5={source.emailMd5} size={size} default="blank" />
         </div>
       )
     }
 
     const classes = classNames(className, {
       avatar: true,
-      profile: this.props.profile,
-      startup: this.props.startup,
+      hotel: this.props.hotel,
       bordered: this.props.bordered,
+      small: this.props.small,
+      smaller: this.props.smaller,
     })
 
     return (
-      <div className={classes} style={{width: size, height: size}}>
+      <div className={classes}>
         {this.props.linked ? (
           <Link to={this.props.getLink(source)}>
             {image}

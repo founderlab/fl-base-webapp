@@ -1,18 +1,19 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {Grid, Row, Col} from 'react-bootstrap'
 import TermsModal from '../../users/components/TermsModal'
 import PrivacyModal from '../../users/components/PrivacyModal'
 
-@connect(state => _.pick(state, 'auth', 'config', 'app'), {})
+@connect(state => ({
+  app: state.app,
+}))
 export default class Navbar extends Component {
 
   static propTypes = {
     app: PropTypes.object.isRequired,
-    auth: PropTypes.object.isRequired,
-    config: PropTypes.object.isRequired,
   }
 
   constructor() {
@@ -27,20 +28,30 @@ export default class Navbar extends Component {
   closePrivacyModal = () => this.setState({showPrivacyModal: false})
 
   render() {
-    // const {app} = this.props
-    // const staticPageLinks = app.get('staticPageLinks').toJSON()
-    // const {footerContactInfo, facebookUrl, twitterUrl, instagramUrl} = app.get('settings').toJSON()
-    // const pageLinks = staticPageLinks && _.map(staticPageLinks, p => (<li key={p.slug}><Link to={`/${p.slug}`}>{p.title}</Link></li>))
+    const settings = this.props.app.get('settings').toJSON()
 
     return (
       <footer>
-        <Grid fluid className="org-footer">
+        <Grid className="footer">
           <Row>
-            <Col xs={12} md={6} className="copyright">
-              &copy; frameworkstein Pty Ltd 2016
-            </Col>
-            <Col xs={12} md={6} className="terms-privacy text-right">
-              <a href="mailto:hello@frameworkstein.com">hello@frameworkstein.com</a> | <a onClick={this.openTermsModal}>Terms</a> | <a onClick={this.openPrivacyModal}>Privacy</a>
+            <Col xs={12}>
+              <Link className="footer-logo" to="/" onlyActiveOnIndex><img src="/public/images/logo.png" alt="Frameworkstein logo" /></Link>
+              <div className="footer-links">
+                <a className="i-list" href="https://blog.frameworkstein.com/blog">Blog</a>
+                <Link className="i-list" to="/faq">FAQ</Link>
+                <Link className="i-list" to="/faq/agent">Agent FAQ</Link>
+                <Link className="i-list" to="/terms">Terms & Conditions</Link>
+                <Link className="i-list" to="/privacy">Privacy Policy</Link>
+                <Link className="i-list" to="/make-a-complaint/australia">Make a complaint</Link>
+                <Link className="i-list" to="/contact">Contact us</Link>
+              </div>
+              <div className="footer-copyright">
+                {settings.footerCopyright}
+              </div>
+              <div className="footer-social">
+                <a className="i-list" target="_blank" href="https://facebook.com/frameworkstein"><i className="fa fa-facebook" /></a>
+                <a className="i-list" target="_blank" href="https://twitter.com/frameworkstein"><i className="fa fa-twitter" /></a>
+              </div>
             </Col>
           </Row>
         </Grid>

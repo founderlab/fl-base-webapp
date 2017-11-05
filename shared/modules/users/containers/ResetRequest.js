@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import {resetRequest} from 'fl-auth-redux'
@@ -15,7 +16,7 @@ export default class ResetRequestContainer extends Component {
     resetRequest: PropTypes.func.isRequired,
   }
 
-  onReset = data => {
+  handleReset = data => {
     this.props.resetRequest(`${this.props.config.get('url')}/reset-request`, data.email && data.email.trim())
   }
 
@@ -33,7 +34,7 @@ export default class ResetRequestContainer extends Component {
           loading={loading}
           resetEmailSent={resetEmailSent}
           email={this.props.email}
-          onSubmit={this.onReset}
+          onSubmit={this.handleReset}
         />
       </div>
     )

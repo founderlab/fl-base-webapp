@@ -1,10 +1,12 @@
 export default {
-  landingPageImage: 'Text',
-
   facebookUrl: 'Text',
   twitterUrl: 'Text',
   instagramUrl: 'Text',
-  footerContactInfo: 'Text',
+  footerCopyright: 'Text',
+
+  ausPhone: 'Text',
+  nzPhone: 'Text',
+  ukPhone: 'Text',
 
   createdDate: 'DateTime',
 }

@@ -1,21 +1,17 @@
-# FounderLab base project for Frameworkstein web apps
-
-A single page Node app with user login. Use this when starting a new project.
-
-Uses React, Redux, BackboneORM, Bootstrap, Webpack.
+# frameworkstein.com
 
 Requires: node, postgres, redis
 
 ##### Basic instructions
 ```
-# 1. First install dependencies
+# 1. Install dependencies
 $ npm install
 
 # 2a. Start the node server in one terminal
-$ npm start-dev
+$ npm run start-dev
 
-# 2b. Start the webpack development server in another
+# 2b. Start the webpack development server in another 
 $ npm run client-watch
 ```
 
-The app will start and can be found at [http://localhost:3000](http://localhost:3000) 
+The app will start and can be found at [http://localhost:3070](http://localhost:3070) 

@@ -1,0 +1,51 @@
+.bookings-section {
+  padding: 25px 15px 100px; }
+  .bookings-section .top {
+  padding: 0 100px;
+  z-index: 2; }
+  .bookings-section .bottom {
+  position: relative;
+  z-index: 1; }
+  .bookings-section .bottom::before {
+    position: absolute;
+    right: 115px;
+    bottom: -300px;
+    content: ' ';
+    width: 140px;
+    height: 400px;
+    z-index: 10;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url("/public/images/1to2.png"); }
+  .bookings-section .bottom img {
+    width: 100%;
+    margin-top: -45px;
+    z-index: -1;
+    position: relative; }
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
+  .bookings-section {
+  padding: 25px 15px 50px; }
+  .bookings-section .bottom img {
+    margin-top: 0; }
+  .bookings-section .bottom::before {
+    width: 115px;
+    right: 93px;
+    bottom: -315px; } }
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  .bookings-section .description {
+  width: 100%; }
+  .bookings-section .top {
+  padding: 0; }
+  .bookings-section .bottom::before {
+  width: 70px;
+  right: 86px;
+  bottom: -340px; } }
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+  .bookings-section .bottom::before {
+  display: none; } }

@@ -7,7 +7,11 @@ const defaultState = fromJS({
   staticPageLinks: {},
   settings: {},
   errors: {},
+  faqList: {},
+  faqs: {},
   loading: false,
+  faqsLoading: false,
+  faqsLoaded: false,
 })
 
 export default function reducer(state=defaultState, action={}) {
@@ -20,6 +24,11 @@ export default function reducer(state=defaultState, action={}) {
     case TYPES.APP_SETTINGS_LOAD + '_ERROR':
     case TYPES.STATIC_PAGE_LOAD + '_ERROR':
       return state.merge({loading: false, errors: {app: action.error || action.res.body.error}})
+
+    case TYPES.FAQ_LOAD + '_START':
+      return state.merge({faqsLoading: true, errors: {}})
+    case TYPES.FAQ_LOAD + '_ERROR':
+      return state.merge({faqsLoading: false, errors: {faqs: action.error || action.res.body.error}})
 
     case TYPES.APP_SETTINGS_LOAD +'_SUCCESS':
       return state.merge({
@@ -45,6 +54,15 @@ export default function reducer(state=defaultState, action={}) {
         pageNotFound: false,
       }).mergeDeep({
         pagesBySlug: {[action.res.slug]: action.res},
+      })
+
+    case TYPES.FAQ_LOAD + '_SUCCESS':
+      return state.merge({
+        errors: {},
+        faqsLoading: false,
+        faqsLoaded: true,
+        faqList: action.modelList,
+        faqs: action.models,
       })
 
     default:

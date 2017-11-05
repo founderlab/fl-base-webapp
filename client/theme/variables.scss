@@ -17,32 +17,36 @@
  //## Gray and brand colors for use across Bootstrap.
 
  $gray-base:              #000 !default;
- $gray-darker:            lighten($gray-base, 13.5%) !default;  // #222
- $gray-dark:              lighten($gray-base, 20%) !default;    // #333
- $gray:                   lighten($gray-base, 33.5%) !default;  // #555
- $gray-light:             lighten($gray-base, 60%) !default;    // #999
- $gray-lightish:          lighten($gray-base, 80%) !default;    // #ccc
- $gray-lighter:           lighten($gray-base, 93.5%) !default;  // #eee
- $gray-lighterer:         lighten($gray-base, 97%) !default;
+ $gray-darker:            #282828;
+ $gray-dark:              #555;
+ $gray:                   #8c8c8c;
+ $gray-light:             #ccc;
+ $gray-lighter:           #d6d6d6;
+ $gray-lighterer:         #f7f7f7;
 
- $brand-primary:         #42C299 !default;
- $brand-success:         #8A73B9 !default;
- $brand-info:            #3EA2EC !default;
- $brand-warning:         #F9B644 !default;
- $brand-danger:          #FF6459 !default;
+ $gray-blue:              #809cb5;
+ $gray-blue-light:        #9fb2bc;
+ $gray-blue-lighter:      #ccd5da;
+
+ $brand-primary:         #3e69bb !default;
+ $brand-success:         #61e764 !default;
+ $brand-info:            #00a2ff !default;
+ $brand-warning:         #ffd83e !default;
+ $brand-danger:          #e54d4f !default;
+ $brand-star:            #ff7b41 !default;
+ $brand-sales:           #493c89 !default;
 
  //== Scaffolding
  //
  //## Settings for some of the most global styles.
 
  //** Background color for `<body>`.
- // $body-bg:               #fff !default;
- $body-bg:               #edf3f4 !default;
+ $body-bg:               #fff !default;
  //** Global text color on `<body>`.
- $text-color:            $gray !default;
+ $text-color:            $gray-darker !default;
 
  //** Global textual link color.
- $link-color:            $brand-primary !default;
+ $link-color:            $brand-info !default;
  //** Link hover color set via `darken()` function.
  $link-hover-color:      lighten($link-color, 20%) !default;
  //** Link hover decoration.
@@ -59,16 +63,16 @@
  $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
  $font-family-base:        $font-family-sans-serif !default;
 
- $font-size-base:          16px !default;
- $font-size-large:         ceil(($font-size-base * 1.25)) !default;     // ~20px
- $font-size-small:         ceil(($font-size-base * 0.8125)) !default;   // ~13px
+ $font-size-base:          15px !default;
+ $font-size-large:         20px;
+ $font-size-small:         13px;
 
- $font-size-h1:            floor(($font-size-base * 2.6)) !default;     // ~41px
- $font-size-h2:            floor(($font-size-base * 2)) !default;       // ~34px
- $font-size-h3:            ceil(($font-size-base * 1.5)) !default;      // ~24px
- $font-size-h4:            ceil(($font-size-base * 1.25)) !default;     // ~20px
- $font-size-h5:            $font-size-base !default;                    // ~16px
- $font-size-h6:            $font-size-small !default;                   // ~13px
+ $font-size-h1:            40px;
+ $font-size-h2:            35px;
+ $font-size-h3:            30px;
+ $font-size-h4:            25px;
+ $font-size-h5:            20px;
+ $font-size-h6:            15px;
 
  //** Unit-less `line-height` for use in components like buttons.
  $line-height-base:        1.428571429 !default; // 20/14
@@ -79,7 +83,7 @@
  $headings-font-family:    inherit !default;
  $headings-font-weight:    300 !default;
  $headings-line-height:    1.1 !default;
- $headings-color:          $gray-dark !default;
+ $headings-color:          $text-color !default;
 
 
  //== Iconography
@@ -98,8 +102,8 @@
  //
  //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
- $padding-base-vertical:     7px !default;
- $padding-base-horizontal:   12px !default;
+ $padding-base-vertical:     6px !default;
+ $padding-base-horizontal:   10px !default;
 
  $padding-large-vertical:    13px !default;
  $padding-large-horizontal:  16px !default;
@@ -113,9 +117,9 @@
  $line-height-large:         1.3333333 !default; // extra decimals for Win 8.1 Chrome
  $line-height-small:         1.5 !default;
 
- $border-radius-base:        0 !default;
- $border-radius-large:       0 !default;
- $border-radius-small:       0 !default;
+ $border-radius-base:        20px !default;
+ $border-radius-large:       25px !default;
+ $border-radius-small:       20px !default;
 
  //** Global color for active items (e.g., navs or dropdowns).
  $component-active-color:    #fff !default;
@@ -146,7 +150,7 @@
  $table-bg-active:               $table-bg-hover !default;
 
  //** Border color for table and cell borders.
- $table-border-color:            $gray-lighter !default;
+ $table-border-color:            $gray-light !default;
 
 
  //== Buttons
@@ -155,9 +159,9 @@
 
  $btn-font-weight:                300 !default;
 
- $btn-default-color:              $gray !default;
- $btn-default-bg:                 $gray-lighter !default;
- $btn-default-border:             darken($btn-default-bg, 5%) !default;
+ $btn-default-color:              $brand-primary !default;
+ $btn-default-bg:                 transparent !default;
+ $btn-default-border:             darken($brand-primary, 5%) !default;
 
  $btn-primary-color:              #fff !default;
  $btn-primary-bg:                 $brand-primary !default;
@@ -172,7 +176,7 @@
  $btn-info-border:                darken($btn-info-bg, 5%) !default;
 
  $btn-warning-bg:                 $brand-warning !default;
- $btn-warning-color:              darken($btn-warning-bg, 60%) !default;
+ $btn-warning-color:              darken($btn-warning-bg, 40%) !default;
  $btn-warning-border:             darken($btn-warning-bg, 5%) !default;
 
  $btn-danger-color:               #fff !default;
@@ -194,12 +198,12 @@
  //** `<input>` background color
  $input-bg:                       #fff !default;
  //** `<input disabled>` background color
- $input-bg-disabled:              $gray-lighter !default;
+ $input-bg-disabled:              $gray-lighterer !default;
 
  //** Text color for `<input>`s
- $input-color:                    $gray !default;
+ $input-color:                    $gray-dark !default;
  //** `<input>` border color
- $input-border:                   darken(#f8f8f8, 6.5%) !default;
+ $input-border:                   $gray-light !default;
 
  // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
  //** Default `.form-control` border radius
@@ -215,10 +219,10 @@
  $input-border-focus:             $brand-info !default;
 
  //** Placeholder text color
- $input-color-placeholder:        $gray-lightish !default;
+ $input-color-placeholder:        $gray-blue-light !default;
 
  //** Default `.form-control` height
- $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 4) !default;
+ $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
  //** Large `.form-control` height
  $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
  //** Small `.form-control` height
@@ -304,21 +308,21 @@
 
  // Small screen / tablet
  //** Deprecated `$screen-sm` as of v3.0.1
- $screen-sm:                  598px !default;
+ $screen-sm:                  768px !default;
  $screen-sm-min:              $screen-sm !default;
  //** Deprecated `$screen-tablet` as of v3.0.1
  $screen-tablet:              $screen-sm-min !default;
 
  // Medium screen / desktop
  //** Deprecated `$screen-md` as of v3.0.1
- $screen-md:                  822px !default;
+ $screen-md:                  992px !default;
  $screen-md-min:              $screen-md !default;
  //** Deprecated `$screen-desktop` as of v3.0.1
  $screen-desktop:             $screen-md-min !default;
 
  // Large screen / wide desktop
  //** Deprecated `$screen-lg` as of v3.0.1
- $screen-lg:                  1030px !default;
+ $screen-lg:                  1200px !default;
  $screen-lg-min:              $screen-lg !default;
  //** Deprecated `$screen-lg-desktop` as of v3.0.1
  $screen-lg-desktop:          $screen-lg-min !default;
@@ -339,7 +343,7 @@
  $grid-gutter-width:         30px !default;
  // Navbar collapse
  //** Point at which the navbar becomes uncollapsed.
- $grid-float-breakpoint:     $screen-sm-min !default;
+ $grid-float-breakpoint:     $screen-md-min !default;
  //** Point at which the navbar begins collapsing.
  $grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
 
@@ -359,7 +363,7 @@
  $container-md:                 $container-desktop !default;
 
  // Large screen / wide desktop
- $container-large-desktop:      (1140px + $grid-gutter-width) !default;
+ $container-large-desktop:      (1170px + $grid-gutter-width) !default;
  //** For `$screen-lg-min` and up.
  $container-lg:                 $container-large-desktop !default;
 
@@ -396,7 +400,7 @@
 
  // Navbar toggle
  $navbar-default-toggle-hover-bg:           rgba(255, 255, 255, 0.1) !default;
- $navbar-default-toggle-icon-bar-bg:        #fff !default;
+ $navbar-default-toggle-icon-bar-bg:        $brand-primary !default;
  $navbar-default-toggle-border-color:       transparent !default;
 
 
@@ -509,11 +513,11 @@
  //## Define colors for form feedback states and, by default, alerts.
 
  $state-success-text:             #fff !default;
- $state-success-bg:               lighten($brand-primary, 30%) !default;
+ $state-success-bg:               lighten($brand-success, 30%) !default;
  $state-success-border:           darken($state-success-bg, 4%) !default;
 
- $state-info-text:                #fff !default;
- $state-info-bg:                  lighten($brand-info, 30%) !default;
+ $state-info-text:                darken($brand-info, 20%) !default;
+ $state-info-bg:                  lighten($brand-info, 40%) !default;
  $state-info-border:              darken($state-info-bg, 12%) !default;
 
  $state-warning-text:             $btn-warning-color !default;

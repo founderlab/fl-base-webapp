@@ -1,0 +1,54 @@
+.specification-section {
+  padding: 150px 0 50px; }
+  .specification-section .spec-install {
+  margin-bottom: 32px; }
+  .specification-section .spec-install img {
+    width: 360px; }
+  .specification-section .spec-browse img {
+  width: 205px; }
+  .specification-section .spec-instantly {
+  margin-top: -160px; }
+  .specification-section .spec-instantly img {
+    width: 200px; }
+  .specification-section .btn-free {
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 10px 45px; }
+  .specification-section .bottom {
+  width: 70%;
+  margin: 0 auto; }
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  .specification-section {
+  padding: 50px 15px; }
+  .specification-section .spec-install {
+    margin-bottom: 20px;
+    text-align: center; }
+    .specification-section .spec-install img {
+    width: 300px; }
+  .specification-section .spec-instantly {
+    margin-top: 0; }
+  .specification-section .bottom {
+    width: 70%;
+    margin: 0 auto; } }
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+  .specification-section {
+  padding: 25px 15px; }
+  .specification-section .spec-install img {
+    width: 70%; }
+  .specification-section .bottom {
+    width: 100%; } }
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+  .specification-section .spec-install img {
+  width: 100%; }
+  .specification-section .spec-browse img {
+  width: 100%; }
+  .specification-section .spec-instantly img {
+  width: 100%; }
+  .specification-section .bottom .title, .specification-section .bottom .description {
+  text-align: justify; } }

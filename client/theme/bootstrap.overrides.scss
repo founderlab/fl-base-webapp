@@ -3,7 +3,6 @@
  *
  */
 
-@import './bootstrap-xl.scss';
 @import './index.scss';
 
 // Open Sans
@@ -14,39 +13,128 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,300" !defaul
 
 // Buttons =====================================================================
 
+a.btn.btn-default, button.btn.btn-default {
+  border: solid 1px $brand-primary;
+  background: #fff;
+
+  &:hover, &:active, &.active, &:focus {
+    color: #fff;
+    border-color: darken($brand-primary, 10%);
+    background: darken($brand-primary, 10%);
+  }
+}
+
+a.btn.btn-remove, a.btn.btn-help,
+button.btn.btn-remove, button.btn.btn-help {
+  font-size: $font-size-h5;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: $gray-light;
+  float: right;
+  padding: 10px 15px;
+  background: transparent;
+
+  i {
+    margin: 0;
+  }
+
+  &.nolabel {
+    margin-top: -8px;
+  }
+
+  &, &:hover, &:active {
+    background: transparent;
+    border: 0 none !important;
+    @include box-shadow(none);
+  }
+
+  &:hover, &:active {
+    color: $brand-danger;
+  }
+}
+
+a.btn.btn-help, button.btn.btn-help {
+  margin-top: 0;
+  color: $brand-primary;
+  float: none;
+  padding: 4px 10px;
+
+  &:hover, &:active {
+    color: $brand-info;
+  }
+}
+
 .btn-toolbar .pagination-buttons, .per-page-dropdown {
   .btn {
     @include box-shadow(none);
   }
   .btn-primary {
-    background: transparent;
     color: $brand-primary;
-    border: solid 1px transparent;
+    background: #fff;
   }
   .btn-default {
     color: $gray-light;
-    background: transparent;
-    border: solid 1px transparent;
+    background: #fff;
+
     &:hover {
-      border: solid 1px $gray-lighter;
+      background: $brand-primary;
     }
   }
 }
 
 a, button, i {
-  @include transition(all 0.2s);
+  @include transition(all 0.3s);
 
   &.btn {
     border: 0 none;
+    font-size: $font-size-small;
+    padding: 10px 26px;
+
     &:focus, &.focus {
       border: 0 none;
     }
+  }
+
+  &.btn-xs {
+    padding: 1px 5px;
+  }
+
+  &.btn-sm {
+    padding: 5px 12px;
+  }
+
+  &.btn-lg {
+    font-size: 20px;
+    padding: 13px 30px;
   }
 }
 
 .dropdown-menu {
   @include box-shadow(none);
 }
+
+.btn {
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+  i.fa-spin {
+    margin-right: 5px;
+  }
+  &:not(.btn-default) i {
+    color: #fff !important;
+  }
+  .checkbox {
+    label, input {
+      margin-left: 0;
+    }
+  }
+  i {
+    margin-right: 5px;
+  }
+}
+
+.btn-sm .glyphicon {
+  font-size: 10px;
+}
+
 
 // Forms ======================================================================
 
@@ -61,13 +149,13 @@ a, button, i {
   margin: 0;
 }
 
-.form-group {
-  margin-bottom: 30px;
+select.form-control {
+  padding: 3px;
+  background: #fff;
 }
-
 .form-control,
 input {
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 3px;
   @include box-shadow(none);
 
@@ -93,7 +181,7 @@ input {
 
   .form-control,
   .form-control:focus {
-    border: 2px solid $brand-warning;
+    border: 1px solid $brand-warning;
   }
 
   .input-group-addon {
@@ -118,7 +206,7 @@ input {
 
   .form-control,
   .form-control:focus {
-    border: 2px solid $brand-danger;
+    border: 1px solid $brand-danger;
   }
 
   .input-group-addon {
@@ -138,19 +226,39 @@ input {
   &.radio-inline label,
   &.checkbox-inline label,
   .form-control-feedback {
-    color: $brand-primary;
+    color: $text-color
   }
 
   .form-control,
   .form-control:focus {
-    border: 2px solid $brand-primary;
+    border: 1px solid $gray-light;
   }
 
   .input-group-addon {
-    border-color: $brand-primary;
+    border-color: $gray-light;
   }
 }
 
+.form-group, form {
+  label {
+    font-size: $font-size-small;
+  }
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin-top: 2px;
+}
+
+.help-block {
+  font-size: $font-size-small;
+}
+
+/* Remove mobile browser shadow */
+input[type=text], input[type=email], input[type=password], textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
 // Containers =================================================================
 
@@ -201,6 +309,7 @@ a.list-group-item {
 }
 
 .panel {
+  border-radius: 3px;
   &-default {
     .close {
       color: $text-color;
@@ -216,4 +325,11 @@ a.list-group-item {
 
 .popover {
   color: $text-color;
+}
+
+.alert {
+  h5, h6 {
+    margin-top: 0;
+  }
+  border-radius: 3px;
 }

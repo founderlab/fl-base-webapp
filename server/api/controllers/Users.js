@@ -2,12 +2,27 @@ import _ from 'lodash'
 import RestController from 'fl-backbone-rest'
 import {createAuthMiddleware} from 'fl-auth-server'
 import User from '../../models/User'
+import schema from '../../../shared/models/schemas/user'
 
 function canAccess(options, callback) {
   const {user, req} = options
   if (!user) return callback(null, false)
   if (user.admin) return callback(null, true)
-  if (req.params.id && (user.id === req.params.id)) return callback(null, true)
+
+  const query = JSONUtils.parseQuery(req.query)
+  if (query.$include) return callback(null, false, 'No $include')
+  if (query.$template === 'admin') return callback(null, false, 'This template is only for admins')
+
+  const id = req.params.id
+  if (req.method === 'PUT') {
+    return User.passwordIsValidForId(id, req.body.currentPassword, (err, valid) => {
+      if (err) return callback(err)
+      if (!valid) return callback(null, false, `The current password you entered isn't correct`)
+      callback(null, true)
+    })
+  }
+
+  // if (id && (user.id == id)) return callback(null, true)
   callback(null, false)
 }
 
@@ -18,11 +33,13 @@ export default class UsersController extends RestController {
       route: '/api/users',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {
-        index: ['id', 'email', 'admin'],
-        show: ['id', 'email', 'admin'],
+        index: ['id', ..._.without(_.keys(schema), 'password', 'emailConfirmationToken', 'resetToken', 'resetTokenCreatedDate')],
+        show: ['id', ..._.without(_.keys(schema), 'password', 'emailConfirmationToken', 'resetToken', 'resetTokenCreatedDate')],
+        update: ['id', 'email', 'admin', 'currentPassword', 'password'],
       },
       templates: {
         show: {$select: ['id', 'email', 'admin']},
+        admin: require('../templates/users/admin'),
       },
       default_template: 'show',
     }, options))
@@ -36,7 +53,7 @@ export default class UsersController extends RestController {
 
     req.body.password = User.createHash(req.body.password)
     const user = new User(req.body)
-    user.save(err => {
+    user.save(user.toJSON(), err => {
       if (err) return this.sendError(res, err)
       user.onCreate(err => {
         if (err) return this.sendError(res, err)
@@ -46,10 +63,11 @@ export default class UsersController extends RestController {
   }
 
   update(req, res) {
+    delete req.body.currentPassword
     if (req.body.password) {
       req.body.password = User.createHash(req.body.password)
     }
-    super(req, res)
+    super.update(req, res)
   }
 
   redirect = (req, res) => {
@@ -58,5 +76,4 @@ export default class UsersController extends RestController {
     }
     res.redirect('/')
   }
-
 }

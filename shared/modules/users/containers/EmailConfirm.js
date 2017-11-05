@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import {push} from 'redux-router'

@@ -1,0 +1,55 @@
+.reviews-section {
+  padding: 100px 0; }
+  .reviews-section .reviews-container {
+  background: #ffffff;
+  padding: 5px 15px 25px 50px;
+  margin: 0 25px;
+  filter: blur(1px); }
+  .reviews-section .reviews-container .reviews-name span {
+    margin-left: 15px; }
+  .reviews-section .reviews-container .reviews-store {
+    margin-top: 10px;
+    color: #7b7b7b; }
+  .reviews-section .reviews-container .fa-star {
+    font-size: 16px; }
+  .reviews-section .reviews-container .star-active {
+    color: #ffce39; }
+  .reviews-section .reviews-container .star-deactive {
+    color: #c0c0c0; }
+  .reviews-section .owl-item.center .reviews-container {
+  border: 1px solid #d2d2d2;
+  filter: blur(0); }
+  .reviews-section .owl-carousel {
+  margin-top: 30px; }
+  .reviews-section .owl-dots {
+  text-align: center;
+  padding-top: 35px; }
+  .reviews-section .owl-dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 10px;
+  display: inline-block;
+  border: 1px solid #7b7b7b;
+  border-radius: 50%;
+  background: transparent; }
+  .reviews-section .owl-dot.active {
+  border: none;
+  background: #ffce39; }
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+  .reviews-section {
+  padding: 50px 15px; } }
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+  .reviews-section {
+  padding: 15px; }
+  .reviews-section .reviews-section {
+    padding: 100px 0;
+    margin: 0; }
+  .reviews-section .reviews-container {
+    margin: 0; }
+    .reviews-section .reviews-container .reviews-name span {
+    margin-left: 0;
+    display: block; } }

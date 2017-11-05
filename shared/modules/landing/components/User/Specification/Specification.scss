@@ -1,0 +1,91 @@
+.specification-section {
+  padding: 150px 0 50px;
+  .spec-install {
+  margin-bottom: 32px;
+  img {
+    width: 360px;
+  }
+  }
+  .spec-browse {
+  img {
+    width: 205px;
+  }
+  }
+  .spec-instantly {
+  margin-top: -160px;
+  img {
+    width: 200px;
+  }
+  }
+  .btn-free {
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 10px 45px;
+  }
+  .bottom {
+  width: 70%;
+  margin: 0 auto;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+  .specification-section {
+  padding: 50px 15px;
+  .spec-install {
+    margin-bottom: 20px;
+    text-align: center;
+    img {
+    width: 300px;
+    }
+  }
+  .spec-instantly {
+    margin-top: 0;
+  }
+  .bottom {
+    width: 70%;
+    margin: 0 auto;
+  }
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+  .specification-section {
+  padding: 25px 15px;
+  .spec-install {
+    img {
+    width: 70%;
+    }
+  }
+  .bottom {
+    width: 100%;
+  }
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+  .specification-section {
+  .spec-install {
+    img {
+    width: 100%;
+    }
+  }
+  .spec-browse {
+    img {
+    width: 100%;
+    }
+  }
+  .spec-instantly {
+    img {
+    width: 100%;
+    }
+  }
+  .bottom {
+    .title, .description {
+    text-align: justify;
+    }
+  }
+  }
+}

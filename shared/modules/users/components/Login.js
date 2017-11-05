@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {Grid, Row, Col, Panel} from 'react-bootstrap'
 import LoginForm from './LoginForm'
 
@@ -7,10 +8,10 @@ export default function Login(props) {
     <div className="form-page login">
 
       <header>
-        <Grid fluid>
+        <Grid>
           <Row>
             <Col xs={12}>
-              <h1 className="text-center">Sign in</h1>
+              <h1 className="text-center">Agent login</h1>
             </Col>
           </Row>
         </Grid>

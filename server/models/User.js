@@ -1,31 +1,20 @@
 import _ from 'lodash' // eslint-disable-line
-import Queue from 'queue-async'
 import moment from 'moment'
 import Backbone from 'backbone'
+import Queue from 'queue-async'
 import {smartSync} from 'fl-server-utils'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt-nodejs'
 import EventEmitter from 'events'
 import {wrapById} from '../cache/users'
-import {trackNewUser} from '../activity'
+import profileSchema from '../../shared/models/schemas/profile'
 let Profile
+let Hotel
 
 const LAST_ACTIVE_UPDATE_INTERVAL = 1000 * 60 * 60 // 1 minute
 
 const dbUrl = process.env.DATABASE_URL
 if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
-
-function locationObj(location) {
-  if (!location) return {}
-  const split = (location.name || '').split(',')
-  const city = (split[0] || '').trim()
-  const country = (split[1] || '').trim()
-  return {
-    countryCode: location.country && location.country.code,
-    city,
-    country,
-  }
-}
 
 export default class User extends Backbone.Model {
   url = `${dbUrl}/users`
@@ -40,20 +29,82 @@ export default class User extends Backbone.Model {
 
   defaults() { return {createdDate: moment.utc().toDate()} }
 
-  onCreate(callback) {
-    const profile = new Profile({
-      user: this,
-      firstName: '',
-      lastName: '',
-      emailMd5: crypto.createHash('md5').update(this.get('email')).digest('hex'),
+  /*
+   * Ensure that a new user has an hotel an a profile
+   */
+  onCreate(_profile, _callback) {
+    const profile = _callback ? _profile : {}
+    const callback = _callback ? _callback : _profile
+
+    const displayName = `${profile.firstName} ${profile.lastName}`
+    const hotelNameOrId = this.get('hotelNameOrId') || displayName
+    const queue = new Queue(1)
+
+    // temp logging
+    const VERBOSE = true
+    const log = (...args) => VERBOSE && console.log(...args)
+    //
+    let orgId
+
+    queue.defer(callback => {
+      log('checking hotelNameOrId', hotelNameOrId, _.isString(hotelNameOrId), _.isNumber(hotelNameOrId))
+      Hotel.findOne({$or: [{id: hotelNameOrId}, {name: hotelNameOrId}]}, (err, org) => {
+        // Assume errors here are from the given hotelNameOrId not being an integer
+
+        const q = new Queue(1)
+
+        if (org) {
+          orgId = org.id
+        }
+        else {
+          log('making new org with ', {name: hotelNameOrId})
+          q.defer(callback => Hotel.findOrCreate({name: hotelNameOrId}, (err, org) => callback(err, orgId = org.id)))
+        }
+
+        q.await(err => {
+          if (err) return callback(err)
+          log('saving user')
+          this.save({}, callback)
+        })
+      })
     })
 
-    profile.save(err => {
+    queue.await(err => {
       if (err) return callback(err)
-      const result = {user: this.toJSON(), profile: profile.toJSON()}
-      trackNewUser(result, () => {
+
+      const profileModel = new Profile({
+        ..._.pick(profile, _.keys(profileSchema)),
+        displayName,
+        user: this,
+        emailMd5: crypto.createHash('md5').update(this.get('email')).digest('hex'),
+        hotel_id: orgId,
+      })
+
+      log('saving orgId to profile', orgId)
+      profileModel.save(err => {
+        if (err) return callback(err)
+        const result = {user: this.toJSON(), profile: profileModel.toJSON()}
+
         callback(err, result)
       })
+    })
+  }
+
+  static onSubscribeToPlan(options, callback) {
+    const {userId, subscription} = options
+    if (!userId) return callback(new Error('[User.onSubscribeToPlan] Missing userId'))
+    if (!subscription || !subscription.plan) return callback(new Error('[User.onSubscribeToPlan] Missing subscription or plan'))
+
+    Profile.findOne({user_id: userId}, (err, profile) => {
+      if (err) return callback(err)
+      profile.set({
+        planId: subscription.plan.id,
+        planExpiresDate: new Date(subscription.current_period_end),
+        homepageFeatured: !!subscription.plan.metadata.homepageFeatured,
+        searchFeatured: !!subscription.plan.metadata.searchFeatured,
+      })
+
+      profile.save(callback)
     })
   }
 
@@ -87,6 +138,13 @@ export default class User extends Backbone.Model {
       }
 
       callback(err, user)
+    })
+  }
+
+  static passwordIsValidForId(id, password, callback) {
+    User.cursor({id, $one: true}).values('password').toJSON((err, passwordHash) => {
+      if (err) return callback(err)
+      bcrypt.compare(password, passwordHash, callback)
     })
   }
 

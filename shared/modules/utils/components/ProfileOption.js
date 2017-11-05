@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Avatar from './Avatar'
 
@@ -60,7 +61,7 @@ export default class Option extends React.Component {
         onClick={this.handleMouseDown}
         title={option.title}
       >
-        {profile && (<Avatar source={profile} size={50} className="pull-left" />)} <span className="name">{label}</span>
+        {profile && (<Avatar profile={profile} size={50} className="pull-left" />)} <span className="name">{label}</span>
       </div>
     )
   }

@@ -24,7 +24,7 @@ export default function context({auth, startups, profiles, router}, action) {
   return context
 }
 
-export function profileFromParams({auth, profiles, router, userId, profileId}, action, defaultToCurrentUser) {
+export function profileFromParams({auth, profiles, router, userId, profileId, profileSlug}, action, defaultToCurrentUser) {
   if (!profiles) {
     warning(false, 'profileFromParams: profiles store missing from context when profileId param is present')
     return {}
@@ -32,7 +32,8 @@ export function profileFromParams({auth, profiles, router, userId, profileId}, a
   const params = (action && action.payload && action.payload.params) || (router && router.params) || {}
   const context = {}
   context.userId = userId || params.userId
-  context.profileId = profileId || params.profileId
+  context.profileSlug = profileSlug || params.profileSlug
+  context.profileId = profileId || params.profileId || context.profileSlug && profiles.get('bySlug').get(context.profileSlug)
 
   if (!context.userId) {
     if (context.profileId && profiles.get('models').get(context.profileId)) {
@@ -41,22 +42,19 @@ export function profileFromParams({auth, profiles, router, userId, profileId}, a
     else if (defaultToCurrentUser) {
       if (!auth) {
         warning(false, 'profileFromParams: the defaultToCurrentUser option requires the auth store to be provided')
-        return {}
+        return context
       }
       context.userId = auth.get('user').get('id')
     }
     else {
-      warning(false, 'profileFromParams: no userId given')
-      return {}
+      return context
     }
   }
 
   context.profileId = context.profileId || profiles.get('byUser').get(context.userId.toString())
-  if (!context.profileId) {
-    warning(false, 'profileFromParams: no profileId found')
-    return {}
+  if (context.profileId) {
+    context.profileIm = profiles.get('models').get(context.profileId.toString())
+    context.profile = context.profileIm && context.profileIm.toJSON()
   }
-  context.profileIm = profiles.get('models').get(context.profileId.toString())
-  context.profile = context.profileIm && context.profileIm.toJSON()
   return context
 }

@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Alert, Row, Col} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {reduxForm, Field, formValueSelector} from 'redux-form'
@@ -27,12 +28,27 @@ export default class RegisterForm extends Component {
     loading: PropTypes.bool,
     email: PropTypes.string,
     errorMsg: PropTypes.string,
+    query: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
+    showEmail: PropTypes.bool,
+    returnTo: PropTypes.string,
+    loginReturnTo: PropTypes.string,
+    title: PropTypes.string,
   }
 
-  constructor() {
-    super()
-    this.state = {showTermsModal: false, showPrivacyModal: false}
+  static contextTypes = {
+    organisation: PropTypes.object.isRequired,
+  }
+
+  static defaultProps = {
+    query: {},
+    returnTo: '/',
+    title: `Alrighty, let's get you started!`,
+  }
+
+  state = {
+    showTermsModal: false,
+    showPrivacyModal: false,
   }
 
   openTermsModal = () =>  this.setState({showTermsModal: true})
@@ -41,49 +57,72 @@ export default class RegisterForm extends Component {
   closeTermsModal = () => this.setState({showTermsModal: false})
   closePrivacyModal = () => this.setState({showPrivacyModal: false})
 
+  handleShowEmail = () => this.setState({showEmail: true})
+
   render() {
-    const {loading, errorMsg, handleSubmit, email} = this.props
-    const showEmail = !!(this.state.showEmail || loading)
+    const {loading, errorMsg, handleSubmit, email, query, title, returnTo, loginReturnTo} = this.props
+    const {organisation} = this.context
+    const showEmail = !!(this.state.showEmail || this.props.showEmail || loading)
+    if (email) query.email = email
+    if (loginReturnTo) query.returnTo = loginReturnTo
 
     return (
-      <div className="text-center">
-        <h2 className="header">Alrighty, let's get you started!</h2>
-        <form className="register-form" onSubmit={handleSubmit}>
-          <Row>
-            <Col sm={8} smOffset={2}>
-              <Field
-                ref="email"
-                type="email"
-                name="email"
-                inputProps={{placeholder: 'Email'}}
-                component={Input}
-              />
-              <Field
-                type="password"
-                name="password"
-                inputProps={{placeholder: 'Password (6 or more characters)'}}
-                component={Input}
-              />
+      <div className="register text-center">
+        <h2 className="header">{title}</h2>
+        <form onSubmit={handleSubmit}>
 
-              {errorMsg && (
-                <Alert bsStyle="info">
-                  {errorMsg === 'User already exists' ? (
-                    <div>
-                      <strong>Hey!</strong> Looks like that email is already registered. You can <Link to={`/login?email=${email}`}> sign in here</Link>.
-                    </div>
-                  ) : errorMsg}
-                  <span style={{display: 'none'}}>{errorMsg}</span>
-                </Alert>
-              )}
-
-              <Button block loading={loading} bsStyle="primary" bsSize="large" type="submit">Join the community</Button>
-
-            </Col>
-          </Row>
-
-          <p className="text-light">
+          <p><a className="btn btn-lg btn-block btn-linkedin btn-linkedin-signup" href={`/auth/linkedin/redirect/${organisation.subdomain}?returnTo=${returnTo}`}>Sign up with LinkedIn</a></p>
+          <p className="small light">We won't post anything on your behalf or hassle your contacts.</p>
+          <p className="small light">
             By signing up, you agree to our <a onClick={this.openTermsModal}>terms of use</a> and <a onClick={this.openPrivacyModal}>privacy policy</a>.
           </p>
+
+          <h3 className="or">or</h3>
+          <p><a onClick={this.handleShowEmail}>Sign up with email</a></p>
+
+          <Collapse keepCollapsedContent isOpened={showEmail}>
+            <Row>
+              <Col sm={8} smOffset={2}>
+                <Field
+                  ref="email"
+                  type="email"
+                  name="email"
+                  inputProps={{placeholder: 'Email'}}
+                  component={Input}
+                />
+                <Field
+                  type="password"
+                  name="password"
+                  inputProps={{placeholder: 'Password (6 or more characters)'}}
+                  component={Input}
+                />
+
+                {errorMsg && (
+                  <Alert bsStyle="info">
+                    {errorMsg === 'User already exists' ? (
+                      <div>
+                        <strong>Hey!</strong> Looks like that email is already registered. You can <Link to={{pathname: '/login', query}}> sign in here</Link>.
+                      </div>
+                    ) : errorMsg}
+                    <span style={{display: 'none'}}>{errorMsg}</span>
+                  </Alert>
+                )}
+
+                <Button block loading={loading} bsStyle="primary" bsSize="large" type="submit">Join the community</Button>
+
+                <p className="small light">
+                  By signing up, you agree to our <a onClick={this.openTermsModal}>terms of use</a> and <a onClick={this.openPrivacyModal}>privacy policy</a>.
+                </p>
+              </Col>
+            </Row>
+          </Collapse>
+
+          <br />
+          <Row>
+            <Col sm={8} smOffset={2}>
+              <Alert bsStyle="info">Already have an account? <Link to={{pathname: '/login', query}}>Sign in here</Link>.</Alert>
+            </Col>
+          </Row>
         </form>
 
         <TermsModal show={this.state.showTermsModal} onHide={this.closeTermsModal} />

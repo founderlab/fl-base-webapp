@@ -1,5 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Inflection from 'inflection'
 import {FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap'
 import {validationHelp, validationState} from 'fl-react-utils'

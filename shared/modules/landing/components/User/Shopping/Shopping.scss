@@ -1,0 +1,60 @@
+.shopping-section {
+  padding: 25px 15px 100px;
+  .top {
+  padding: 0 100px;
+  z-index: 2;
+  .description {
+    width: 670px;
+  }
+  }
+  .bottom {
+  position: relative;
+  z-index: 1;
+  img {
+    width: 100%;
+    margin-top: -45px;
+    z-index: -1;
+    position: relative;
+  }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+  .shopping-section {
+  padding: 25px 15px 50px;
+  .top {
+    .description {
+    width: 100%;
+    }
+  }
+  .bottom {
+   img {
+     margin-top: 0;
+   }
+  }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+  .shopping-section {
+  .description {
+    width: 100%;
+  }
+  .top {
+    padding: 0;
+  }
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+  .shopping-section {
+  .top {
+    .description {
+    text-align: justify;
+    }
+  }
+  }
+}

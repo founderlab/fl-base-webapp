@@ -10,23 +10,23 @@ export function userPermissions(props) {
   }
 }
 
-export function organisationPermissions(props) {
-  const {auth, organisation, organisations} = props
+export function hotelPermissions(props) {
+  const {auth, hotel, hotels} = props
   const user = props.user || auth.get('user') && auth.get('user').toJSON()
 
-  const organisationId = props.organisationId || (organisation && organisation.id) || organisation ||
-                         (organisations && organisations.get('active') && organisations.get('active').get('id'))
-  if (!organisationId) return {}
+  const hotelId = props.hotelId || (hotel && hotel.id) || hotel ||
+                         (hotels && hotels.get('active') && hotels.get('active').get('id'))
+  if (!hotelId) return {}
 
   return {
-    organisationAdmin: user.organisation_id === organisationId && user.organisationAdmin,
+    hotelAdmin: user.hotel_id === hotelId && user.hotelAdmin,
   }
 }
 
 export function permissions(props) {
   return _.merge(
     userPermissions(props),
-    organisationPermissions(props)
+    hotelPermissions(props)
   )
 }
 
@@ -39,9 +39,9 @@ export function userCanEditProfile(...args) {
 }
 
 /*
- * Organisation permissions
+ * Hotel permissions
  */
-export function userCanEditOrganisation(...args) {
+export function userCanEditHotel(...args) {
   const userIs = permissions(...args)
-  return !!(userIs.globalAdmin || userIs.organisationAdmin)
+  return !!(userIs.globalAdmin || userIs.hotelAdmin)
 }

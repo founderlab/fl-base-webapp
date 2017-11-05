@@ -2,7 +2,7 @@ import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
 import {smartSync} from 'fl-server-utils'
-import Inflection from 'inflection'
+import slugify from 'slugify'
 
 const dbUrl = process.env.DATABASE_URL
 if (!dbUrl) console.log('Missing process.env.DATABASE_URL')
@@ -16,7 +16,7 @@ export default class StaticPage extends Backbone.Model {
 
   defaults() { return {createdDate: moment.utc().toDate()} }
 
-  static slugify(string) { return Inflection.dasherize((string || '').toLowerCase()) }
+  static slugify(string) { return slugify(string.toLowerCase()) }
 }
 
 StaticPage.prototype.sync = smartSync(dbUrl, StaticPage)

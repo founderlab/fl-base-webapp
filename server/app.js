@@ -5,15 +5,16 @@ import bodyParser from 'body-parser'
 import http from 'http'
 import path from 'path'
 import morgan from 'morgan'
-import moment from 'moment'
 import cookieParser from 'cookie-parser'
-import favicon from 'serve-favicon'
+import csurf from 'csurf'
+import forcedomain from 'forcedomain'
 import s3Router from 'react-dropzone-s3-uploader/s3router'
 import {configure as configureAuth, createInternalMiddleware} from 'fl-auth-server'
 import {cors} from 'fl-server-utils'
 
 import initDB from './initDB'
-import {sendConfirmationEmail, sendResetEmail} from './email'
+import './triggers'
+import {sendResetEmail} from './email'
 import config from './config'
 import sessionMiddleware from './session'
 import cache from './cache'
@@ -22,10 +23,11 @@ import initClientApps from './clientApps'
 import User from './models/User'
 
 const bindOptions = {
+  User,
   verbose: process.env.VERBOSE,
   cache: {
     cache,
-    createHash: controller => `fl_${controller.route}`,
+    createHash: controller => `im_${controller.route}`,
   },
   origins: config.origins,
   auth: [createInternalMiddleware({secret: config.secret, deserializeUser: User.deserializeUser})],
@@ -42,6 +44,18 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
 
+const csrf = csurf()
+app.use((req, res, next) => {
+  if (!req.session) return next()
+  return csrf(req, res, next)
+})
+
+app.all('/ping', (req, res) => res.status(200).end())
+
+app.use(forcedomain({
+  hostname: config.hostname,
+}))
+
 app.use('/s3', (req, res, next) => {
   s3Router({
     bucket: config.s3Bucket,
@@ -51,21 +65,17 @@ app.use('/s3', (req, res, next) => {
   })(req, res, next)
 })
 
-app.all('/ping', (req, res) => res.status(200).end())
-app.all('/time', (req, res) => res.json(moment.utc().toDate()))
 app.use('/public', express.static(path.join(__dirname, '../public')))
-// app.use(favicon(path.join(__dirname, '../public/favicons/favicon.ico')))
 
 // Auth after other middleware and before api/client
 configureAuth({
   app,
   User,
-  sendConfirmationEmail,
   sendResetEmail,
   facebook: false,
   linkedin: false,
   login: {
-    extraRegisterParams: ['type', 'organisation_id', 'mentor'],
+    extraRegisterParams: ['firstName', 'lastName'],
   },
   serializing: {
     deserializeUser: User.deserializeUser,

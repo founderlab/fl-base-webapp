@@ -29,14 +29,46 @@ function immute(fromObj, parentKey, depth=0) {
   return obj
 }
 
+// Add $user_id and $hotel_id to queries
+// Add the csrf token to superagent request headers
 const requestModifierMiddleware = createRequestModifierMiddleware({
+  setValue: (request, value) => {
+    const {headers, ...query} = value
+    if (_.isObject(request._cursor)) _.merge(request._cursor, query)
+    if (_.isFunction(request.query)) request.query(query)
+    if (_.isFunction(request.set) && headers) request.set(headers)
+    return request
+  },
+
   getValue: store => {
-    const {auth} = store.getState()
+    const {auth, hotels} = store.getState()
     const value = {}
     if (auth.get('user')) value.$user_id = auth.get('user').get('id')
+    if (hotels.get('active')) value.$hotel_id = hotels.get('active').get('id')
+    if (auth.get('csrf')) value.headers = {'x-csrf-token': auth.get('csrf')}
     return value
   },
 })
+
+// Scroll to the top of the app container when the route changes
+const locsEqual = (locA, locB) => locA.pathname === locB.pathname
+
+const scrollMiddleware = store => next => action => {
+  const router = store.getState().router
+  const ROUTER_DID_CHANGE = '@@reduxReactRouter/routerDidChange'
+  if (typeof window === 'object' && action.type === ROUTER_DID_CHANGE && router && !locsEqual(action.payload.location, router.location)) {
+    document.body.scrollTop = 0
+  }
+  next(action)
+}
+
+const logRocketEnhancer = typeof window === 'object' && window.LogRocket ? window.LogRocket.reduxEnhancer({
+  actionSanitizer: action => {
+    const field = _.get(action, 'action.meta.field')
+    if (field === 'password') return null
+    return action
+  },
+}) : f => (a, b, c) => f(a, b, c)
 
 export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
   const reducer = require('./reducer') // delay requiring reducers until needed
@@ -46,12 +78,13 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
     requestMiddleware,
     responseParserMiddleware,
     fetchComponentDataMiddleware,
+    scrollMiddleware,
   )
   const finalCreateStore = compose(
     reduxReactRouter({getRoutes, createHistory}),
     middlewares,
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f,
-    typeof window === 'object' && window.LogRocket ? window.LogRocket.reduxEnhancer() : f => (a, b, c) => f(a, b, c),
+    logRocketEnhancer,
   )(_createStore)
 
   const initialState = immute(_initialState)

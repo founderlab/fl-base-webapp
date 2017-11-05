@@ -1,25 +1,10 @@
 {
-  "stage": 0,
-  "optional": "runtime",
-  "loose": "all",
+  "presets": ["env", "react"],
   "plugins": [
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "react-transform"
-      ],
-      "extra": {
-        "react-transform": {
-          "transforms": [{
-            "transform": "react-transform-catch-errors",
-            "imports": [
-              "react",
-              "redbox-react"
-            ]
-          }]
-        }
-      }
-    }
-  }
+    "transform-decorators-legacy",
+    "transform-runtime",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "add-module-exports"
+  ]
 }

@@ -6,7 +6,7 @@ import {canAccess as profileAuth} from '../../server/api/controllers/Profiles'
 
 const models = {}
 const tests = [
-  {authFn: profileAuth, idFn: (models) => models.users.seekerUser.get('profile').id},
+  {authFn: profileAuth, idFn: (models) => models.users.entrepreneurUser.get('profile').id},
 ]
 
 describe('Profile authorisation', () => {
@@ -20,9 +20,10 @@ describe('Profile authorisation', () => {
   _.forEach(tests, ({authFn, idFn}) => {
 
     it('disallows $include', done => {
-      const user = models.users.seekerUser.toJSON()
+      const user = models.users.entrepreneurUser.toJSON()
       const req = {
         user,
+        organisation: models.organisations[0].toJSON(),
         query: {$include: 'applications'},
         method: 'GET',
       }
@@ -42,6 +43,7 @@ describe('Profile authorisation', () => {
           const req = {
             user,
             method,
+            organisation: models.organisations[0].toJSON(),
             query: {},
             body: {},
           }
@@ -56,12 +58,13 @@ describe('Profile authorisation', () => {
     })
 
     it('allows get methods for the users own profile by user_id', done => {
-      const user = models.users.seekerUser.toJSON()
+      const user = models.users.entrepreneurUser.toJSON()
       const req = {
         user,
+        organisation: models.organisations[0].toJSON(),
         method: 'GET',
         params: {},
-        query: {user_id: models.users.seekerUser.id},
+        query: {user_id: models.users.entrepreneurUser.id},
         body: {},
       }
       authFn({user, req}, (err, ok) => {
@@ -77,10 +80,11 @@ describe('Profile authorisation', () => {
       const queue = new Queue(1)
       _.forEach(methods, method => {
         queue.defer(callback => {
-          const user = models.users.seekerUser.toJSON()
+          const user = models.users.entrepreneurUser.toJSON()
           const req = {
             user,
             method,
+            organisation: models.organisations[0].toJSON(),
             params: {id: modelId},
             query: {},
             body: {},
@@ -103,10 +107,11 @@ describe('Profile authorisation', () => {
 
       _.forEach(methods, method => {
         queue.defer(callback => {
-          const user = {id: 123}
+          const user = models.users.programManagerUser.toJSON()
           const req = {
             user,
             method,
+            organisation: models.organisations[0].toJSON(),
             params: {id: modelId},
             query: {},
             body: {},

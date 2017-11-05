@@ -1,6 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {PropTypes} from 'react'
-import {FormGroup, ControlLabel, Checkbox} from 'react-bootstrap'
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Row, Col, FormGroup, ControlLabel, Checkbox} from 'react-bootstrap'
 import {Field} from 'redux-form'
 
 export default class Checkboxes extends React.Component {
@@ -39,17 +40,19 @@ export default class Checkboxes extends React.Component {
   renderItems = field => {
     const {keyFn, labelFn, items} = this.props
     return (
-      <div>
-        {_.map(items, item => (
-          <Checkbox
-            key={keyFn(item)}
-            onClick={this.toggleItemFn(item, field)}
-            checked={this.isSelected(item, field)}
-          >
-            {labelFn(item)}
-          </Checkbox>
+      <Row>
+        {_.map(items, (item, i) => (
+          <Col key={i} xs={6} sm={4} lg={3}>
+            <Checkbox
+              key={keyFn(item)}
+              onChange={this.toggleItemFn(item, field)}
+              checked={this.isSelected(item, field)}
+            >
+              {labelFn(item)}
+            </Checkbox>
+          </Col>
         ))}
-      </div>
+      </Row>
     )
   }
 
@@ -68,5 +71,4 @@ export default class Checkboxes extends React.Component {
       </FormGroup>
     )
   }
-
 }

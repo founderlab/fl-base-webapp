@@ -1,0 +1,99 @@
+@import "../../../styles/vars";
+.price-description-section {
+  padding: 70px 0;
+  border-bottom: 1px solid $grey-hard;
+  img {
+  width: 100%;
+  padding: 50px;
+  margin-top: -35px;
+  }
+}
+.price-section {
+  padding: 50px 0;
+  .description {
+  margin-bottom: 30px;
+  }
+  .table-list {
+  padding: 0 15px;
+  }
+  .table-element {
+  padding: 15px;
+  .element {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid $grey-hard;
+  }
+  .table-title {
+    padding: 10px 15px;
+    font-size: 18px;
+    background-color: $pink-soft;
+    border-bottom: 1px solid $grey-hard;
+    span {
+    font-size: 16px;
+    vertical-align: bottom;
+    margin-left: -1px;
+    }
+  }
+  .table-description {
+    padding: 30px;
+    .top {
+    font-size: 36px;
+    span {
+      font-size: 18px;
+    }
+    }
+  }
+  .btn-free {
+    width: 100%;
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: 10px 0;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  }
+}
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1199px) {
+  .price-description-section {
+  img {
+    margin-left: 70px;
+    padding: 0;
+  }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+  .price-description-section {
+  padding: 15px 0;
+  img {
+    margin: 10px 0;
+    padding: 0 100px;
+  }
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+  .price-description-section {
+  img {
+    padding: 0;
+  }
+  }
+  .price-section {
+  .table-element {
+    width: 50%;
+    display: inline-block;
+  }
+  }
+}
+/* Small Devices, Tablets */
+@media only screen and (max-width : 480px) {
+  .price-section {
+  .table-element {
+    width: 100%;
+    display: block;
+  }
+  }
+}

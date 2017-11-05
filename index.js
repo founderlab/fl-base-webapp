@@ -12,6 +12,6 @@ try {
   console.error(err)
 }
 
-require('babel-core/register')(config)
+require('babel-register')(config)
 
 require('./server/app')

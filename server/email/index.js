@@ -1,10 +1,9 @@
 import nodemailer from 'nodemailer'
 import smtpTransport from 'nodemailer-smtp-transport'
-import Organisation from '../models/Organisation'
 import appConfig from '../config'
 import querystring from 'querystring'
 import passwordReset from './templates/passwordReset'
-import emailConfirmation from './templates/emailConfirmation'
+import Profile from '../models/Profile'
 
 let transport = null
 
@@ -30,27 +29,30 @@ export default function sendMail(options, callback) {
   if (!options.from) options.from = appConfig.email.from
 
   if (process.env.NODE_ENV !== 'production') options.subject = `[${process.env.NODE_ENV}] ${options.subject}`
-  transport.sendMail(options, callback)
-}
 
-export function sendConfirmationEmail(user, callback) {
-  const email = user.get('email')
-  const query = querystring.stringify({email, token: user.get('emailConfirmationToken')})
-  const options = {
-    confirmationUrl: `${appConfig.url}/confirm-email?${query}`,
-  }
-  const message = emailConfirmation(options)
-  console.log('[email sendConfirmationEmail]', email, options, user.get('emailConfirmationToken'), message)
-  sendMail({to: email, subject: `Confirm your email for ${appConfig.url}`, html: message}, callback)
+  console.log('===============================')
+  console.log('Sending mail with options')
+  console.dir(options, {colors: true, depth: null})
+  console.log('===============================')
+  transport.sendMail(options, callback)
 }
 
 export function sendResetEmail(user, callback) {
   const email = user.get('email')
   const query = querystring.stringify({email, resetToken: user.get('resetToken')})
-  const options = {
-    resetUrl: `${appConfig.url}/reset?${query}`,
-  }
-  const message = passwordReset(options)
-  console.log('[email sendResetEmail]', email, options, user.get('resetToken'), message)
-  sendMail({to: email, subject: `Password reset for ${appConfig.url}`, html: message}, callback)
+
+  Profile.cursor({user_id: user.id, $one: true}).toJSON((err, profile) => {
+    const options = {
+      profile,
+      resetUrl: `${appConfig.url}/reset?${query}`,
+    }
+    const message = passwordReset(options)
+
+    console.log('[email sendResetEmail]', email, options, user.get('resetToken'), message)
+    sendMail({
+      to: email,
+      subject: `Reset your Frameworkstein password`,
+      html: message,
+    }, callback)
+  })
 }

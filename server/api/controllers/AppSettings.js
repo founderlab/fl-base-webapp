@@ -16,7 +16,7 @@ export default class AppSettingsController extends RestController {
       model_type: require('../../models/AppSettings'),
       route: '/api/app_settings',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
-      whitelist: {update: ['facebookUrl', 'twitterUrl', 'instagramUrl', 'footerContactInfo']},
+      whitelist: {update: ['facebookUrl', 'twitterUrl', 'instagramUrl', 'footerCopyright', 'ausPhone', 'nzPhone', 'ukPhone']},
       templates: {
         detail: require('../templates/appSettings/detail'),
       },

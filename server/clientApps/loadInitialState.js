@@ -3,12 +3,14 @@ import _ from 'lodash' // eslint-disable-line
 export default function loadInitialState(req, callback) {
   const user = req.user
 
-  const state = {}
+  const state = {auth: {}}
 
   if (user) {
-    state.auth = {
-      user: {id: user.id},
-    }
+    state.auth.user = {id: user.id}
+  }
+
+  if (req.csrfToken) {
+    state.auth.csrf = req.csrfToken()
   }
 
   // Immutable.fromJS has a bug with objects flagged as anonymous in node 6

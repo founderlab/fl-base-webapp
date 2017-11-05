@@ -1,54 +1,60 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router'
+import {push} from 'redux-router'
 import {connect} from 'react-redux'
-import {NavDropdown, Navbar, Nav, MenuItem, NavItem} from 'react-bootstrap'
+import {Navbar, Nav, NavItem} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
+import Avatar from '../../utils/components/Avatar'
 
-@connect(state => ({auth: state.auth}))
-export default class AppNavbar extends Component {
+const Logout = () => (<li><a href="/logout">Sign out</a></li>)  // eslint-disable-line
+
+@connect(state => ({profiles: state.profiles}), {push})
+export default class AppNavbar extends Component {              // eslint-disable-line
 
   static propTypes = {
-    auth: PropTypes.object.isRequired,
+    profiles: PropTypes.object.isRequired,
     openLoginModal: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
   }
 
+  state = {}
+
   render() {
-    const user = this.props.auth.get('user')
+    const profile = this.props.profiles.get('active') ? this.props.profiles.get('active').toJSON() : null
     let loginDisplay = null
 
-    if (user) {
-      loginDisplay = (
-        <NavDropdown id="user-dropdown" title={user.get('email')}>
-          {user.get('admin') && <MenuItem href="/admin">Admin</MenuItem>}
-          <LinkContainer to="/" onlyActiveOnIndex><MenuItem>Dashboard</MenuItem></LinkContainer>
-          <LinkContainer to="/profile"><MenuItem>Profile</MenuItem></LinkContainer>
-          <LinkContainer to="/report"><MenuItem>Report a Problem</MenuItem></LinkContainer>
-          <li><a href="/logout">Logout</a></li>
-        </NavDropdown>
-      )
+    if (profile) {
+      loginDisplay = [
+        <LinkContainer key="profile" to="/profile"><NavItem>{profile.displayName}</NavItem></LinkContainer>,
+        <LinkContainer key="avatar" to="/profile"><NavItem><Avatar smaller profile={profile} /></NavItem></LinkContainer>,
+        <Logout key="logout" />,
+      ]
     }
     else {
       loginDisplay = [
-        <LinkContainer className="nav-login" key={1} to="/register"><NavItem>Register</NavItem></LinkContainer>,
-        <NavItem key={2} onClick={this.props.openLoginModal}>Sign in</NavItem>,
+        <LinkContainer key="login" to="/login"><NavItem>Login</NavItem></LinkContainer>,
+        <NavItem key="pdiv1" className="divider">|</NavItem>,
+        <LinkContainer key="register" to="/register"><NavItem>Sign up</NavItem></LinkContainer>,
       ]
     }
 
     return (
-      <Navbar fluid>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to="/" onlyActiveOnIndex>Logo</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
+      <Navbar collapseOnSelect>
+        <div className="nav-left">
+          <Link className="nav-logo i-list" to="/" onlyActiveOnIndex><img src="/public/images/logo.png" alt="Frameworkstein logo" /></Link>
+        </div>
 
-        <Navbar.Collapse>
-          <Nav pullRight>
-            {loginDisplay}
-          </Nav>
-        </Navbar.Collapse>
+        <div className="nav-right" style={{display: this.state.searchVisible ? 'none' : 'block'}}>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav pullRight className="nav-links">
+              {loginDisplay}
+            </Nav>
+          </Navbar.Collapse>
+        </div>
+
       </Navbar>
     )
   }

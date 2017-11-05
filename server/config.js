@@ -12,12 +12,14 @@ const config = {
   sessionAge: process.env.SESSION_AGE || 365 * 24 * 60 * 60 * 1000,
 
   email: {
+    // secure: true,
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     user: process.env.EMAIL_USERNAME,
     password: process.env.EMAIL_PASSWORD,
     from: process.env.EMAIL_FROM,
-    secure: true,
+    welcomeFrom: process.env.EMAIL_FROM,    // The from address to use in welcome emails
+    adminEmail: process.env.ADMIN_EMAIL,
   },
 
   secret: process.env.INTERNAL_SECRET || DEFAULT_SECRET,
@@ -32,8 +34,10 @@ const config = {
   publicPath: process.env.PUBLIC_PATH || '/public',
   maxFileUploadSize: process.env.MAX_FILE_UPLOAD_SIZE || 1024 * 1024 * 10, //10mb
 
+  stripePublishableApiKey: process.env.STRIPE_PUBLISHABLE_API_KEY,
+
   // These keys from this config object are passed to the client
-  clientConfigKeys: ['name', 'url', 'publicPath', 's3Url', 'maxFileUploadSize'],
+  clientConfigKeys: ['name', 'url', 'publicPath', 's3Url', 'maxFileUploadSize', 'stripePublishableApiKey'],
 
   database: (process.env.DATABASE_URL || '').split(':')[0],
 }
@@ -49,12 +53,6 @@ config.protocol = process.env.PROTOCOL || urlParts.protocol || 'http:'
 if (!config.url) config.url = `${config.protocol}//${config.hostname}:${config.port}`
 
 config.internalUrl = process.env.INTERNAL_URL || `http://localhost:${config.port}`
-
-config.orgUrl = org => {
-  if (!org || process.env.NODE_ENV === 'development') return config.url
-  const subdomain = org.subdomain || org
-  return config.url.replace(config.hostname, `${subdomain}.${config.hostname}`)
-}
 
 export default config
 
