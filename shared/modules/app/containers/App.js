@@ -14,8 +14,6 @@ import LoginModal from '../../users/containers/LoginModal'
 @connect(state => ({
   routes: state.router.routes,
   config: state.config,
-  auth: state.auth,
-  profiles: state.profiles,
 }))
 export default class App extends Component {
 
@@ -23,8 +21,7 @@ export default class App extends Component {
     children: PropTypes.node,
     routes: PropTypes.array.isRequired,
     config: PropTypes.object.isRequired,
-    auth: PropTypes.object.isRequired,
-    profiles: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   static contextTypes = {
@@ -37,6 +34,28 @@ export default class App extends Component {
     publicPath: PropTypes.string,
     stripePublishableApiKey: PropTypes.string,
     markdownProps: PropTypes.object,
+  }
+
+  static fetchData({store}, callback) {
+    const {auth, app, profiles} = store.getState()
+    const baseQueue = new Queue()
+
+    if (!app.get('loaded')) baseQueue.defer(callback => store.dispatch(loadAppSettings(callback)))
+
+    baseQueue.await(err => {
+      if (err) return callback(err)
+
+      const profileQueue = new Queue()
+
+      if (auth.get('user')) {
+        const userId = auth.get('user').get('id')
+        if (!profiles.get('loading') && !profiles.get('active')) {
+          profileQueue.defer(callback => store.dispatch(loadActiveProfile({user_id: userId}, callback)))
+        }
+      }
+
+      profileQueue.await(callback)
+    })
   }
 
   constructor() {
@@ -70,28 +89,6 @@ export default class App extends Component {
     }
   }
 
-  static fetchData({store, action}, callback) {
-    const {auth, app, profiles} = store.getState()
-    const baseQueue = new Queue()
-
-    if (!app.get('loaded')) baseQueue.defer(callback => store.dispatch(loadAppSettings(callback)))
-
-    baseQueue.await(err => {
-      if (err) return callback(err)
-
-      const profileQueue = new Queue()
-
-      if (auth.get('user')) {
-        const userId = auth.get('user').get('id')
-        if (!profiles.get('loading') && !profiles.get('active')) {
-          profileQueue.defer(callback => store.dispatch(loadActiveProfile({user_id: userId}, callback)))
-        }
-      }
-
-      profileQueue.await(callback)
-    })
-  }
-
   openLoginModal = (e) => {
     e.preventDefault()
     this.setState({showModal: true})
@@ -103,11 +100,11 @@ export default class App extends Component {
     const route = this.props.routes[1]
     const hideFooter = route && route.hideFooter
     const hideNav = route && route.hideNav
-    const pageUrl = `${this.state.url}${location.pathname}`
+    const pageUrl = `${this.state.url}${this.props.location.pathname}`
 
     return (
       <div id="app-view">
-        <Helmet titleTemplate={`%s | Frameworkstein`}>
+        <Helmet titleTemplate="%s | Frameworkstein">
           {headerTags(this.props)}
           <meta property="og:image"       content="https://www.frameworkstein.com/public/images/logo.png" />
           <meta property="og:type"        content="website" />

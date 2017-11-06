@@ -13,7 +13,7 @@ import Register from '../components/Register'
   subscriptions: state.subscriptions,
   profiles: state.profiles,
   query: state.router.location.query,
-}), {register, push, createCard})
+}), {register, push})
 export default class RegisterContainer extends Component {
 
   static propTypes = {
@@ -23,7 +23,6 @@ export default class RegisterContainer extends Component {
     query: PropTypes.object.isRequired,
     register: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    createCard: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -71,7 +70,6 @@ export default class RegisterContainer extends Component {
           loading={loading}
           errorMsg={errorMsg && errorMsg.toString()}
           onSubmit={this.handleSubmit}
-          cardEntry={cardEntry}
         />
       </div>
     )

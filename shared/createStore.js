@@ -41,10 +41,9 @@ const requestModifierMiddleware = createRequestModifierMiddleware({
   },
 
   getValue: store => {
-    const {auth, hotels} = store.getState()
+    const {auth} = store.getState()
     const value = {}
     if (auth.get('user')) value.$user_id = auth.get('user').get('id')
-    if (hotels.get('active')) value.$hotel_id = hotels.get('active').get('id')
     if (auth.get('csrf')) value.headers = {'x-csrf-token': auth.get('csrf')}
     return value
   },

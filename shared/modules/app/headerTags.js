@@ -1,15 +1,11 @@
-export default (props) => ({
+import React from 'react'
 
-  meta: [
-    {charset: 'utf-8'},
-    {'http-equiv': 'X-UA-Compatible', content: 'IE:edge'},
-    {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-    {name: 'theme-color', content: '#ffffff'},
-    {name: 'apple-mobile-web-app-capable', value: 'yes'},
-  ],
+export default () => ([
+  <meta key={1} charSet="utf-8" />,
+  <meta key={2} httpEquiv="X-UA-Compatible" content="IE:edge" />,
+  <meta key={3} name="viewport" content="width=device-width initial-scale=1" />,
+  <meta key={4} name="theme-color" content="#ffffff" />,
+  <meta key={5} name="apple-mobile-web-app-capable" value="yes" />,
 
-  link: [
-    {rel: 'shortcut icon', type: 'image/png', href: '/public/favicons/favicon.png'},
-  ],
-
-})
+  <link key={6} rel="shortcut icon" type="image/png" href="/public/favicons/favicon.png" />,
+])

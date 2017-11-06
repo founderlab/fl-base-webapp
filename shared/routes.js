@@ -31,7 +31,7 @@ export default function getRoutes(store) {
 
   return (
     <Route path="/" name="app" component={require('./modules/app/containers/App')}>
-      <IndexRoute sidebarIfUser component={require('./modules/app/containers/Landing')} />
+      <IndexRoute component={require('./modules/app/containers/Landing')} />
 
       <AdminRoute hideNav hideFooter path="/admin" name="admin" onEnter={requireAdmin} />
 
