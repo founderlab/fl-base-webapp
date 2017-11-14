@@ -58,7 +58,7 @@ export default class RegisterContainer extends Component {
     return (
       <div>
         <Helmet>
-          <title itemProp="name" lang="en">Migration Agent Listing</title>
+          <title itemProp="name" lang="en">Register</title>
           <meta name="description" content="Register to do great things." />
         </Helmet>
         <Register

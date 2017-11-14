@@ -45,8 +45,8 @@ export default class LoginContainer extends Component {
     return (
       <div>
         <Helmet>
-          <title itemProp="name" lang="en">Log in or Register & Find Work</title>
-          <meta name="description" content="Register and access visa applicants who are looking to immigrate and need the help of migration agents." />
+          <title itemProp="name" lang="en">Login</title>
+          <meta name="description" content="Login" />
         </Helmet>
         <Login loading={loading} errorMsg={errorMsg} onSubmit={this.handleSubmit} email={email} />
       </div>

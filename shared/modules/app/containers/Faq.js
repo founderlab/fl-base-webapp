@@ -27,11 +27,7 @@ export default class FaqContainer extends Component {
     const faqItems = faqList && _(faqList).filter(f => faqType ? (f.type === faqType) : !f.type).sortBy(f => +f.order).value()
 
     let title = 'How Frameworkstein Works'
-    let description = 'See reviews of migration agents and find the best migration agent for FREE. Make immigration easy with Frameworkstein.'
-    if (faqType === 'agent') {
-      title = 'How Frameworkstein Works for Migration Agents'
-      description = 'Learn how to cost effectively promote your migration agent services worldwide. '
-    }
+    let description = 'Frameworkstein FAQ'
 
     return (
       <div>
