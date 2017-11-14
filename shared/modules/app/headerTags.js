@@ -7,5 +7,5 @@ export default () => ([
   <meta key={4} name="theme-color" content="#ffffff" />,
   <meta key={5} name="apple-mobile-web-app-capable" value="yes" />,
 
-  <link key={6} rel="shortcut icon" type="image/png" href="/public/favicons/favicon.png" />,
+  <link key={6} rel="shortcut icon" type="image/png" href="/public/favicon.jpg" />,
 ])
