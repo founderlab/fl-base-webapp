@@ -5,7 +5,7 @@ const toScaffold = {
   users: {
     adminUser: {
       email: 'admin@frameworkstein.com',
-      password: 'qBdiWIdoAa9sdhuj3eatSDorir9J6A2m',
+      password: 'changeme',
       admin: true,
       profile: {
         displayName: 'admin person',
