@@ -10,7 +10,6 @@ import Register from '../components/Register'
 
 @connect(state => ({
   auth: state.auth,
-  subscriptions: state.subscriptions,
   profiles: state.profiles,
   query: state.router.location.query,
 }), {register, push})
@@ -18,7 +17,6 @@ export default class RegisterContainer extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    subscriptions: PropTypes.object.isRequired,
     profiles: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     register: PropTypes.func.isRequired,
@@ -44,30 +42,28 @@ export default class RegisterContainer extends Component {
         console.log(' error', err)
         return this.setState({errorMsg: err.message || err, loading: false})
       }
-      this.props.push('/profile')
+      this.props.push('/')
     })
   }
 
   render() {
-    const {auth, profiles, subscriptions, query} = this.props
-    const loading = subscriptions.get('loading') || auth.get('loading') || profiles.get('loading') || this.state.loading
+    const {auth, profiles, query} = this.props
+    const loading = auth.get('loading') || profiles.get('loading') || this.state.loading
 
     let errorMsg = ''
     if (this.state.errorMsg) errorMsg = this.state.errorMsg
     else if (auth.get('errors')) errorMsg = auth.get('errors').get('register')
-    else if (subscriptions.get('errors')) errorMsg = subscriptions.get('errors').get('subscriptions')
     else if (profiles.get('errors')) errorMsg = profiles.get('errors').get('save')
 
     return (
       <div>
         <Helmet>
           <title itemProp="name" lang="en">Migration Agent Listing</title>
-          <meta name="description" content="Register for a migration agent profile and get connected with those looking to immigrate to their dream country." />
+          <meta name="description" content="Register to do great things." />
         </Helmet>
         <Register
-          activePlan={query.plan}
-          initialValues={{planId: query.plan}}
           loading={loading}
+          initialValues={{email: query.email}}
           errorMsg={errorMsg && errorMsg.toString()}
           onSubmit={this.handleSubmit}
         />

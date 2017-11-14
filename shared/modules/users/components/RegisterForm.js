@@ -36,10 +36,6 @@ export default class RegisterForm extends Component {
     title: PropTypes.string,
   }
 
-  static contextTypes = {
-    organisation: PropTypes.object.isRequired,
-  }
-
   static defaultProps = {
     query: {},
     returnTo: '/',
@@ -61,7 +57,6 @@ export default class RegisterForm extends Component {
 
   render() {
     const {loading, errorMsg, handleSubmit, email, query, title, returnTo, loginReturnTo} = this.props
-    const {organisation} = this.context
     const showEmail = !!(this.state.showEmail || this.props.showEmail || loading)
     if (email) query.email = email
     if (loginReturnTo) query.returnTo = loginReturnTo
@@ -71,14 +66,14 @@ export default class RegisterForm extends Component {
         <h2 className="header">{title}</h2>
         <form onSubmit={handleSubmit}>
 
-          <p><a className="btn btn-lg btn-block btn-linkedin btn-linkedin-signup" href={`/auth/linkedin/redirect/${organisation.subdomain}?returnTo=${returnTo}`}>Sign up with LinkedIn</a></p>
+          <p><a className="btn btn-lg btn-block btn-linkedin btn-linkedin-signup" href={`/auth/linkedin/redirect/?returnTo=${returnTo}`}>Sign up with LinkedIn</a></p>
           <p className="small light">We won't post anything on your behalf or hassle your contacts.</p>
           <p className="small light">
-            By signing up, you agree to our <a onClick={this.openTermsModal}>terms of use</a> and <a onClick={this.openPrivacyModal}>privacy policy</a>.
+            By signing up, you agree to our <a role="button" tabIndex="0" onClick={this.openTermsModal}>terms of use</a> and <a role="button" tabIndex="0" onClick={this.openPrivacyModal}>privacy policy</a>.
           </p>
 
           <h3 className="or">or</h3>
-          <p><a onClick={this.handleShowEmail}>Sign up with email</a></p>
+          <p><a role="button" tabIndex="0" onClick={this.handleShowEmail}>Sign up with email</a></p>
 
           <Collapse keepCollapsedContent isOpened={showEmail}>
             <Row>
@@ -111,7 +106,7 @@ export default class RegisterForm extends Component {
                 <Button block loading={loading} bsStyle="primary" bsSize="large" type="submit">Join the community</Button>
 
                 <p className="small light">
-                  By signing up, you agree to our <a onClick={this.openTermsModal}>terms of use</a> and <a onClick={this.openPrivacyModal}>privacy policy</a>.
+                  By signing up, you agree to our <a role="button" tabIndex="0" onClick={this.openTermsModal}>terms of use</a> and <a role="button" tabIndex="0" onClick={this.openPrivacyModal}>privacy policy</a>.
                 </p>
               </Col>
             </Row>
