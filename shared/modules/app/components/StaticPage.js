@@ -3,6 +3,10 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 export default class StaticPage extends Component {
+  static propTypes = {
+    page: PropTypes.object.isRequired,
+  }
+
   render() {
     const {page} = this.props
     return (
@@ -12,8 +16,4 @@ export default class StaticPage extends Component {
       </div>
     )
   }
-}
-
-StaticPage.propTypes = {
-  page: PropTypes.object.isRequired,
 }

@@ -11,18 +11,14 @@ const defaults = {
     facebookUrl: 'https://facebook.com/',
     twitterUrl: 'https://twitter.com/',
     instagramUrl: 'https://instagram.com/',
-    footerCopyright: `Copyright © Frameworkstein Pty Ltd 2017 ACN: 600 778 532`,
-    ausPhone: '(61 2) 8386 6824',
-    nzPhone: '(09) 889 1246',
-    ukPhone: '(020) 3239 4664',
+    footerCopyright: `Copyright © Carrots Money Pty Ltd 2017`,
+    phone: '',
   },
   staticPages: [
     {title: 'About Us'},
-    {title: 'FAQ'},
-    {title: 'Privacy', content: '<p>privacy content</p>'},
-    {title: 'Terms of Service', content: '<p>terms content</p>'},
   ],
   faqItems: require('./data/faqItems'),
+  steps: require('./data/steps'),
 }
 const models = {}
 

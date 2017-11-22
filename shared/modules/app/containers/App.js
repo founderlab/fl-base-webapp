@@ -10,6 +10,7 @@ import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
 import {loadActiveProfile} from '../../profiles/actions'
 import LoginModal from '../../users/containers/LoginModal'
+import RegisterModal from '../../users/containers/RegisterModal'
 
 @connect(state => ({
   routes: state.router.routes,
@@ -60,7 +61,7 @@ export default class App extends Component {
 
   constructor() {
     super()
-    this.state = {showModal: false}
+    this.state = {showLoginModal: false}
   }
 
   getChildContext() {
@@ -72,7 +73,7 @@ export default class App extends Component {
       markdownProps: {
         escapeHtml: true,
         renderers: {
-          Link: props => (<a href={props.href} target="_blank">{props.children}</a>),
+          Link: props => (<a href={props.href} target="_blank" rel="noopener noreferrer">{props.children}</a>),
         },
       },
     }
@@ -91,10 +92,16 @@ export default class App extends Component {
 
   openLoginModal = (e) => {
     e.preventDefault()
-    this.setState({showModal: true})
+    this.setState({showLoginModal: true})
   }
 
-  closeLoginModal = () => this.setState({showModal: false})
+  openRegisterModal = (e) => {
+    e.preventDefault()
+    this.setState({showRegisterModal: true})
+  }
+
+  closeLoginModal = () => this.setState({showLoginModal: false})
+  closeRegisterModal = () => this.setState({showRegisterModal: false})
 
   render() {
     const route = this.props.routes[1]
@@ -106,7 +113,7 @@ export default class App extends Component {
       <div id="app-view">
         <Helmet titleTemplate="%s | Frameworkstein">
           {headerTags(this.props)}
-          <meta property="og:image"       content="https://www.frameworkstein.com/public/images/logo.png" />
+          <meta property="og:image"       content={`${this.state.url}/public/images/logo.png`} />
           <meta property="og:type"        content="website" />
           <meta property="og:url"         content={pageUrl} />
         </Helmet>
@@ -116,7 +123,8 @@ export default class App extends Component {
             {this.props.children}
           </div>
           {!hideFooter && <Footer />}
-          <LoginModal show={this.state.showModal} onHide={this.closeLoginModal} />
+          <LoginModal show={this.state.showLoginModal} onHide={this.closeLoginModal} />
+          <RegisterModal show={this.state.showRegisterModal} onHide={this.closeRegisterModal} />
         </div>
       </div>
     )

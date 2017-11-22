@@ -69,17 +69,16 @@ export default class RegisterForm extends Component {
           <p><a className="btn btn-lg btn-block btn-linkedin btn-linkedin-signup" href={`/auth/linkedin/redirect/?returnTo=${returnTo}`}>Sign up with LinkedIn</a></p>
           <p className="small light">We won't post anything on your behalf or hassle your contacts.</p>
           <p className="small light">
-            By signing up, you agree to our <a role="button" tabIndex="0" onClick={this.openTermsModal}>terms of use</a> and <a role="button" tabIndex="0" onClick={this.openPrivacyModal}>privacy policy</a>.
+            By signing up, you agree to our <button className="btn-link" onClick={this.openTermsModal}>terms of use</button> and <button className="btn-link" onClick={this.openPrivacyModal}>privacy policy</button>.
           </p>
 
           <h3 className="or">or</h3>
-          <p><a role="button" tabIndex="0" onClick={this.handleShowEmail}>Sign up with email</a></p>
+          <p><button className="btn-link" onClick={this.handleShowEmail}>Sign up with email</button></p>
 
           <Collapse keepCollapsedContent isOpened={showEmail}>
             <Row>
               <Col sm={8} smOffset={2}>
                 <Field
-                  ref="email"
                   type="email"
                   name="email"
                   inputProps={{placeholder: 'Email'}}
@@ -106,7 +105,7 @@ export default class RegisterForm extends Component {
                 <Button block loading={loading} bsStyle="primary" bsSize="large" type="submit">Join the community</Button>
 
                 <p className="small light">
-                  By signing up, you agree to our <a role="button" tabIndex="0" onClick={this.openTermsModal}>terms of use</a> and <a role="button" tabIndex="0" onClick={this.openPrivacyModal}>privacy policy</a>.
+                  By signing up, you agree to our <button className="btn-link" onClick={this.openTermsModal}>terms of use</button> and <button className="btn-link" onClick={this.openPrivacyModal}>privacy policy</button>.
                 </p>
               </Col>
             </Row>

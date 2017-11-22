@@ -49,8 +49,8 @@ export default class Navbar extends Component {
                 {settings.footerCopyright}
               </div>
               <div className="footer-social">
-                <a className="i-list" target="_blank" href="https://facebook.com/frameworkstein"><i className="fa fa-facebook" /></a>
-                <a className="i-list" target="_blank" href="https://twitter.com/frameworkstein"><i className="fa fa-twitter" /></a>
+                <a className="i-list" target="_blank" rel="noopener noreferrer" href="https://facebook.com/frameworkstein"><i className="fa fa-facebook" /></a>
+                <a className="i-list" target="_blank" rel="noopener noreferrer" href="https://twitter.com/frameworkstein"><i className="fa fa-twitter" /></a>
               </div>
             </Col>
           </Row>
