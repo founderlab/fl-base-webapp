@@ -6,6 +6,7 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const relativeAssetsPath = '../public/dist'
 const assetsPath = path.join(__dirname, relativeAssetsPath)
@@ -106,21 +107,24 @@ module.exports = {
 
     // optimizations
     new webpack.optimize.CommonsChunkPlugin({name: 'shared', filename: 'shared-[chunkhash].js'}),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      // mangle: false,
-      sourceMap: false,
-      compress: {
-        warnings: false, // Suppress uglification warnings
-        pure_getters: true,
-        unsafe: true,
-        unsafe_comps: true,
+    new UglifyJsPlugin({
+      parallel: true,
+      uglifyOptions: {
+        // mangle: false,
+        mangle: {
+          keep_fnames: true,
+        },
+        compress: {
+          keep_fnames: true,
+          unsafe: true,
+        },
+        output: {
+          comments: false,
+        },
+        exclude: [/\.min\.js$/gi], // skip pre-minified libs
       },
-      output: {
-        comments: false,
-      },
-      exclude: [/\.min\.js$/gi], // skip pre-minified libs
     }),
   ],
 }

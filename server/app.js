@@ -34,6 +34,7 @@ const bindOptions = {
 }
 const app = bindOptions.app = express()
 console.log(`************** ${config.name} (${(require('../package.json')).version}) port: ${config.port} running env: '${config.env}' **************`)
+
 app.set('port', config.port)
 app.use(morgan('fl', {skip: req => req.url === '/ping' || req.url === '/favicon.ico'}))
 // Remember to keep cors before auth middleware
@@ -72,7 +73,19 @@ configureAuth({
   app,
   User,
   sendResetEmail,
-  facebook: false,
+  facebook: {
+    url: config.url,
+    clientId: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    paths: {
+      redirect: '/auth/facebook',
+      callback: '/auth/facebook/callback',
+      mobile: '/auth/facebook/mobile',
+    },
+    scope: ['email'],
+    profileFields: ['id', 'displayName', 'email'],
+    onLogin: User.onFacebookLogin,
+  },
   linkedin: false,
   login: {
     extraRegisterParams: ['firstName', 'lastName'],

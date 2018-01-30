@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 import {requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware} from 'redux-request-middleware'
 import {fetchComponentDataMiddleware} from 'fetch-component-data'
 import {fromJS} from 'immutable'
+import {setHeaders} from './lib/headers'
 
 const MUTABLES = {
   router: 'always',
@@ -88,5 +89,6 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   const initialState = immute(_initialState)
   const store = finalCreateStore(reducer, initialState)
+  setHeaders({'x-csrf-token': _initialState.auth.csrf})
   return store
 }

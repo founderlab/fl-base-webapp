@@ -1,15 +1,13 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
-import Queue from 'queue-async'
 import {smartSync} from 'fl-server-utils'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt-nodejs'
 import EventEmitter from 'events'
 import {wrapById} from '../cache/users'
-import profileSchema from '../../shared/models/schemas/profile'
+
 let Profile
-let Hotel
 
 const LAST_ACTIVE_UPDATE_INTERVAL = 1000 * 60 * 60 // 1 minute
 
@@ -29,82 +27,27 @@ export default class User extends Backbone.Model {
 
   defaults() { return {createdDate: moment.utc().toDate()} }
 
-  /*
-   * Ensure that a new user has an hotel an a profile
-   */
-  onCreate(_profile, _callback) {
-    const profile = _callback ? _profile : {}
-    const callback = _callback ? _callback : _profile
-
-    const displayName = `${profile.firstName} ${profile.lastName}`
-    const hotelNameOrId = this.get('hotelNameOrId') || displayName
-    const queue = new Queue(1)
-
-    // temp logging
-    const VERBOSE = true
-    const log = (...args) => VERBOSE && console.log(...args)
-    //
-    let orgId
-
-    queue.defer(callback => {
-      log('checking hotelNameOrId', hotelNameOrId, _.isString(hotelNameOrId), _.isNumber(hotelNameOrId))
-      Hotel.findOne({$or: [{id: hotelNameOrId}, {name: hotelNameOrId}]}, (err, org) => {
-        // Assume errors here are from the given hotelNameOrId not being an integer
-
-        const q = new Queue(1)
-
-        if (org) {
-          orgId = org.id
-        }
-        else {
-          log('making new org with ', {name: hotelNameOrId})
-          q.defer(callback => Hotel.findOrCreate({name: hotelNameOrId}, (err, org) => callback(err, orgId = org.id)))
-        }
-
-        q.await(err => {
-          if (err) return callback(err)
-          log('saving user')
-          this.save({}, callback)
-        })
-      })
+  onCreate(callback) {
+    const profile = new Profile({
+      user: this,
+      firstName: '',
+      lastName: '',
+      emailMd5: crypto.createHash('md5').update(this.get('email')).digest('hex'),
     })
 
-    queue.await(err => {
+    profile.save(err => {
       if (err) return callback(err)
-
-      const profileModel = new Profile({
-        ..._.pick(profile, _.keys(profileSchema)),
-        displayName,
-        user: this,
-        emailMd5: crypto.createHash('md5').update(this.get('email')).digest('hex'),
-        hotel_id: orgId,
-      })
-
-      log('saving orgId to profile', orgId)
-      profileModel.save(err => {
-        if (err) return callback(err)
-        const result = {user: this.toJSON(), profile: profileModel.toJSON()}
-
-        callback(err, result)
-      })
+      const result = {user: this.toJSON(), profile: profile.toJSON()}
+      callback(null, result)
     })
   }
 
-  static onSubscribeToPlan(options, callback) {
-    const {userId, subscription} = options
-    if (!userId) return callback(new Error('[User.onSubscribeToPlan] Missing userId'))
-    if (!subscription || !subscription.plan) return callback(new Error('[User.onSubscribeToPlan] Missing subscription or plan'))
-
-    Profile.findOne({user_id: userId}, (err, profile) => {
+  static onFacebookLogin(user, facebookProfile, isNew, callback) {
+    Profile.findOne({user_id: user.id}, (err, _profile) => {
       if (err) return callback(err)
-      profile.set({
-        planId: subscription.plan.id,
-        planExpiresDate: new Date(subscription.current_period_end),
-        homepageFeatured: !!subscription.plan.metadata.homepageFeatured,
-        searchFeatured: !!subscription.plan.metadata.searchFeatured,
-      })
-
-      profile.save(callback)
+      const profile = _profile || new Profile({user, name: facebookProfile.name})
+      const update = _.omit(facebookProfile, 'id')
+      profile.save(update, callback)
     })
   }
 

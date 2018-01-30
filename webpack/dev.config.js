@@ -4,14 +4,17 @@ require('babel-polyfill')
 const path = require('path')
 const webpack = require('webpack')
 const AssetsPlugin = require('assets-webpack-plugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const HappyPack = require('happypack')
+// const AutoDllPlugin = require('autodll-webpack-plugin')
 
-const assetsPath = path.resolve(__dirname, '../public')
+const assetsPath = path.resolve(__dirname, '../public/dist')
 const host = (process.env.HOSTNAME || 'localhost')
 const port = (+process.env.PORT) + 1 || 4001
 
 module.exports = {
-  // devtool: 'inline-source-map',
   context: path.resolve(__dirname, '..'),
+  // recordsPath: path.join(__dirname, 'records.json'),
   entry: {
     app: [
       'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
@@ -43,7 +46,8 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'happypack/loader',
+        // loader: 'babel-loader',
         query: {
           presets: ['babel-preset-react-hmre'].map(require.resolve),
         },
@@ -73,6 +77,23 @@ module.exports = {
     ],
   },
   plugins: [
+    // new AutoDllPlugin({
+    //   context: path.join(__dirname, '..'),
+    //   filename: '[name].dll.js',
+    //   entry: {
+    //     vendor: [
+    //       'react',
+    //       'react-dom',
+    //       'moment',
+    //       'lodash',
+    //     ],
+    //   },
+    // }),
+    new HardSourceWebpackPlugin(),
+    new HappyPack({
+      threads: 2,
+      loaders: ['babel-loader'],
+    }),
     new AssetsPlugin({prettyPrint: true}),
     new webpack.optimize.CommonsChunkPlugin({name: 'shared', filename: 'shared.js'}),
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -82,6 +103,7 @@ module.exports = {
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new webpack.DefinePlugin({
       'process.env': {
         DEBUG: process.env.DEBUG,
