@@ -4,9 +4,7 @@ export default {
   instagramUrl: 'Text',
   footerCopyright: 'Text',
 
-  ausPhone: 'Text',
-  nzPhone: 'Text',
-  ukPhone: 'Text',
+  phone: 'Text',
 
   createdDate: 'DateTime',
 }

@@ -18,7 +18,6 @@ const defaults = {
     {title: 'About Us'},
   ],
   faqItems: require('./data/faqItems'),
-  steps: require('./data/steps'),
 }
 const models = {}
 
