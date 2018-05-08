@@ -11,7 +11,7 @@ export default function Login(props) {
         <Grid>
           <Row>
             <Col xs={12}>
-              <h1 className="text-center">Agent login</h1>
+              <h1 className="text-center">Login</h1>
             </Col>
           </Row>
         </Grid>

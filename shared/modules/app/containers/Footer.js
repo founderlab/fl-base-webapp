@@ -39,10 +39,8 @@ export default class Navbar extends Component {
               <div className="footer-links">
                 <a className="i-list" href="https://blog.frameworkstein.com/blog">Blog</a>
                 <Link className="i-list" to="/faq">FAQ</Link>
-                <Link className="i-list" to="/faq/agent">Agent FAQ</Link>
                 <Link className="i-list" to="/terms">Terms & Conditions</Link>
                 <Link className="i-list" to="/privacy">Privacy Policy</Link>
-                <Link className="i-list" to="/make-a-complaint/australia">Make a complaint</Link>
                 <Link className="i-list" to="/contact">Contact us</Link>
               </div>
               <div className="footer-copyright">

@@ -20,10 +20,6 @@ const template = (_profiles, options, callback) => {
     _.forEach(profiles, profile => {
       if (!profile.displayName) profile.displayName = `${profile.firstName} ${profile.lastName}`
       profile.hotel = _.find(hotels, org => org.id === profile.hotel_id) || {}
-      profile.workExperiences = _.sortBy(profile.workExperiences || [], w => (w.isCurrent || !w.toYear) ? -9999 : -w.toYear)
-      profile.educations = _.sortBy(profile.educations || [], w => (w.isCurrent || !w.toYear) ? -9999 : -w.toYear)
-      profile.isLawyer = !!_.find(profile.registrations, r => r.isLawyer)
-      profile.isAgent = !!_.find(profile.registrations, r => !r.isLawyer)
     })
     callback(null, single ? profiles[0] : profiles)
   })
