@@ -7,7 +7,6 @@ export default class Profile extends Backbone.Model {
   schema = () => _.extend({
 
     user: () => ['belongsTo', require('./User')],
-    hotel: () => ['belongsTo', require('./Hotel')],
 
   }, require('./schemas/profile'))
 

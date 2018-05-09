@@ -2,7 +2,6 @@ module.exports = {
   email: 'Text',
   password: 'Text',
   admin: 'Boolean',
-  type: 'Text',
 
   emailConfirmationToken: 'Text',
   emailConfirmedDate: 'DateTime',
@@ -12,6 +11,4 @@ module.exports = {
 
   lastActiveDate: 'DateTime',
   createdDate: 'DateTime',
-
-  hotelNameOrId: 'Text',
 }

@@ -15,12 +15,12 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     app: [
-      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'bootstrap-loader/extractStyles',
       'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/app.js',
     ],
     admin: [
-      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'bootstrap-loader/extractStyles',
       'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/admin.js',
     ],

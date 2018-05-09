@@ -7,6 +7,7 @@ import {push} from 'redux-router'
 import {confirmEmail} from 'fl-auth-redux'
 import EmailConfirm from '../components/EmailConfirm'
 
+
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {confirmEmail, push})
 export default class EmailConfirmContainer extends Component {
 
@@ -30,7 +31,11 @@ export default class EmailConfirmContainer extends Component {
     const props = _props || this.props
     const {auth, config, query} = props
     if (!(auth.get('errors') && auth.get('errors').get('confirmEmail')) && !auth.get('loading') && !auth.get('emailConfirmed')) {
-      this.props.confirmEmail(`${config.get('url')}/confirm-email`, query.email, query.token)
+      this.props.confirmEmail(`${config.get('url')}/confirm-email`, query.email, query.token, err => {
+        console.log('heading home')
+        err && console.log(err)
+        this.props.push('/')
+      })
     }
   }
 

@@ -17,7 +17,12 @@ var serverOptions = {
   lazy: false,
   publicPath: webpackConfig.output.publicPath,
   headers: {'Access-Control-Allow-Origin': '*'},
-  stats: 'none'
+  stats: 'none',
+  logLevel: 'error',
+  // lazy: true,
+  watchOptions: {
+    aggregateTimeout: 3000,
+  }
 }
 
 var dashboard = new Dashboard()

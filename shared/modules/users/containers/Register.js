@@ -1,70 +1,76 @@
 import _ from 'lodash' // eslint-disable-line
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Queue from 'queue-async'
-import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
+import Helmet from 'react-helmet'
 import {push} from 'redux-router'
 import {register} from 'fl-auth-redux'
+import {saveProfile, loadActiveProfile} from '../actions'
 import Register from '../components/Register'
+
 
 @connect(state => ({
   auth: state.auth,
   profiles: state.profiles,
-  query: state.router.location.query,
-}), {register, push})
-export default class RegisterContainer extends Component {
+  router: state.router,
+}), {register, loadActiveProfile, saveProfile, push})
+export default class RegisterContainer extends React.Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
     profiles: PropTypes.object.isRequired,
-    query: PropTypes.object.isRequired,
     register: PropTypes.func.isRequired,
+    loadActiveProfile: PropTypes.func.isRequired,
+    saveProfile: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
-    url: PropTypes.string,
+    url: PropTypes.string.isRequired,
   }
 
-  state = {}
-
   handleSubmit = data => {
-    const user = _.pick(data, 'email', 'password')
-    const queue = new Queue(1)
-    this.setState({errorMsg: '', loading: true})
+    data.email = data.email && data.email.trim()
+    this.props.register(`${this.context.url}/register`, data, err => {
+      if (err) return console.log(err)
 
-    // create the user, profile and log them in
-    queue.defer(callback => this.props.register(this.context.url, user, callback))
+      this.props.loadActiveProfile({user_id: this.props.auth.get('user').get('id')}, err => {
+        if (err) return console.log(err)
 
-    queue.await(err => {
-      if (err) {
-        console.log(' error', err)
-        return this.setState({errorMsg: err.message || err, loading: false})
-      }
-      this.props.push('/')
+        const profile = _.extend(this.props.profiles.get('active').toJSON(), data)
+
+        this.props.saveProfile(profile, err => {
+          if (err) return console.log(err) // todo: errors
+          this.props.push(this.props.router.location.query.returnTo || '/')
+        })
+      })
     })
   }
 
-  render() {
-    const {auth, profiles, query} = this.props
-    const loading = auth.get('loading') || profiles.get('loading') || this.state.loading
+  loading = () => this.props.auth.get('loading')
 
-    let errorMsg = ''
-    if (this.state.errorMsg) errorMsg = this.state.errorMsg
-    else if (auth.get('errors')) errorMsg = auth.get('errors').get('register')
-    else if (profiles.get('errors')) errorMsg = profiles.get('errors').get('save')
+  errorMsg = () => {
+    const {auth} = this.props
+    const userError = auth.get('errors') && auth.get('errors').get('register')
+    if (userError) return userError.toString()
+    return ''
+  }
+
+  render() {
+    const {auth, router} = this.props
+    const email = auth.get('user') && auth.get('user').get('email')
 
     return (
       <div>
-        <Helmet>
-          <title itemProp="name" lang="en">Register</title>
-          <meta name="description" content="Register to do great things." />
-        </Helmet>
+        <Helmet title="Profile setup" />
         <Register
-          loading={loading}
-          initialValues={{email: query.email}}
-          errorMsg={errorMsg && errorMsg.toString()}
+          loading={this.loading()}
+          errorMsg={this.errorMsg()}
+
+          email={email}
+          query={router.location.query}
+
           onSubmit={this.handleSubmit}
         />
       </div>

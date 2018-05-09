@@ -1,9 +1,9 @@
 import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
-import Inflection from 'inflection'
-import {FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap'
-import {validationHelp, validationState} from 'fl-react-utils'
+import {FormGroup, Label, FormText, FormFeedback} from 'reactstrap'
+import {validationError, validationState} from 'fl-react-utils'
+
 
 const getRte = () => {
   if (typeof window !== 'undefined') return require('react-rte').default
@@ -16,7 +16,6 @@ export default class MarkdownInput extends React.Component {
     label: PropTypes.node,
     input: PropTypes.object,
     help: PropTypes.node,
-    defaultHelp: PropTypes.node,
     helpTop: PropTypes.bool,
     meta: PropTypes.object,
     validationState: PropTypes.func,
@@ -39,19 +38,13 @@ export default class MarkdownInput extends React.Component {
 
   onChange = value => {
     this.setState({value})
-    // todo: avoid generating a string on each change?
-    this.props.input.onChange(value.toString('markdown'))
+    this.props.input.onChange((value.toString('markdown') || '').trim())
   }
 
   render() {
-    const {label, input, meta, inputProps, helpTop, defaultHelp, validationState} = this.props
+    const {label, input, meta, inputProps, help, helpTop} = this.props
+    const error = validationError(meta)
 
-    let help = this.props.help
-    if (_.isUndefined(help)) {
-      help = validationHelp(meta) || defaultHelp
-    }
-
-    const id = Inflection.dasherize(input.name.toLowerCase())
     const RichTextEditor = getRte()
     const control = RichTextEditor ? (
       <RichTextEditor
@@ -62,11 +55,12 @@ export default class MarkdownInput extends React.Component {
     ) : null
 
     return (
-      <FormGroup controlId={id} validationState={validationState ? validationState(meta) : null}>
-        {label && <ControlLabel>{label}</ControlLabel>}
-        {help && helpTop && (<HelpBlock>{help}</HelpBlock>)}
+      <FormGroup>
+        {label && (<Label>{label}</Label>)}
+        {help && helpTop && (<FormText color="muted">{help}</FormText>)}
         {control}
-        {help && !helpTop && (<HelpBlock>{help}</HelpBlock>)}
+        {error && (<FormFeedback>{error}</FormFeedback>)}
+        {help && !helpTop && (<FormText color="muted">{help}</FormText>)}
       </FormGroup>
     )
   }

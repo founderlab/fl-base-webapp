@@ -30,7 +30,7 @@ function immute(fromObj, parentKey, depth=0) {
   return obj
 }
 
-// Add $user_id and $hotel_id to queries
+// Add $user_id to queries
 // Add the csrf token to superagent request headers
 const requestModifierMiddleware = createRequestModifierMiddleware({
   setValue: (request, value) => {
@@ -51,13 +51,16 @@ const requestModifierMiddleware = createRequestModifierMiddleware({
 })
 
 // Scroll to the top of the app container when the route changes
-const locsEqual = (locA, locB) => locA.pathname === locB.pathname
-
+const locsEqual = (locA, locB) => (locA.pathname === locB.pathname) // && (locA.search === locB.search)
 const scrollMiddleware = store => next => action => {
   const router = store.getState().router
   const ROUTER_DID_CHANGE = '@@reduxReactRouter/routerDidChange'
   if (typeof window === 'object' && action.type === ROUTER_DID_CHANGE && router && !locsEqual(action.payload.location, router.location)) {
-    document.body.scrollTop = 0
+    const scrollEle = document.getElementsByClassName('app-content')[0]
+    if (scrollEle) {
+      scrollEle.scrollTop = 0
+      scrollEle.parentElement.scrollTop = 0
+    }
   }
   next(action)
 }
@@ -89,6 +92,7 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   const initialState = immute(_initialState)
   const store = finalCreateStore(reducer, initialState)
+
   setHeaders({'x-csrf-token': _initialState.auth.csrf})
   return store
 }

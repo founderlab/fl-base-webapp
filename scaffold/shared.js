@@ -3,22 +3,26 @@ import Queue from 'queue-async'
 import StaticPage from '../server/models/StaticPage'
 import User from '../server/models/User'
 import AppSettings from '../server/models/AppSettings'
-import Profile from '../server/models/Profile'
-import FaqItem from '../server/models/FaqItem'
 
 const defaults = {
   appSettings: {
     facebookUrl: 'https://facebook.com/',
     twitterUrl: 'https://twitter.com/',
     instagramUrl: 'https://instagram.com/',
-    footerCopyright: `Copyright © Carrots Money Pty Ltd 2017`,
-    phone: '',
+    footerContactInfo: `
+      XX Fake st<br />
+      Sydney<br />
+      NSW 2000<br />
+      Australia`,
   },
   staticPages: [
     {title: 'About Us'},
+    {title: 'FAQ'},
+    {title: 'Privacy', slug: 'privacy'},
+    {title: 'Terms of service', slug: 'terms'},
   ],
-  faqItems: require('./data/faqItems'),
 }
+
 const models = {}
 
 export default function scaffold(_toScaffold, callback) {
@@ -26,10 +30,9 @@ export default function scaffold(_toScaffold, callback) {
   const queue = new Queue(1)
   models.users = {}
 
-  _.forEach(toScaffold.users, (userWithProfile, key) => {
+  _.forEach(toScaffold.users, (_user, key) => {
     queue.defer(callback => {
-      const {profile, ..._user} = userWithProfile
-      console.log('Creating user', profile.displayName)
+      console.log('Creating user', _user.profile.displayName)
       User.findOne({email: _user.email}, (err, existingUser) => {
         if (err) return callback(err)
         if (existingUser) {
@@ -39,17 +42,7 @@ export default function scaffold(_toScaffold, callback) {
         const user = new User(_user)
         models.users[key] = user
         user.set({password: User.createHash(user.get('password'))})
-        user.save(err => {
-          if (err) return callback(err)
-
-          Profile.slug(profile, (err, slug) => {
-            if (err) return callback(err)
-            profile.slug = slug
-            profile.user_id = user.id
-            profile.contactEmail = user.get('email')
-            new Profile(profile).save(callback)
-          })
-        })
+        user.save(callback)
       })
     })
   })
@@ -64,16 +57,6 @@ export default function scaffold(_toScaffold, callback) {
       const staticPage = new StaticPage(_.extend(pageDefaults, _staticPage))
       models.staticPages.push(staticPage)
       staticPage.save(callback)
-    })
-  })
-
-  models.faqItems = []
-  _.forEach(toScaffold.faqItems, (_faqItem, i) => {
-    queue.defer(callback => {
-      const defaults = {order: i}
-      const faqItem = new FaqItem(_.extend(defaults, _faqItem))
-      models.faqItems.push(faqItem)
-      faqItem.save(callback)
     })
   })
 

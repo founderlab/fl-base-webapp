@@ -1,3 +1,4 @@
+import _ from 'lodash'
 
 export function updateModel(state, model) {
   let newState = state.merge({loading: false, errors: {}}).mergeDeep({models: {[model.id]: model}})

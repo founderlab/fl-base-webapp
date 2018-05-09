@@ -4,21 +4,24 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
 import {formValueSelector} from 'redux-form'
-import {push} from 'redux-router'
 import {login} from 'fl-auth-redux'
 import Login from '../components/Login'
 
+
 const selector = formValueSelector('login')
-@connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query, email: selector(state, 'email')}), {push, login})
+@connect(state => _.extend(_.pick(state, 'auth'), {query: state.router.location.query, email: selector(state, 'email')}), {login})
 export default class LoginContainer extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    config: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
     email: PropTypes.string,
+  }
+
+  static contextTypes = {
+    url: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -27,28 +30,33 @@ export default class LoginContainer extends Component {
   }
 
   handleSubmit = data => {
-    this.props.login(`${this.props.config.get('url')}/login`, data.email && data.email.trim(), data.password, err => {
+    this.props.login(`${this.context.url}/login`, data.email && data.email.trim(), data.password, err => {
       if (!err) {
-        this.setState({loaded: true}, () => window.location.href = this.props.query.redirectTo || '/profile')
+        this.setState({loaded: true}, () => window.location.href = this.props.query.returnTo || '/')
       }
     })
   }
 
   render() {
-    const {auth, query, email} = this.props
+    const {auth, query, email, location} = this.props
     // Stay loading while the redirect is happening
     const loading = auth.get('loading') || this.state.loaded
     const errorMsg = auth.get('errors') ? auth.get('errors').get('login') : null
     const initialValues = {}
     if (query.email) initialValues.email = query.email
 
+    const title = `Sign in`
+    const description = `Sign in`
+
     return (
       <div>
         <Helmet>
-          <title itemProp="name" lang="en">Login</title>
-          <meta name="description" content="Login" />
+          <title itemProp="name" lang="en">{title}</title>
+          <meta name="description"        content={description} />
+          <meta property="og:title"       content={title} />
+          <meta property="og:description" content={description} />
         </Helmet>
-        <Login loading={loading} errorMsg={errorMsg} onSubmit={this.handleSubmit} email={email} />
+        <Login initialValues={initialValues} loading={loading} errorMsg={errorMsg} onSubmit={this.handleSubmit} email={email} query={query} returnTo={location.query.returnTo} />
       </div>
     )
   }

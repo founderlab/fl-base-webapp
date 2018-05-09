@@ -2,6 +2,7 @@ import _ from 'lodash' // eslint-disable-line
 import RestController from 'fl-backbone-rest'
 import {createAuthMiddleware} from 'fl-auth-server'
 
+
 function canAccess(options, callback) {
   const {user, req} = options
   if (req.method === 'GET') return callback(null, true)
@@ -16,11 +17,10 @@ export default class AppSettingsController extends RestController {
       model_type: require('../../models/AppSettings'),
       route: '/api/app_settings',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
-      whitelist: {update: ['facebookUrl', 'twitterUrl', 'instagramUrl', 'footerCopyright', 'ausPhone', 'nzPhone', 'ukPhone']},
       templates: {
         detail: require('../templates/appSettings/detail'),
       },
-      default_template: 'detail',
+      defaultTemplate: 'detail',
     }, options))
   }
 }

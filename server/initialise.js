@@ -1,6 +1,5 @@
 // require('pretty-error').start()
 import morgan, {compile} from 'morgan'
-import moment from 'moment'
 import config from './config'
 
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development'
@@ -23,9 +22,7 @@ if (!process.env.DATABASE_URL) {
 const Backbone = require('backbone')
 Backbone.ajax = require('fl-server-utils').createBasicAjax(config)
 
-moment.locale('en-AU')
-
-morgan.token('remote-addr', req => req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.ip)
+morgan.token('subdomain', req => req.headers.host ? req.headers.host.split('.')[0] : '~')
 
 // Modified morgan dev format so we can have colours
 morgan.format('fl', function developmentFormatLine(tokens, req, res) {
@@ -45,7 +42,7 @@ morgan.format('fl', function developmentFormatLine(tokens, req, res) {
   if (!fn) {
     // compile
     fn = developmentFormatLine[colour] = compile('\x1b['
-      + colour + 'm:method :status \x1b[0m:url :response-time ms - :res[content-length]\x1b[0m :remote-addr :date')
+      + colour + 'm:method :status \x1b[0m:subdomain :url :response-time ms - :res[content-length]\x1b[0m :res[hostname] :remote-addr :date')
   }
 
   return fn(tokens, req, res)

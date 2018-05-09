@@ -1,34 +1,39 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Grid, Row, Col, Panel} from 'react-bootstrap'
+import {Container, Row, Col, Card, CardBody} from 'reactstrap'
 import RegisterForm from './RegisterForm'
 
 export default class Register extends Component {
-  render() {
-    return (
-      <div className="form-page register">
 
-        <header className="clouds">
-          <Grid>
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  }
+
+  render() {
+
+    return (
+      <section className="form-page">
+        <header>
+          <Container>
             <Row>
               <Col xs={12}>
-                <h1 className="text-center">Create your Frameworkstein profile</h1>
+                <h2 className="text-center">Create your profile</h2>
               </Col>
             </Row>
-          </Grid>
+          </Container>
         </header>
 
-        <Grid>
+        <Container>
           <Row>
-            <Col xs={12} lg={10} lgOffset={1}>
-              <Panel className="inset-form">
-                <RegisterForm {...this.props} />
-              </Panel>
+            <Col xs={12}>
+              <Card>
+                <CardBody><RegisterForm {...this.props} /></CardBody>
+              </Card>
             </Col>
           </Row>
-        </Grid>
-      </div>
+        </Container>
+      </section>
     )
   }
 }

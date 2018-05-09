@@ -7,6 +7,7 @@ import {push} from 'redux-router'
 import {reset} from 'fl-auth-redux'
 import Reset from '../components/Reset'
 
+
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {reset, push})
 export default class ResetContainer extends Component {
 
@@ -20,7 +21,7 @@ export default class ResetContainer extends Component {
 
   onReset = data => {
     this.props.reset(`${this.props.config.get('url')}/reset`, data.email && data.email.trim(), data.password, data.resetToken, err => {
-      if (!err) window.location.href = this.props.query.redirectTo || '/profile'
+      if (!err) this.props.push(this.props.query.returnTo || '/')
     })
   }
 
@@ -28,7 +29,7 @@ export default class ResetContainer extends Component {
     return (
       <div>
         <Helmet title="Reset your password" />
-        <Reset loading={this.props.auth.get('loading')} auth={this.props.auth} email={this.props.query.email} resetToken={this.props.query.resetToken} onSubmit={this.onReset} />
+        <Reset auth={this.props.auth} email={this.props.query.email} resetToken={this.props.query.resetToken} onSubmit={this.onReset} />
       </div>
     )
   }

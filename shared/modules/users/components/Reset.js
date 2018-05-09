@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Grid, Row, Col, Panel} from 'react-bootstrap'
+import {Container, Row, Col, Card, CardBody} from 'reactstrap'
 import {ResetForm} from 'fl-auth-react'
+
 
 export default class Reset extends Component {
 
@@ -14,24 +15,26 @@ export default class Reset extends Component {
       <div className="form-page password-reset">
 
         <header>
-          <Grid>
+          <Container>
             <Row>
               <Col xs={12}>
-                <h1 className="text-center">Enter a new password</h1>
+                <h2 className="text-center">Enter a new password</h2>
               </Col>
             </Row>
-          </Grid>
+          </Container>
         </header>
 
-        <Grid>
+        <Container>
           <Row>
-            <Col xs={12} sm={10} smOffset={1} md={12} mdOffset={0}>
-              <Panel className="panel-form">
-                <ResetForm {...this.props} />
-              </Panel>
+            <Col xs={12} sm={{size: 10, offset: 1}}>
+              <Card>
+                <CardBody>
+                  <ResetForm {...this.props} />
+                </CardBody>
+              </Card>
             </Col>
           </Row>
-        </Grid>
+        </Container>
       </div>
     )
   }

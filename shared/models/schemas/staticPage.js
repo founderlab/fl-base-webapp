@@ -1,7 +1,7 @@
 export default {
   title: 'Text',
   slug: 'Text',
-  content: 'Text',
+  contentMd: 'Text',
   order: 'Integer',
   visible: 'Boolean',
   showInFooter: 'Boolean',

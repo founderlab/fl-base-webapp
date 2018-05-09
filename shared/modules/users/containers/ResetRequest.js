@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {resetRequest} from 'fl-auth-redux'
 import ResetRequest from '../components/ResetRequest'
 
+
 @connect(state => _.extend(_.pick(state, 'auth', 'config'), {email: state.router.location.query.email}), {resetRequest})
 export default class ResetRequestContainer extends Component {
 
@@ -16,7 +17,7 @@ export default class ResetRequestContainer extends Component {
     resetRequest: PropTypes.func.isRequired,
   }
 
-  handleReset = data => {
+  onReset = data => {
     this.props.resetRequest(`${this.props.config.get('url')}/reset-request`, data.email && data.email.trim())
   }
 
@@ -34,7 +35,7 @@ export default class ResetRequestContainer extends Component {
           loading={loading}
           resetEmailSent={resetEmailSent}
           email={this.props.email}
-          onSubmit={this.handleReset}
+          onSubmit={this.onReset}
         />
       </div>
     )

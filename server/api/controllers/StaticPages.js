@@ -2,6 +2,7 @@ import _ from 'lodash' // eslint-disable-line
 import RestController from 'fl-backbone-rest'
 import {createAuthMiddleware} from 'fl-auth-server'
 
+
 function canAccess(options, callback) {
   const {user, req} = options
   if (req.method === 'GET') return callback(null, true)
@@ -17,10 +18,9 @@ export default class StaticPagesController extends RestController {
       route: '/api/static_pages',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       templates: {
-        detail: require('../templates/staticPages/detail'),
-        link: require('../templates/staticPages/link'),
+        base: require('../templates/staticPages/base'),
       },
-      default_template: 'detail',
+      defaultTemplate: 'base',
     }, options))
   }
 }

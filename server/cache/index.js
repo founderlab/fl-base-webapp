@@ -2,9 +2,10 @@ import _ from 'lodash' // eslint-disable-line
 import cacheManager from 'cache-manager'
 import redisStore from 'fl-cache-manager-redis'
 
+
 const cacheUrl = process.env.SESSIONS_DATABASE_URL
-const ttlMs = process.env.NODE_ENV === 'production' ? 5 * 1000 * 60 : 0 // 5 minutes in production
-// const ttlMs = 5 * 1000 * 60
+let ttlMs = +process.env.CACHE_MS
+if (!ttlMs) ttlMs = process.env.NODE_ENV === 'development' ? 0 * 1000 : 5 * 60 * 1000 // 5 minutes in production
 
 const options = {
   store: 'memory',

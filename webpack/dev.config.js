@@ -5,8 +5,8 @@ const path = require('path')
 const webpack = require('webpack')
 const AssetsPlugin = require('assets-webpack-plugin')
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const AutoDllPlugin = require('autodll-webpack-plugin')
 const HappyPack = require('happypack')
-// const AutoDllPlugin = require('autodll-webpack-plugin')
 
 const assetsPath = path.resolve(__dirname, '../public/dist')
 const host = (process.env.HOSTNAME || 'localhost')
@@ -17,13 +17,13 @@ module.exports = {
   // recordsPath: path.join(__dirname, 'records.json'),
   entry: {
     app: [
-      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'bootstrap-loader',
       'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/app.js',
       'webpack-hot-middleware/client?reload=true&path=http://' + host + ':' + port + '/__webpack_hmr',
     ],
     admin: [
-      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'bootstrap-loader',
       'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/admin.js',
       'webpack-hot-middleware/client?reload=true&path=http://' + host + ':' + port + '/__webpack_hmr',
@@ -91,7 +91,7 @@ module.exports = {
     // }),
     new HardSourceWebpackPlugin(),
     new HappyPack({
-      threads: 2,
+      threads: 4,
       loaders: ['babel-loader'],
     }),
     new AssetsPlugin({prettyPrint: true}),

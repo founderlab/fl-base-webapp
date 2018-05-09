@@ -2,9 +2,10 @@ import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
-import {Row, Col, FormGroup, ControlLabel, HelpBlock, ProgressBar} from 'react-bootstrap'
+import {Row, Col, FormGroup, Label, FormText, ProgressBar} from 'reactstrap'
 import {S3Image} from 'fl-react-utils'
 import Avatar from '../components/Avatar'
+
 
 const MAX_FILE_SIZE = 1024 * 1024 * 10 //10mb
 
@@ -25,10 +26,14 @@ export default class AvatarUploader extends React.Component {
   }
 
   static contextTypes = {
-    s3Url: PropTypes.string,
+    url: PropTypes.string.isRequired,
+    s3Url: PropTypes.string.isRequired,
   }
 
-  state = {editing: false}
+  constructor() {
+    super()
+    this.state = {editing: false}
+  }
 
   handleToggleEdit = () => {
     this.setState({editing: !this.state.editing})
@@ -44,44 +49,43 @@ export default class AvatarUploader extends React.Component {
     })
   }
 
-  renderUploadedFile = () => (<div className="avatar"><S3Image className="avatar" filename={this.props.input.value} /></div>)
-
   render() {
     const {name, label, help, validationState} = this.props
-    const style = this.props.style || {}
+    const filename = this.props.input.value
 
     const uploaderProps = {
-      style,
-      maxSize: MAX_FILE_SIZE,
+      style: this.props.style || {},
       s3Url: this.context.s3Url,
-      host: this.context.url,
       progressComponent: ({progress}) => (<ProgressBar to={progress} />),
+      passChildrenProps: false,
+      onFinish: this.handleFinishedUpload,
+      maxSize: MAX_FILE_SIZE,
+      upload: {
+        server: this.context.url,
+      },
     }
 
-    const filename = this.props.input.value
-    const FileComponent = this.renderUploadedFile
-
     return (
-      <FormGroup className="profile-editor text-center" controlId={name} validationState={validationState}>
+      <FormGroup className="profile-editor text-center" validationState={validationState}>
         <Row>
           <Col xs={12}>
-            {label && <ControlLabel>{label}</ControlLabel>}
+            {label && <Label>{label}</Label>}
           </Col>
         </Row>
 
         <Row>
           <Col xs={12}>
-            <DropzoneS3Uploader onFinish={this.handleFinishedUpload} {...uploaderProps}>
+            <DropzoneS3Uploader {...uploaderProps}>
               {filename ? (
-                <FileComponent />
+                <div className="avatar"><S3Image className="avatar" filename={filename} /></div>
               ) : (
-                <Avatar source={this.props.profile} size={80} />
+                <Avatar profile={this.props.profile} size="lg" />
               )}
             </DropzoneS3Uploader>
           </Col>
         </Row>
         <Row>
-          {help && <HelpBlock>{help}</HelpBlock>}
+          {help && <FormText>{help}</FormText>}
         </Row>
       </FormGroup>
     )

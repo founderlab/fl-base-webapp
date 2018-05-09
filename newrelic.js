@@ -10,7 +10,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['frameworkstein'],
+  app_name: ['Frameworkstein'],
   /**
    * Your New Relic license key.
    */
@@ -22,5 +22,9 @@ exports.config = {
      * production applications.
      */
     level: 'info'
+  },
+  // Ignore 401s
+  error_collector: {
+    ignore_status_codes: [404, 401]
   }
 }

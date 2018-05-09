@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {loadStaticPage} from '../actions'
 import Loader from '../../utils/components/Loader'
+import NotFound from '../../utils/components/NotFound'
 import StaticPage from '../components/StaticPage'
+
 
 @connect(state => ({app: state.app, slug: state.router.params.slug}))
 export default class StaticPageContainer extends Component {
@@ -19,7 +21,6 @@ export default class StaticPageContainer extends Component {
     const slug = ((action && action.payload && action.payload.params) || router.params).slug
     if (app.get('pagesBySlug').get(slug)) return callback()
     store.dispatch(loadStaticPage(slug, callback))
-    return callback()
   }
 
   page() {
@@ -30,7 +31,9 @@ export default class StaticPageContainer extends Component {
   render() {
     if (this.props.app.get('loading')) return (<Loader />)
     const page = this.page()
-    if (!page) return (<h1>Not found</h1>)
+
+    if (!page) return (<NotFound />)
+
     return (
       <StaticPage page={page.toJSON()} />
     )

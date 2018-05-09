@@ -38,5 +38,4 @@ export default function initDB(callback) {
       })
     }
   })
-
 }
