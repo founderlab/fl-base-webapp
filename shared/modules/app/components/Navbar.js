@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -35,7 +35,7 @@ export default class AppNavbar extends Component {
 
     if (profile) {
       return (
-        <Navbar color="dark-blue" dark expand="md" className="app-nav">
+        <Navbar color="primary" dark expand="md" className="app-nav">
           <NavbarBrand tag={Link} to="/">Frameworkstein</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -69,7 +69,7 @@ export default class AppNavbar extends Component {
     }
 
     return (
-      <Navbar color="dark-blue" dark className="app-nav">
+      <Navbar color="primary" dark className="app-nav">
         <NavbarBrand tag={Link} to="/">Frameworkstein</NavbarBrand>
         <Nav className="ml-auto mr-3">
           <NavLink tag={Link} to="/login">Login</NavLink>

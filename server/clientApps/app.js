@@ -18,10 +18,7 @@ export default createServerRenderer({
   alwaysFetch: require('../../shared/modules/app/containers/App'),
   verbose: true,
 
-  config: (req, callback) => {
-    const _config = _.pick(config, config.clientConfigKeys)
-    callback(null, _config)
-  },
+  config: () => _.pick(config, config.clientConfigKeys),
 
   ...otherTags,
 })

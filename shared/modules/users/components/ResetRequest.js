@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 import {Container, Row, Col, Card, CardBody} from 'reactstrap'
 import {ResetRequestForm} from 'fl-auth-react'
 

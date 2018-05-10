@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 import {Media} from 'reactstrap'
 import classNames from 'classnames'
 import Avatar from './Avatar'

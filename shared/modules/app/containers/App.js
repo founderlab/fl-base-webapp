@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
+import { renderRoutes } from 'react-router-config'
 import Navbar from '../components/Navbar'
 import headerTags from '../headerTags'
 import {loadAppSettings} from '../actions'
@@ -17,11 +18,11 @@ import {loadAppSettings} from '../actions'
 export default class App extends Component {
 
   static propTypes = {
-    children: PropTypes.node,
     config: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired, // eslint-disable-line
     profiles: PropTypes.object.isRequired,
+    route: PropTypes.object.isRequired,
   }
 
   static childContextTypes = {
@@ -33,12 +34,8 @@ export default class App extends Component {
   static fetchData({store}, callback) {
     const {app} = store.getState()
     const q = new Queue()
-console.log('appfetch')
     if (!app.get('loaded')) q.defer(callback => store.dispatch(loadAppSettings(callback)))
-    q.await(err => {
-      console.log('fetched')
-      callback(err)
-    })
+    q.await(callback)
   }
 
   state = {}
@@ -52,7 +49,6 @@ console.log('appfetch')
   }
 
   componentWillMount() {
-console.log('appcomponentWillMount')
     if (!this.state.url) {
       this.setState({
         url: this.props.config.get('url'),
@@ -63,13 +59,14 @@ console.log('appcomponentWillMount')
   }
 
   render() {
-    const {profiles, location} = this.props
+    const {profiles, location, route} = this.props
     const profileIm = profiles.get('active')
     const profile = profileIm && profileIm.toJSON()
 
     const title = `Frameworkstein`
     const description = `Rarr`
     const pageUrl = `${this.state.url}${location.pathname}`
+
     return (
       <div id="app-outer" className={this.state.client+''}>
         <Helmet titleTemplate="%s | Frameworkstein">
@@ -85,7 +82,7 @@ console.log('appcomponentWillMount')
         <Navbar
           profile={profile}
         />
-        <div className="app-content">{this.props.children}</div>
+        <div className="app-content mt-3">{renderRoutes(route.routes)}</div>
       </div>
     )
   }

@@ -1,25 +1,21 @@
 import React from 'react'
 import moment from 'moment'
-// import {ReduxRouter, reduxReactRouter} from 'redux-router'
-import { BrowserRouter, Link, Route } from 'react-router-dom'
+import {ReduxRouter, reduxReactRouter} from 'redux-router'
 
 //todo: replace later, react 16 messes with hot loading
 // import {hydrate} from 'react-dom'
 import {render as hydrate} from 'react-dom'
 //
+//tmp
+import {renderToString} from 'react-dom/server'
+import {Route, Router, IndexRoute} from 'react-router'
+//
 
-// import createHistory from 'history/lib/createBrowserHistory'
-import createHistory from 'history/createBrowserHistory'
-import { ConnectedRouter } from 'react-router-redux'
-
+import createHistory from 'history/lib/createBrowserHistory'
 import {Provider} from 'react-redux'
+import {patchRouteEntry} from 'fl-react-utils'
 import LogRocket from 'logrocket'
-// import { patchRouteEntry } from 'fl-react-utils'
 import createStore from '../shared/createStore'
-import { renderRoutes } from 'react-router-config'
-// import App from '../shared/modules/app/containers/App'
-// import {AdminRoute} from 'fl-admin'
-
 
 // Set moment locale to aus
 moment.locale('en-AU')
@@ -27,6 +23,8 @@ moment.locale('en-AU')
 // no jQuery, backbone needs an ajax function
 const Backbone = require('backbone')
 Backbone.ajax = require('fl-backbone.nativeajax')
+
+
 
 
 export default function(getRoutes) {
@@ -48,28 +46,35 @@ export default function(getRoutes) {
     }
   }
 
-  // const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initialState)
-  const history = createHistory()
-  const store = createStore({initialState, history})
+  const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initialState)
 
   //TODO: Remove or make development only
   const ele = document.getElementById('react-view')
   ele.innerHTML = ''
   // /TODO
 
-  // const requireAdmin = () => true
+
+  console.log('wtf', renderToString(
+    <Provider store={store} key="provider">
+      <Router history={createHistory()}>
+        <Route path="/" name="app" component={renderTestPage} />
+      </Router>
+    </Provider>)
+  )
+  console.log('render')
 
   hydrate((
     <Provider store={store} key="provider">
-      <ConnectedRouter history={history}>
-        {renderRoutes(getRoutes())}
-      </ConnectedRouter>
+      <ReduxRouter routes={getRoutes(store)} />
     </Provider>
   ), ele)
 }
 
-        // <div>
-          // {/*<AdminRoute path="/admin" name="admin" onEnter={requireAdmin} />*/}
-          // <Route path="*" name="app" component={App} routes={getRoutes()} />
-        // </div>
- // routes={getRoutes(store)} />
+      // <ReduxRouter routes={() => <Route path="/" name="app" component={renderTestPage} />} />
+    // <Provider store={store} key="provider">
+      // <ReduxRouter routes={getRoutes(store)} />
+    // </Provider>
+
+function renderTestPage() {
+  return <div>TESTPAGE</div>
+}

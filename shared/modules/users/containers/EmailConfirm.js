@@ -1,22 +1,27 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import qs from 'qs'
 import Helmet from 'react-helmet'
 import {connect} from 'react-redux'
-import {push} from 'redux-router'
+// import {push} from 'redux-router'
 import {confirmEmail} from 'fl-auth-redux'
 import EmailConfirm from '../components/EmailConfirm'
 
 
-@connect(state => _.extend(_.pick(state, 'auth', 'config'), {query: state.router.location.query}), {confirmEmail, push})
+@connect(state => _.extend(_.pick(state, 'auth', 'config'), {}), {confirmEmail})
 export default class EmailConfirmContainer extends Component {
 
   static propTypes = {
     auth: PropTypes.object,
-    config: PropTypes.object.isRequired,
-    query: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     confirmEmail: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
+  }
+
+  static contextTypes = {
+    url: PropTypes.string.isRequired,
   }
 
   componentDidMount(props) {
@@ -29,15 +34,18 @@ export default class EmailConfirmContainer extends Component {
 
   confirm(_props) {
     const props = _props || this.props
-    const {auth, config, query} = props
+    const {auth} = props
+    const {url} = this.context
+    const query = this.query()
     if (!(auth.get('errors') && auth.get('errors').get('confirmEmail')) && !auth.get('loading') && !auth.get('emailConfirmed')) {
-      this.props.confirmEmail(`${config.get('url')}/confirm-email`, query.email, query.token, err => {
-        console.log('heading home')
+      this.props.confirmEmail(`${url}/confirm-email`, query.email, query.token, err => {
         err && console.log(err)
-        this.props.push('/')
+        this.props.history.push('/')
       })
     }
   }
+
+  query = () => qs.parse(this.props.location.search)
 
   render() {
     const {auth} = this.props

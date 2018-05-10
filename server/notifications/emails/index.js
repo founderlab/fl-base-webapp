@@ -33,29 +33,23 @@ export default function sendMail(options, callback) {
 }
 
 export function sendConfirmationEmail(user, callback) {
-  user.subdomain((err, subdomain) => {
-    console.log('sendConfirmationEmail', err, subdomain)
-    if (err) return callback(err)
-    const email = user.get('email')
-    const query = querystring.stringify({email, token: user.get('emailConfirmationToken')})
-    const options = {
-      confirmationUrl: `${appConfig.orgUrl(subdomain)}/confirm-email?${query}`,
-    }
-    const message = emailConfirmation(options)
-    console.log('[email sendConfirmationEmail]', email, options, user.get('emailConfirmationToken'), message)
-    sendMail({to: email, subject: `Confirm your email for ${appConfig.url}`, html: message}, callback)
-  })
+  const email = user.get('email')
+  const query = querystring.stringify({email, token: user.get('emailConfirmationToken')})
+  const options = {
+    confirmationUrl: `${appConfig.url}/confirm-email?${query}`,
+  }
+  const message = emailConfirmation(options)
+  console.log('[email sendConfirmationEmail]', email, options, user.get('emailConfirmationToken'), message)
+  sendMail({to: email, subject: `Confirm your email for ${appConfig.url}`, html: message}, callback)
 }
 
 export function sendResetEmail(user, callback) {
-  user.subdomain((err, subdomain) => {
-    const email = user.get('email')
-    const query = querystring.stringify({email, resetToken: user.get('resetToken')})
-    const options = {
-      resetUrl: `${appConfig.orgUrl(subdomain)}/reset?${query}`,
-    }
-    const message = passwordReset(options)
-    console.log('[email sendResetEmail]', email, options, user.get('resetToken'), message)
-    sendMail({to: email, subject: `Password reset for ${appConfig.url}`, html: message}, callback)
-  })
+  const email = user.get('email')
+  const query = querystring.stringify({email, resetToken: user.get('resetToken')})
+  const options = {
+    resetUrl: `${appConfig.url}/reset?${query}`,
+  }
+  const message = passwordReset(options)
+  console.log('[email sendResetEmail]', email, options, user.get('resetToken'), message)
+  sendMail({to: email, subject: `Password reset for ${appConfig.url}`, html: message}, callback)
 }

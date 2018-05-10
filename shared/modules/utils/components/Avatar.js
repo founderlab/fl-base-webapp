@@ -2,7 +2,7 @@ import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 import {S3Image} from 'fl-react-utils'
 // import Icon from '../../utils/components/Icon'

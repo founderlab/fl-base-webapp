@@ -4,7 +4,9 @@ import thunk from 'redux-thunk'
 import {requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware} from 'redux-request-middleware'
 import {fetchComponentDataMiddleware} from 'fetch-component-data'
 import {fromJS} from 'immutable'
+import { routerMiddleware } from 'react-router-redux'
 import {setHeaders} from './lib/headers'
+
 
 const MUTABLES = {
   router: 'always',
@@ -73,7 +75,8 @@ const logRocketEnhancer = typeof window === 'object' && window.LogRocket ? windo
   },
 }) : f => (a, b, c) => f(a, b, c)
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
+// export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
+export default function createStore({initialState, history}) {
   const reducer = require('./reducer') // delay requiring reducers until needed
   const middlewares = applyMiddleware(
     thunk,
@@ -82,17 +85,18 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
     responseParserMiddleware,
     fetchComponentDataMiddleware,
     scrollMiddleware,
+    routerMiddleware(history),
   )
   const finalCreateStore = compose(
-    reduxReactRouter({getRoutes, createHistory}),
+    // reduxReactRouter({getRoutes, createHistory}),
     middlewares,
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f,
     logRocketEnhancer,
   )(_createStore)
 
-  const initialState = immute(_initialState)
-  const store = finalCreateStore(reducer, initialState)
+  const _initialState = immute(initialState)
+  const store = finalCreateStore(reducer, _initialState)
 
-  setHeaders({'x-csrf-token': _initialState.auth.csrf})
+  setHeaders({'x-csrf-token': initialState.auth.csrf})
   return store
 }
