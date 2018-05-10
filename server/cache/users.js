@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {JSONUtils} from 'backbone-orm'
+import { JSONUtils } from 'backbone-orm'
 import cache from './index'
 
 

@@ -1,19 +1,18 @@
 import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import qs from 'qs'
 import Helmet from 'react-helmet'
-// import {push} from 'redux-router'
-import {register} from 'fl-auth-redux'
-import {saveProfile, loadActiveProfile} from '../actions'
+// import { push } from 'redux-router'
+import { register } from 'fl-auth-redux'
+import { saveProfile, loadActiveProfile } from '../actions'
 import Register from '../components/Register'
 
 
 @connect(state => ({
   auth: state.auth,
   profiles: state.profiles,
-  router: state.router,
 }), {register, loadActiveProfile, saveProfile})
 export default class RegisterContainer extends React.Component {
 

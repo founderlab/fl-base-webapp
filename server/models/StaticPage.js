@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
-import {smartSync} from 'fl-server-utils'
+import { smartSync } from 'fl-server-utils'
 import slugify from 'slugify'
 
 

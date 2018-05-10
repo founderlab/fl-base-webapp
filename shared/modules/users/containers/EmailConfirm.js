@@ -3,9 +3,9 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 import Helmet from 'react-helmet'
-import {connect} from 'react-redux'
-// import {push} from 'redux-router'
-import {confirmEmail} from 'fl-auth-redux'
+import { connect } from 'react-redux'
+// import { push } from 'redux-router'
+import { confirmEmail } from 'fl-auth-redux'
 import EmailConfirm from '../components/EmailConfirm'
 
 

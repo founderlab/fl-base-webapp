@@ -2,7 +2,7 @@ import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import {Container, Row, Col} from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 
 
 export default class StaticPage extends Component {

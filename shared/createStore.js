@@ -1,11 +1,11 @@
 import _ from 'lodash' // eslint-disable-line
-import {createStore as _createStore, compose, applyMiddleware} from 'redux'
+import { createStore as _createStore, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import {requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware} from 'redux-request-middleware'
-import {fetchComponentDataMiddleware} from 'fetch-component-data'
-import {fromJS} from 'immutable'
+import { requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware } from 'redux-request-middleware'
+import { fetchComponentDataMiddleware } from 'fetch-component-data'
+import { fromJS } from 'immutable'
 import { routerMiddleware } from 'react-router-redux'
-import {setHeaders} from './lib/headers'
+import { setHeaders } from './lib/headers'
 
 
 const MUTABLES = {

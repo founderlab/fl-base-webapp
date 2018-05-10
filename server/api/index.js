@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import path from 'path'
-import {directoryFunctionModulesAsync} from 'fl-server-utils'
+import { directoryFunctionModulesAsync } from 'fl-server-utils'
 
 const controllers = {}
 

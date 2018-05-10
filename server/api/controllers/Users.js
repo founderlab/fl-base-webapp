@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import RestController from 'fl-backbone-rest'
-import {createAuthMiddleware} from 'fl-auth-server'
+import { createAuthMiddleware } from 'fl-auth-server'
 import User from '../../models/User'
 
 

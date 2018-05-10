@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Modal, ModalBody} from 'reactstrap'
+import { Modal, ModalBody } from 'reactstrap'
 import Privacy from '../../app/components/Privacy'
 
 export default class TermsModal extends Component {

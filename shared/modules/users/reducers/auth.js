@@ -1,6 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
-import {fromJS} from 'immutable'
-import {reducer as authReducer} from 'fl-auth-redux'
+import { fromJS } from 'immutable'
+import { reducer as authReducer } from 'fl-auth-redux'
 
 
 const defaultState = fromJS({

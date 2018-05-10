@@ -3,8 +3,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 import Helmet from 'react-helmet'
-import {connect} from 'react-redux'
-import {resetRequest} from 'fl-auth-redux'
+import { connect } from 'react-redux'
+import { resetRequest } from 'fl-auth-redux'
 import ResetRequest from '../components/ResetRequest'
 
 

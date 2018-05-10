@@ -1,8 +1,8 @@
 import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
-import {FormGroup, Label, FormText, FormFeedback} from 'reactstrap'
-import {validationError, validationState} from 'fl-react-utils'
+import { FormGroup, Label, FormText, FormFeedback } from 'reactstrap'
+import { validationError, validationState } from 'fl-react-utils'
 
 
 const getRte = () => {

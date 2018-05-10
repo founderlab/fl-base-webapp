@@ -1,8 +1,8 @@
 import _ from 'lodash' // eslint-disable-line
 import Queue from 'queue-async'
 import RestController from 'fl-backbone-rest'
-import {JSONUtils} from 'backbone-orm'
-import {createAuthMiddleware} from 'fl-auth-server'
+import { JSONUtils } from 'backbone-orm'
+import { createAuthMiddleware } from 'fl-auth-server'
 import Profile from '../../models/Profile'
 
 

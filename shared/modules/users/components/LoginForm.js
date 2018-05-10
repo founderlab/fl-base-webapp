@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Alert, Row, Col} from 'reactstrap'
-import {Link} from 'react-router-dom'
-import {reduxForm, Field} from 'redux-form'
-import {Input, allFieldsRequiredFn} from 'fl-react-utils'
+import { Alert, Row, Col } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import { reduxForm, Field } from 'redux-form'
+import { Input, allFieldsRequiredFn } from 'fl-react-utils'
 import Button from '../../utils/components/Button'
 
 @reduxForm({

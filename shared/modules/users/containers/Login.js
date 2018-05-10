@@ -2,9 +2,9 @@ import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import {connect} from 'react-redux'
-import {formValueSelector} from 'redux-form'
-import {login} from 'fl-auth-redux'
+import { connect } from 'react-redux'
+import { formValueSelector } from 'redux-form'
+import { login } from 'fl-auth-redux'
 import qs from 'qs'
 import Login from '../components/Login'
 
@@ -24,10 +24,7 @@ export default class LoginContainer extends Component {
     url: PropTypes.string.isRequired,
   }
 
-  constructor() {
-    super()
-    this.state = {}
-  }
+  state = {}
 
   query = () => qs.parse(this.props.location.search)
 

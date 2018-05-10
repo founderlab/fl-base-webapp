@@ -3,11 +3,11 @@ import Queue from 'queue-async'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import Navbar from '../components/Navbar'
 import headerTags from '../headerTags'
-import {loadAppSettings} from '../actions'
+import { loadAppSettings } from '../actions'
 
 
 @connect(state => ({
@@ -31,11 +31,18 @@ export default class App extends Component {
     publicPath: PropTypes.string,
   }
 
-  static fetchData({store}, callback) {
+  static fetchData({store}) {
     const {app} = store.getState()
-    const q = new Queue()
-    if (!app.get('loaded')) q.defer(callback => store.dispatch(loadAppSettings(callback)))
-    q.await(callback)
+    // const q = new Queue()
+    // if (!app.get('loaded')) q.defer(callback => store.dispatch(loadAppSettings(callback)))
+    // q.await(callback)
+    return new Promise((resolve, reject) => {
+      if (app.get('loaded')) return resolve()
+      store.dispatch(loadAppSettings(err => {
+        if (err) reject(err)
+        else resolve()
+      }))
+    })
   }
 
   state = {}

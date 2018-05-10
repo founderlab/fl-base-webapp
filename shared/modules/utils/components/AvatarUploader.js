@@ -2,8 +2,8 @@ import _ from 'lodash' // eslint-disable-line
 import React from 'react'
 import PropTypes from 'prop-types'
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
-import {Row, Col, FormGroup, Label, FormText, ProgressBar} from 'reactstrap'
-import {S3Image} from 'fl-react-utils'
+import { Row, Col, FormGroup, Label, FormText, ProgressBar } from 'reactstrap'
+import { S3Image } from 'fl-react-utils'
 import Avatar from '../components/Avatar'
 
 

@@ -1,19 +1,19 @@
 import React from 'react'
 import moment from 'moment'
-import {ReduxRouter, reduxReactRouter} from 'redux-router'
+import { ReduxRouter, reduxReactRouter } from 'redux-router'
 
 //todo: replace later, react 16 messes with hot loading
-// import {hydrate} from 'react-dom'
-import {render as hydrate} from 'react-dom'
+// import { hydrate } from 'react-dom'
+import { render as hydrate } from 'react-dom'
 //
 //tmp
-import {renderToString} from 'react-dom/server'
-import {Route, Router, IndexRoute} from 'react-router'
+import { renderToString } from 'react-dom/server'
+import { Route, Router, IndexRoute } from 'react-router'
 //
 
 import createHistory from 'history/lib/createBrowserHistory'
-import {Provider} from 'react-redux'
-import {patchRouteEntry} from 'fl-react-utils'
+import { Provider } from 'react-redux'
+import { patchRouteEntry } from 'fl-react-utils'
 import LogRocket from 'logrocket'
 import createStore from '../shared/createStore'
 

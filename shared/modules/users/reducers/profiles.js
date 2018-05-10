@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
-import {fromJS} from 'immutable'
-import {createGroupByReducer} from 'fl-redux-utils'
-import {TYPES} from '../actions'
+import { fromJS } from 'immutable'
+import { createGroupByReducer } from 'fl-redux-utils'
+import { TYPES } from '../actions'
 
 
 const byUser = createGroupByReducer([TYPES.PROFILE_LOAD + '_SUCCESS'], profile => profile.user_id, {single: true})

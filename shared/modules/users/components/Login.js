@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Container, Row, Col, Card, CardBody} from 'reactstrap'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 import LoginForm from './LoginForm'
 
 export default function Login(props) {

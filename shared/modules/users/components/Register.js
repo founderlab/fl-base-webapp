@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Container, Row, Col, Card, CardBody} from 'reactstrap'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 import RegisterForm from './RegisterForm'
 
 export default class Register extends Component {

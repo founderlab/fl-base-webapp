@@ -1,7 +1,7 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
-import {beforeSend} from '../lib/headers'
+import { beforeSend } from '../lib/headers'
 
 export default class Profile extends Backbone.Model {
   schema = () => _.extend({

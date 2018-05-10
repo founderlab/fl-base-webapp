@@ -1,24 +1,24 @@
 import React from 'react'
 import moment from 'moment'
-// import {ReduxRouter, reduxReactRouter} from 'redux-router'
-import { BrowserRouter, Link, Route } from 'react-router-dom'
+// import { ReduxRouter, reduxReactRouter } from 'redux-router'
+// import { BrowserRouter, Link, Route } from 'react-router-dom'
 
 //todo: replace later, react 16 messes with hot loading
-// import {hydrate} from 'react-dom'
-import {render as hydrate} from 'react-dom'
+// import { hydrate } from 'react-dom'
+import { render as hydrate } from 'react-dom'
 //
 
 // import createHistory from 'history/lib/createBrowserHistory'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter } from 'react-router-redux'
+import { renderRoutes } from 'react-router-config'
 
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import LogRocket from 'logrocket'
 // import { patchRouteEntry } from 'fl-react-utils'
 import createStore from '../shared/createStore'
-import { renderRoutes } from 'react-router-config'
 // import App from '../shared/modules/app/containers/App'
-// import {AdminRoute} from 'fl-admin'
+// import { AdminRoute } from 'fl-admin'
 
 
 // Set moment locale to aus

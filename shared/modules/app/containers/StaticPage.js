@@ -1,8 +1,8 @@
 import _ from 'lodash' // eslint-disable-line
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {loadStaticPage} from '../actions'
+import { connect } from 'react-redux'
+import { loadStaticPage } from '../actions'
 import Loader from '../../utils/components/Loader'
 import NotFound from '../../utils/components/NotFound'
 import StaticPage from '../components/StaticPage'

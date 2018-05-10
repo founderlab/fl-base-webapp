@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {createServerRenderer} from 'fl-react-server'
+import { createServerRenderer } from 'fl-react-server'
 import config from '../config'
 import loadInitialState from './loadInitialState'
 import createStore from '../../shared/createStore'

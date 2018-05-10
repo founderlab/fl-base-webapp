@@ -1,10 +1,10 @@
 import _ from 'lodash' // eslint-disable-line
 import moment from 'moment'
 import Backbone from 'backbone'
-import {smartSync} from 'fl-server-utils'
+import { smartSync } from 'fl-server-utils'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt-nodejs'
-import {wrapById} from '../cache/users'
+import { wrapById } from '../cache/users'
 let Profile
 
 const LAST_ACTIVE_UPDATE_INTERVAL = 5 * 60 * 60 * 1000

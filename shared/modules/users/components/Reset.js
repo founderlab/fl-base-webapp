@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Container, Row, Col, Card, CardBody} from 'reactstrap'
-import {ResetForm} from 'fl-auth-react'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
+import { ResetForm } from 'fl-auth-react'
 
 
 export default class Reset extends Component {
