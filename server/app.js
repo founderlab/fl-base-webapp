@@ -44,6 +44,7 @@ app.use(cookieParser(config.sessionSecret))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(sessionMiddleware)
+app.disable('x-powered-by')
 
 const csrf = csurf({cookie: true})
 app.use((req, res, next) => {

@@ -8,10 +8,7 @@ export default function loadInitialState(req) {
   }
 
   if (user) {
-    const links = {}
-    _.forEach(user.links, link => links[link.id] = link)
     state.auth = {
-      links,
       user: {id: user.id},
     }
   }

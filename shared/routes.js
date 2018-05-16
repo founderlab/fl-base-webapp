@@ -1,6 +1,7 @@
 import React from 'react'
 // import { Route, IndexRoute } from 'react-router'
 // import { AdminRoute } from 'fl-admin'
+import { routes as adminRoutes } from 'fl-admin'
 import { Route, Switch } from 'react-router-dom'
 
 
@@ -52,19 +53,20 @@ export default function getRoutes(store) {
   }
 
   const routes = [
-    { component: require('./modules/app/containers/App'),
-      routes: [
-        { path: '/',
-          exact: true,
-          component: require('./modules/app/containers/Landing'),
-        },
-        { path: '/login',
-          component: require('./modules/users/containers/Login'),
-        },
-        { path: '/register',
-          component: require('./modules/users/containers/Register'),
-        },
-      ],
+    ...adminRoutes(store),
+    {
+      component: require('./modules/app/containers/App'),
+      routes: [{
+        path: '/',
+        exact: true,
+        component: require('./modules/app/containers/Landing'),
+      }, {
+        path: '/login',
+        component: require('./modules/users/containers/Login'),
+      }, {
+        path: '/register',
+        component: require('./modules/users/containers/Register'),
+      }],
     },
   ]
 

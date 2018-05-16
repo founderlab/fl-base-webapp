@@ -1,7 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-// import { ReduxRouter, reduxReactRouter } from 'redux-router'
-// import { BrowserRouter, Link, Route } from 'react-router-dom'
 
 //todo: replace later, react 16 messes with hot loading
 // import { hydrate } from 'react-dom'
@@ -12,13 +10,9 @@ import { render as hydrate } from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter } from 'react-router-redux'
 import { renderRoutes } from 'react-router-config'
-
 import { Provider } from 'react-redux'
 import LogRocket from 'logrocket'
-// import { patchRouteEntry } from 'fl-react-utils'
 import createStore from '../shared/createStore'
-// import App from '../shared/modules/app/containers/App'
-// import { AdminRoute } from 'fl-admin'
 
 
 // Set moment locale to aus
@@ -57,8 +51,6 @@ export default function(getRoutes) {
   ele.innerHTML = ''
   // /TODO
 
-  // const requireAdmin = () => true
-
   hydrate((
     <Provider store={store} key="provider">
       <ConnectedRouter history={history}>
@@ -67,9 +59,3 @@ export default function(getRoutes) {
     </Provider>
   ), ele)
 }
-
-        // <div>
-          // {/*<AdminRoute path="/admin" name="admin" onEnter={requireAdmin} />*/}
-          // <Route path="*" name="app" component={App} routes={getRoutes()} />
-        // </div>
- // routes={getRoutes(store)} />

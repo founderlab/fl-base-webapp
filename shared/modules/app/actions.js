@@ -19,7 +19,13 @@ export function loadStaticPage(slug, callback) {
 export function loadAppSettings(callback) {
   return {
     type: TYPES.APP_SETTINGS_LOAD,
-    request: AppSettings.cursor({$one: true}),
+    // request: AppSettings.cursor({$one: true}),
+    request: new Promise((resolve, reject) => {
+      AppSettings.cursor({$one: true}).toJSON((err, settings) => {
+        if (err) return reject(err)
+        resolve(settings)
+      })
+    }),
     callback,
   }
 }

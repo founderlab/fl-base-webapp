@@ -1,5 +1,4 @@
 import _ from 'lodash' // eslint-disable-line
-import Queue from 'queue-async'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
@@ -31,18 +30,9 @@ export default class App extends Component {
     publicPath: PropTypes.string,
   }
 
-  static fetchData({store}) {
+  static async fetchData({store}) {
     const {app} = store.getState()
-    // const q = new Queue()
-    // if (!app.get('loaded')) q.defer(callback => store.dispatch(loadAppSettings(callback)))
-    // q.await(callback)
-    return new Promise((resolve, reject) => {
-      if (app.get('loaded')) return resolve()
-      store.dispatch(loadAppSettings(err => {
-        if (err) reject(err)
-        else resolve()
-      }))
-    })
+    if (!app.get('loaded')) return store.dispatch(loadAppSettings())
   }
 
   state = {}

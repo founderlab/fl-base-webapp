@@ -1,11 +1,11 @@
 import _ from 'lodash' // eslint-disable-line
 import { createStore as _createStore, compose, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
 import { requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware } from 'redux-request-middleware'
 import { fetchComponentDataMiddleware } from 'fetch-component-data'
 import { fromJS } from 'immutable'
 import { routerMiddleware } from 'react-router-redux'
 import { setHeaders } from './lib/headers'
+import getRoutes from './routes'
 
 
 const MUTABLES = {
@@ -79,24 +79,38 @@ const logRocketEnhancer = typeof window === 'object' && window.LogRocket ? windo
 export default function createStore({initialState, history}) {
   const reducer = require('./reducer') // delay requiring reducers until needed
   const middlewares = applyMiddleware(
-    thunk,
+    // thunk,
+    // toPromiseMiddleware,
     requestModifierMiddleware,
     requestMiddleware,
     responseParserMiddleware,
-    fetchComponentDataMiddleware,
+    fetchComponentDataMiddleware(getRoutes),
     scrollMiddleware,
     routerMiddleware(history),
   )
+  console.log('middlewares', middlewares, logRocketEnhancer)
   const finalCreateStore = compose(
     // reduxReactRouter({getRoutes, createHistory}),
     middlewares,
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f,
     logRocketEnhancer,
   )(_createStore)
+  console.log('finalCreateStore', finalCreateStore)
 
   const _initialState = immute(initialState)
   const store = finalCreateStore(reducer, _initialState)
 
   setHeaders({'x-csrf-token': initialState.auth.csrf})
   return store
+}
+
+
+function toPromiseMiddleware(...args) {
+  return next => action => {
+    console.log('toPromiseMiddleware', ...args)
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve(() => next(action)), 1000)
+    })
+    return promise
+  }
 }
