@@ -37,7 +37,6 @@ export default class LoginContainer extends Component {
   }
 
   render() {
-    console.log('this.props', this.props)
     const {auth, email} = this.props
     // Stay loading while the redirect is happening
     const loading = auth.get('loading') || this.state.loaded
