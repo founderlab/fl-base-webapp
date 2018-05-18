@@ -1,3 +1,9 @@
+## This package has moved to the [Frameworkstein repository](https://github.com/founderlab/frameworkstein/tree/master/packages/fl-base-webapp)
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
 # frameworkstein.com
 
 Requires: node, postgres, redis
