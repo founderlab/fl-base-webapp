@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import {Grid, Row, Col, Panel} from 'react-bootstrap'
-import {ResetForm} from 'fl-auth-react'
+import { Card, CardBody } from 'reactstrap'
+import { ResetForm } from 'fl-auth-react'
 
-export default class Reset extends Component {
+
+export default class Reset extends React.PureComponent {
 
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -11,28 +12,14 @@ export default class Reset extends Component {
 
   render() {
     return (
-      <div className="form-page password-reset">
-
-        <header>
-          <Grid>
-            <Row>
-              <Col xs={12}>
-                <h1 className="text-center">Enter a new password</h1>
-              </Col>
-            </Row>
-          </Grid>
-        </header>
-
-        <Grid>
-          <Row>
-            <Col xs={12} sm={10} smOffset={1} md={12} mdOffset={0}>
-              <Panel className="panel-form">
-                <ResetForm {...this.props} />
-              </Panel>
-            </Col>
-          </Row>
-        </Grid>
-      </div>
+      <section className="py-5">
+        <h4>Enter a new password</h4>
+        <Card>
+          <CardBody>
+            <ResetForm {...this.props} />
+          </CardBody>
+        </Card>
+      </section>
     )
   }
 }

@@ -15,12 +15,12 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     app: [
-      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'bootstrap-loader/extractStyles',
       'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/app.js',
     ],
     admin: [
-      'bootstrap-sass-loader!./client/theme/bootstrap.config.js',
+      'bootstrap-loader/extractStyles',
       'font-awesome-webpack!./webpack/fontAwesome/font-awesome.config.js',
       './client/admin.js',
     ],
@@ -93,12 +93,7 @@ module.exports = {
 
     // set global vars
     new webpack.DefinePlugin({
-      'process.env': {
-        DEBUG: false,
-        CLIENT: true,
-        SERVER: false,
-        NODE_ENV: JSON.stringify('production'), // This has a big effect on the react lib size
-      },
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
 
     // ignore jquery (used by backbone)
@@ -113,12 +108,41 @@ module.exports = {
       parallel: true,
       uglifyOptions: {
         // mangle: false,
+        inline: false,
         mangle: {
           keep_fnames: true,
         },
         compress: {
-          keep_fnames: true,
-          unsafe: true,
+          arrows: false,
+          booleans: false,
+          collapse_vars: false,
+          comparisons: false,
+          computed_props: false,
+          hoist_funs: false,
+          hoist_props: false,
+          hoist_vars: false,
+          if_return: false,
+          inline: false,
+          join_vars: false,
+          keep_infinity: true,
+          loops: false,
+          negate_iife: false,
+          properties: false,
+          reduce_funcs: false,
+          reduce_vars: false,
+          sequences: false,
+          side_effects: false,
+          switches: false,
+          top_retain: false,
+          toplevel: false,
+          typeofs: false,
+          unused: false,
+
+          // Switch off all types of compression except those needed to convince
+          // react-devtools that we're using a production build
+          conditionals: true,
+          dead_code: true,
+          evaluate: true,
         },
         output: {
           comments: false,

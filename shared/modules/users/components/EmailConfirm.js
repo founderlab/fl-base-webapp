@@ -1,48 +1,52 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router'
-import {Grid, Row, Col, Panel} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
+
 
 export default class EmailConfirm extends Component {
 
   static propTypes = {
-    errorMsg: PropTypes.node,
+    errorMsg: PropTypes.string,
     loading: PropTypes.bool,
     emailConfirmed: PropTypes.bool,
   }
 
   render() {
-    const {emailConfirmed, loading, errorMsg} = this.props
+    const { emailConfirmed, loading, errorMsg } = this.props
 
     return (
       <div className="form-page email-confirm">
         <header>
-          <Grid>
+          <Container>
             <Row>
               <Col xs={12}>
-                <h1 className="text-center">Email confirmed</h1>
+                <h2 className="text-center">Email confirmed</h2>
               </Col>
             </Row>
-          </Grid>
+          </Container>
         </header>
 
-        <Grid>
+        <Container>
           <Row>
-            <Col xs={12} sm={10} smOffset={1} md={12} mdOffset={0}>
-              <Panel className="panel-form">
-                {loading && <small>loading...</small>}
-                {errorMsg && <small>{errorMsg}</small>}
+            <Col xs={12} sm={{size: 10, offset: 1}}>
+              <Card>
+                <CardBody>
+                  {loading && <small>loading...</small>}
+                  {errorMsg && <small>{errorMsg}</small>}
 
-                {emailConfirmed && (
-                  <div className="text-center">
-                    <h2 className="text-center">Thanks! Your email is confirmed.</h2>
-                    <h3><Link to="/profile" className="text-center">Head back to your dashboard</Link></h3>
-                  </div>
-                )}
-              </Panel>
+                  {emailConfirmed && (
+                    <div className="text-center">
+                      <p className="text-center">Thanks! Your email is confirmed. Redirecting you to your dashboard...</p>
+                      <br />
+                      <p><Link to="/" className="text-center">Head now</Link></p>
+                    </div>
+                  )}
+                </CardBody>
+              </Card>
             </Col>
           </Row>
-        </Grid>
+        </Container>
       </div>
     )
   }

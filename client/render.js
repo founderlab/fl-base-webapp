@@ -1,41 +1,35 @@
+/* eslint-env browser */
 import React from 'react'
 import moment from 'moment'
-import {ReduxRouter} from 'redux-router'
-import {render} from 'react-dom'
-import createHistory from 'history/lib/createBrowserHistory'
-import {Provider} from 'react-redux'
-import {reduxReactRouter} from 'redux-router'
-import {patchRouteEntry} from 'fl-react-utils'
+
+//todo: replace later, react 16 messes with hot loading
+import { hydrate } from 'react-dom'
+// import { render as hydrate } from 'react-dom'
+//
+
+import createHistory from 'history/createBrowserHistory'
+import { ConnectedRouter } from 'react-router-redux'
+import { Provider } from 'react-redux'
+import renderRoutes from '../shared/routes/renderRoutes'
+import createStore from '../shared/createStore'
 
 // Set moment locale to aus
 moment.locale('en-AU')
 
-// no jQuery, backbone needs an ajax function
-const Backbone = require('backbone')
-Backbone.ajax = require('fl-backbone.nativeajax')
-
-import createStore from '../shared/createStore'
-
 export default function(getRoutes) {
   const initialState = window.__INITIAL_STATE__
-  const store = createStore(reduxReactRouter, patchRouteEntry(getRoutes), createHistory, initialState)
 
-  // const enablWhyDidYouUpdate = process.env.NODE_ENV !== 'production'
-  const enablWhyDidYouUpdate = false
-  if (enablWhyDidYouUpdate) {
-    let createClass = React.createClass // eslint-disable-line
-    Object.defineProperty(React, 'createClass', {
-      set: (nextCreateClass) => {
-        createClass = nextCreateClass
-      },
-    })
-    const {whyDidYouUpdate} = require('why-did-you-update')
-    whyDidYouUpdate(React)
-  }
+  const history = createHistory()
+  const store = createStore({initialState, history, getRoutes})
 
-  render((
+  const ele = document.getElementById('react-view')
+  if (process.env.NODE_ENV !== 'production') ele.innerHTML = ''
+
+  hydrate((
     <Provider store={store} key="provider">
-      <ReduxRouter routes={getRoutes(store)} />
+      <ConnectedRouter history={history}>
+        {renderRoutes(getRoutes())}
+      </ConnectedRouter>
     </Provider>
-  ), document.getElementById('react-view'))
+  ), ele)
 }

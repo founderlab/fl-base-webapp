@@ -2,9 +2,7 @@ export default {
   facebookUrl: 'Text',
   twitterUrl: 'Text',
   instagramUrl: 'Text',
-  footerCopyright: 'Text',
-
-  phone: 'Text',
+  footerContactInfo: 'Text',
 
   createdDate: 'DateTime',
 }

@@ -1,10 +1,13 @@
+/* eslint-env browser */
 import _ from 'lodash' // eslint-disable-line
-import {createStore as _createStore, compose, applyMiddleware} from 'redux'
-import thunk from 'redux-thunk'
-import {requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware} from 'redux-request-middleware'
-import {fetchComponentDataMiddleware} from 'fetch-component-data'
-import {fromJS} from 'immutable'
-import {setHeaders} from './lib/headers'
+import qs from 'qs'
+import { createStore as _createStore, compose, applyMiddleware } from 'redux'
+import { requestMiddleware, responseParserMiddleware, createRequestModifierMiddleware } from 'redux-request-middleware'
+import { fetchComponentDataMiddleware } from 'fetch-component-data'
+import { configure as configureStein } from 'stein-orm-http'
+import { fromJS } from 'immutable'
+import { routerMiddleware, LOCATION_CHANGE } from 'react-router-redux'
+
 
 const MUTABLES = {
   router: 'always',
@@ -30,11 +33,10 @@ function immute(fromObj, parentKey, depth=0) {
   return obj
 }
 
-// Add $user_id and $hotel_id to queries
 // Add the csrf token to superagent request headers
 const requestModifierMiddleware = createRequestModifierMiddleware({
   setValue: (request, value) => {
-    const {headers, ...query} = value
+    const { headers, ...query } = value
     if (_.isObject(request._cursor)) _.merge(request._cursor, query)
     if (_.isFunction(request.query)) request.query(query)
     if (_.isFunction(request.set) && headers) request.set(headers)
@@ -42,22 +44,28 @@ const requestModifierMiddleware = createRequestModifierMiddleware({
   },
 
   getValue: store => {
-    const {auth} = store.getState()
+    const { auth } = store.getState()
     const value = {}
-    if (auth.get('user')) value.$user_id = auth.get('user').get('id')
     if (auth.get('csrf')) value.headers = {'x-csrf-token': auth.get('csrf')}
     return value
   },
 })
 
 // Scroll to the top of the app container when the route changes
-const locsEqual = (locA, locB) => locA.pathname === locB.pathname
+const locsEqual = (locA, locB) => (locA && locB && locA.pathname === locB.pathname) // && locA.search == locB.search)
 
-const scrollMiddleware = store => next => action => {
+// Scroll to the top of the app container when the route changes
+// Add parsed query to the react-router-redux lcoation object
+const locationMiddleware = store => next => action => {
   const router = store.getState().router
-  const ROUTER_DID_CHANGE = '@@reduxReactRouter/routerDidChange'
-  if (typeof window === 'object' && action.type === ROUTER_DID_CHANGE && router && !locsEqual(action.payload.location, router.location)) {
-    document.body.scrollTop = 0
+  if (action.type === LOCATION_CHANGE) {
+    if (router && !locsEqual(action.payload, router.location) && typeof window === 'object') {
+      const scrollEle = document.getElementById('react-view')
+      if (scrollEle) {
+        scrollEle.scrollIntoView()
+      }
+    }
+    action.payload.query = qs.parse(action.payload.search, {ignoreQueryPrefix: true})
   }
   next(action)
 }
@@ -70,25 +78,36 @@ const logRocketEnhancer = typeof window === 'object' && window.LogRocket ? windo
   },
 }) : f => (a, b, c) => f(a, b, c)
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
+// export default function createStore(reduxReactRouter, getRoutes, createHistory, _initialState) {
+export default function createStore({initialState, history, getRoutes}) {
   const reducer = require('./reducer') // delay requiring reducers until needed
   const middlewares = applyMiddleware(
-    thunk,
     requestModifierMiddleware,
     requestMiddleware,
     responseParserMiddleware,
-    fetchComponentDataMiddleware,
-    scrollMiddleware,
+    fetchComponentDataMiddleware(getRoutes),
+    locationMiddleware,
+    routerMiddleware(history),
   )
+
   const finalCreateStore = compose(
-    reduxReactRouter({getRoutes, createHistory}),
     middlewares,
-    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f,
+    typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
     logRocketEnhancer,
   )(_createStore)
+  const _initialState = immute(initialState)
+  const store = finalCreateStore(reducer, _initialState)
 
-  const initialState = immute(_initialState)
-  const store = finalCreateStore(reducer, initialState)
-  setHeaders({'x-csrf-token': _initialState.auth.csrf})
+  const steinOptions = {
+    baseUrl: initialState.config.url,
+    fetch: {
+      headers: {
+        'x-csrf-token': initialState.auth.csrf,
+      },
+    },
+  }
+  if (initialState.auth.accessToken) steinOptions.fetch.headers.authorization = `Bearer ${initialState.auth.accessToken}`
+  configureStein(steinOptions)
+
   return store
 }

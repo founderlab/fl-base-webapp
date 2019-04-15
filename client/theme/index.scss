@@ -1,41 +1,53 @@
-@import './components/colours.scss';
-@import './components/mixins.scss';
+/* Build */
+*, *:before, *:after {
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+}
 
-@import './components/landing.scss';
-@import './components/loader.scss';
-@import './components/select.scss';
+html {
+	font-family: sans-serif;
+	font-size: 0.875em;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
 
-html, body, #react-view, #app-view {
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	-webkit-tap-highlight-color: transparent;
 
-  a:focus, a:active,
-  button:focus, button:active {
-    outline: none;
-    text-decoration: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+a {
+  cursor: pointer;
+	text-decoration: none;
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+a:focus, a:active,
+button:focus, button:active {
+  outline: none;
+  text-decoration: none;
+}
+
+.form-container {
+  margin: 0 auto;
+  width: 580px;
+  padding: $spacer;
+  padding-bottom: 4rem;
+
+  @include media-breakpoint-down(xs) {
+    width: 100%;
   }
 }
 
-.app-content {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-
-  .app {
-    flex: 1;
-  }
+table {
+  @extend .table;
 }
 
-.text-primary { color: $brand-primary; }
-.text-info { color: $brand-info; }
-.text-warning { color: $brand-warning; }
-.text-danger { color: $brand-danger; }
-.text-success { color: $brand-success; }
-
-.bg-primary { background: $brand-primary; }
-.bg-info { background: $brand-info; }
-.bg-warning { background: $brand-warning; }
-.bg-danger { background: $brand-danger; }
-.bg-success { background: $brand-success; }
-.bg-tint { background: $bg-tint; }
+@import './steps'

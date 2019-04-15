@@ -1,31 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Grid, Row, Col, Panel} from 'react-bootstrap'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 import LoginForm from './LoginForm'
 
 export default function Login(props) {
   return (
-    <div className="form-page login">
+    <Container>
+      <Row>
+        <Col xs={12} sm={{size: 10, offset: 1}}>
+          <h2 className="text-center mb-5">Sign in</h2>
 
-      <header>
-        <Grid>
-          <Row>
-            <Col xs={12}>
-              <h1 className="text-center">Agent login</h1>
-            </Col>
-          </Row>
-        </Grid>
-      </header>
-
-      <Grid>
-        <Row>
-          <Col xs={12} sm={10} smOffset={1} md={12} mdOffset={0}>
-            <Panel className="panel-form">
-              <LoginForm {...props} />
-            </Panel>
-          </Col>
-        </Row>
-      </Grid>
-    </div>
+          <Card>
+            <CardBody><LoginForm {...props} /></CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   )
 }

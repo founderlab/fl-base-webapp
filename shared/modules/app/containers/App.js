@@ -1,81 +1,63 @@
 import _ from 'lodash' // eslint-disable-line
-import Queue from 'queue-async'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import {connect} from 'react-redux'
-import Navbar from './Navbar'
-import Footer from './Footer'
+import { connect } from 'react-redux'
+import { renderRoutes } from 'react-router-config'
+import Navbar from '../components/Navbar'
 import headerTags from '../headerTags'
-import {loadAppSettings} from '../actions'
-import {loadActiveProfile} from '../../profiles/actions'
-import LoginModal from '../../users/containers/LoginModal'
-import RegisterModal from '../../users/containers/RegisterModal'
+import { loadAppSettings } from '../actions'
+import { loadActiveProfile } from '../../users/actions'
+
 
 @connect(state => ({
-  routes: state.router.routes,
   config: state.config,
+  auth: state.auth,
+  profiles: state.profiles,
 }))
 export default class App extends Component {
 
   static propTypes = {
-    children: PropTypes.node,
-    routes: PropTypes.array.isRequired,
     config: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-  }
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired, // eslint-disable-line
+    profiles: PropTypes.object.isRequired,
+    route: PropTypes.object.isRequired,
   }
 
   static childContextTypes = {
     url: PropTypes.string,
     s3Url: PropTypes.string,
     publicPath: PropTypes.string,
-    stripePublishableApiKey: PropTypes.string,
-    markdownProps: PropTypes.object,
   }
 
-  static fetchData({store}, callback) {
-    const {auth, app, profiles} = store.getState()
-    const baseQueue = new Queue()
+  static async fetchData({store}) {
+    const { app, auth, profiles } = store.getState()
+    try {
+      if (!app.get('loaded')) {
+        await store.dispatch(loadAppSettings())
 
-    if (!app.get('loaded')) baseQueue.defer(callback => store.dispatch(loadAppSettings(callback)))
-
-    baseQueue.await(err => {
-      if (err) return callback(err)
-
-      const profileQueue = new Queue()
-
-      if (auth.get('user')) {
-        const userId = auth.get('user').get('id')
-        if (!profiles.get('loading') && !profiles.get('active')) {
-          profileQueue.defer(callback => store.dispatch(loadActiveProfile({user_id: userId}, callback)))
+        if (auth.get('user')) {
+          const userId = auth.get('user').get('id')
+          if (!profiles.get('loading') && !profiles.get('active')) {
+            await store.dispatch(loadActiveProfile({user_id: userId}))
+          }
         }
       }
-
-      profileQueue.await(callback)
-    })
+    }
+    catch (err) {
+      console.log('[App fetchData] error, logging user out: ', err)
+      return {logout: true, redirect: '/login'}
+    }
   }
 
-  constructor() {
-    super()
-    this.state = {showLoginModal: false}
-  }
+  state = {}
 
   getChildContext() {
     return {
       url: this.state.url,
       s3Url: this.state.s3Url,
       publicPath: this.state.publicPath,
-      stripePublishableApiKey: this.state.stripePublishableApiKey,
-      markdownProps: {
-        escapeHtml: true,
-        renderers: {
-          Link: props => (<a href={props.href} target="_blank" rel="noopener noreferrer">{props.children}</a>),
-        },
-      },
     }
   }
 
@@ -85,47 +67,35 @@ export default class App extends Component {
         url: this.props.config.get('url'),
         s3Url: this.props.config.get('s3Url'),
         publicPath: this.props.config.get('publicPath'),
-        stripePublishableApiKey: this.props.config.get('stripePublishableApiKey'),
       })
     }
   }
 
-  openLoginModal = (e) => {
-    e.preventDefault()
-    this.setState({showLoginModal: true})
-  }
-
-  openRegisterModal = (e) => {
-    e.preventDefault()
-    this.setState({showRegisterModal: true})
-  }
-
-  closeLoginModal = () => this.setState({showLoginModal: false})
-  closeRegisterModal = () => this.setState({showRegisterModal: false})
-
   render() {
-    const route = this.props.routes[1]
-    const hideFooter = route && route.hideFooter
-    const hideNav = route && route.hideNav
-    const pageUrl = `${this.state.url}${this.props.location.pathname}`
+    const { profiles, location, route } = this.props
+    const profileIm = profiles.get('active')
+    const profile = profileIm && profileIm.toJSON()
+
+    const title = `Frameworkstein`
+    const description = `Rarr`
+    const pageUrl = `${this.state.url}${location.pathname}`
 
     return (
-      <div id="app-view">
+      <div id="app-outer" className={this.state.client+''}>
         <Helmet titleTemplate="%s | Frameworkstein">
           {headerTags(this.props)}
-          <meta property="og:image"       content={`${this.state.url}/public/images/logo.png`} />
+          <title itemProp="name" lang="en">{title}</title>
+          <meta name="description"        content={description} />
+          <meta property="og:title"       content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image"       content="https://frameworkstein.com/public/images/landing-image3x.png" />
           <meta property="og:type"        content="website" />
           <meta property="og:url"         content={pageUrl} />
         </Helmet>
-        <div className="app-content">
-          {!hideNav && <Navbar openLoginModal={this.openLoginModal} />}
-          <div className="app">
-            {this.props.children}
-          </div>
-          {!hideFooter && <Footer />}
-          <LoginModal show={this.state.showLoginModal} onHide={this.closeLoginModal} />
-          <RegisterModal show={this.state.showRegisterModal} onHide={this.closeRegisterModal} />
-        </div>
+        <Navbar
+          profile={profile}
+        />
+        <div className="app-content mt-3">{renderRoutes(route.routes)}</div>
       </div>
     )
   }

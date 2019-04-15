@@ -1,23 +1,14 @@
-## This package has moved to the [Frameworkstein repository](https://github.com/founderlab/frameworkstein/tree/master/packages/fl-base-webapp)
-
-
--------------------------------------------------------------------------------------------------------------------------
-
-
-# frameworkstein.com
-
-Requires: node, postgres, redis
-
 ##### Basic instructions
 ```
-# 1. Install dependencies
+# 1. First install dependencies
 $ npm install
+$ npm install -g nodemon babel@6 webpack
 
 # 2a. Start the node server in one terminal
-$ npm run start-dev
+$ npm start-dev
 
 # 2b. Start the webpack development server in another 
 $ npm run client-watch
 ```
 
-The app will start and can be found at [http://localhost:3070](http://localhost:3070) 
+The app will start and can be found at [http://localhost:4000](http://localhost:4000) 

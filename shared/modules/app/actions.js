@@ -1,12 +1,10 @@
 import _ from 'lodash' // eslint-disable-line
 import AppSettings from '../../models/AppSettings'
 import StaticPage from '../../models/StaticPage'
-import FaqItem from '../../models/FaqItem'
 
 export const TYPES = {
   APP_SETTINGS_LOAD: 'APP_SETTINGS_LOAD',
   STATIC_PAGE_LOAD: 'STATIC_PAGE_LOAD',
-  FAQ_LOAD: 'FAQ_LOAD',
 }
 
 export function loadStaticPage(slug, callback) {
@@ -21,15 +19,13 @@ export function loadStaticPage(slug, callback) {
 export function loadAppSettings(callback) {
   return {
     type: TYPES.APP_SETTINGS_LOAD,
-    request: AppSettings.cursor({$one: true}),
-    callback,
-  }
-}
-
-export function loadFaqs(callback) {
-  return {
-    type: TYPES.FAQ_LOAD,
-    request: FaqItem.cursor({}),
+    // request: AppSettings.cursor({$one: true}),
+    request: new Promise((resolve, reject) => {
+      AppSettings.cursor({$one: true}).toJSON((err, settings) => {
+        if (err) return reject(err)
+        resolve(settings)
+      })
+    }),
     callback,
   }
 }

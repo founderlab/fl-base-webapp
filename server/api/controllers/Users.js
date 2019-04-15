@@ -1,50 +1,32 @@
 import _ from 'lodash'
-import RestController from 'fl-backbone-rest'
-import {createAuthMiddleware} from 'fl-auth-server'
+import RestController from 'stein-orm-rest'
+import { createAuthMiddleware } from 'fl-auth-server'
 import User from '../../models/User'
-import schema from '../../../shared/models/schemas/user'
+
 
 function canAccess(options, callback) {
-  const {user, req} = options
+  const { user, req } = options
   if (!user) return callback(null, false)
   if (user.admin) return callback(null, true)
-
-  const query = JSONUtils.parseQuery(req.query)
-  if (query.$include) return callback(null, false, 'No $include')
-  if (query.$template === 'admin') return callback(null, false, 'This template is only for admins')
-
-  const id = req.params.id
-  if (req.method === 'PUT') {
-    return User.passwordIsValidForId(id, req.body.currentPassword, (err, valid) => {
-      if (err) return callback(err)
-      if (!valid) return callback(null, false, `The current password you entered isn't correct`)
-      callback(null, true)
-    })
-  }
-
-  // if (id && (user.id == id)) return callback(null, true)
+  if (req.params.id && (user.id === req.params.id)) return callback(null, true)
   callback(null, false)
 }
 
 export default class UsersController extends RestController {
   constructor(options) {
     super(options.app, _.defaults({
-      model_type: User,
+      modelType: User,
       route: '/api/users',
       auth: [...options.auth, createAuthMiddleware({canAccess})],
       whitelist: {
-        index: ['id', ..._.without(_.keys(schema), 'password', 'emailConfirmationToken', 'resetToken', 'resetTokenCreatedDate')],
-        show: ['id', ..._.without(_.keys(schema), 'password', 'emailConfirmationToken', 'resetToken', 'resetTokenCreatedDate')],
-        update: ['id', 'email', 'admin', 'currentPassword', 'password'],
+        index: ['id', 'email', 'admin'],
+        show: ['id', 'email', 'admin'],
       },
       templates: {
-        show: {$select: ['id', 'email', 'admin']},
-        admin: require('../templates/users/admin'),
+        base: require('../templates/users/base'),
       },
-      default_template: 'show',
+      defaultTemplate: 'base',
     }, options))
-
-    this.app.get('/oauth/redirect', this.redirect)
   }
 
   create(req, res) {
@@ -53,17 +35,16 @@ export default class UsersController extends RestController {
 
     req.body.password = User.createHash(req.body.password)
     const user = new User(req.body)
-    user.save(user.toJSON(), err => {
+    user.save(err => {
       if (err) return this.sendError(res, err)
-      user.onCreate(err => {
+      user.onCreate({}, (err, json) => {
         if (err) return this.sendError(res, err)
-        res.json(_.omit(user.toJSON(), '_rev', 'password'))
+        res.json(json.user, '_rev', 'password')
       })
     })
   }
 
   update(req, res) {
-    delete req.body.currentPassword
     if (req.body.password) {
       req.body.password = User.createHash(req.body.password)
     }

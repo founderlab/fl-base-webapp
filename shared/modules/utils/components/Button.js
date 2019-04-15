@@ -1,6 +1,6 @@
 import _ from 'lodash' // eslint-disable-line
 import React from 'react'
-import {Button} from 'fl-react-utils'
+import { Button } from 'fl-react-utils'
 
 export default class LoaderButton extends React.Component {
 

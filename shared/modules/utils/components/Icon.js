@@ -7,9 +7,9 @@ export default class Icon extends Component {
 
   static propTypes = {
     root: PropTypes.string,
-    extension: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
-    iconPath: PropTypes.func.isRequired,
+    extension: PropTypes.string,
+    iconPath: PropTypes.func,
     className: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.array,
@@ -26,12 +26,12 @@ export default class Icon extends Component {
   }
 
   render() {
-    const {icon, iconPath, extension} = this.props
+    const { icon, iconPath, extension, ...rest } = this.props
     const root = this.props.root || this.context.s3Url || '/public'
     const iconUrl = iconPath(root, icon, extension)
 
     return (
-      <img className={classNames(this.props.className, 'fl-icon')} src={iconUrl} />
+      <img alt={icon} {...rest} className={classNames(this.props.className, 'fl-icon')} src={iconUrl} />
     )
   }
 }
